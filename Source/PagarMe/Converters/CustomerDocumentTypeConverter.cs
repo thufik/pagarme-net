@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using PagarMe.Serializer;
 
 namespace PagarMe.Converters
 {
-    public class CustomerDocumentTypeConverter : JsonConverter
+    internal class CustomerDocumentTypeConverter : JsonConverter, IUrlConverter
     {
         public override bool CanConvert(Type objectType)
         {
@@ -50,6 +51,19 @@ namespace PagarMe.Converters
                 writer.WriteValue(result);
             else
                 writer.WriteNull();
+        }
+
+        public object UrlConvert(object input)
+        {
+            switch ((CustomerDocumentType)input)
+            {
+                case CustomerDocumentType.Cpf:
+                    return "cpf";
+                case CustomerDocumentType.Cnpj:
+                    return "cnpj";
+            }
+
+            return null;
         }
     }
 }

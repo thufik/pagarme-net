@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PagarMe.Converters
+namespace PagarMe.Serializer
 {
-    internal abstract class PagarMeModelUrlConverter
+    [AttributeUsage(AttributeTargets.Property)]
+    internal class UrlIgnoreAttribute : Attribute
     {
-        public abstract object Convert(object input);
     }
 }

@@ -50,9 +50,11 @@ namespace PagarMe
             return query;
         }
 
-        public object Build(JObject data)
+        public object Build(JObject data, PagarMeProvider provider)
         {
-            return data.ToObject(_type);
+            PagarMeModel model = (PagarMeModel)Activator.CreateInstance(_type, provider);
+            model.Refresh(data);
+            return model;
         }
     }
 }

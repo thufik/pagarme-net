@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using PagarMe.Serializer;
 
 namespace PagarMe.Converters
 {
-    public class CustomerSexConverter : JsonConverter
+    internal class CustomerSexConverter : JsonConverter, IUrlConverter
     {
         public override bool CanConvert(Type objectType)
         {
@@ -34,22 +35,25 @@ namespace PagarMe.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            string result = null;
-
-            switch ((CustumerSex)value)
-            {
-                case CustumerSex.Male:
-                    result = "m";
-                    break;
-                case CustumerSex.Female:
-                    result = "f";
-                    break;
-            }
+            object result = UrlConvert(value);
 
             if (result != null)
                 writer.WriteValue(result);
             else
                 writer.WriteNull();
+        }
+
+        public object UrlConvert(object input)
+        {
+            switch ((CustumerSex)input)
+            {
+                case CustumerSex.Male:
+                    return "m";
+                case CustumerSex.Female:
+                    return "f";
+            }
+
+            return null;
         }
     }
 }

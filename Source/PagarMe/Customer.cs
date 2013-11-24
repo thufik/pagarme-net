@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PagarMe.Converters;
+using PagarMe.Serializer;
 
 namespace PagarMe
 {
@@ -19,7 +20,7 @@ namespace PagarMe
         private string _name, _email, _documentNumber;
         private CustomerDocumentType _documentType;
         private CustumerSex _sex;
-        private DateTime _bornAt, _dateCreated;
+        private DateTime? _bornAt, _dateCreated;
 
         [JsonProperty(PropertyName = "name")]
         public string Name
@@ -89,7 +90,7 @@ namespace PagarMe
         }
 
         [JsonProperty(PropertyName = "born_at")]
-        public DateTime BornAt
+        public DateTime? BornAt
         {
             get { return _bornAt; }
             set
@@ -102,7 +103,7 @@ namespace PagarMe
         }
 
         [JsonProperty(PropertyName = "date_created")]
-        public DateTime DateCreated
+        public DateTime? DateCreated
         {
             get { return _dateCreated; }
             set
@@ -115,12 +116,14 @@ namespace PagarMe
         }
 
         [JsonProperty(PropertyName = "addresses")]
+        [UrlConverter(typeof(SingleItemConverter))]
         public ICollection<CustomerAddress> Addresses
         {
             get { return _addresses; }
         }
 
         [JsonProperty(PropertyName = "phones")]
+        [UrlConverter(typeof(SingleItemConverter))]
         public ICollection<CustomerPhone> Phones
         {
             get { return _phones; }

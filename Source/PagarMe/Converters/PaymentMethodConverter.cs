@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using PagarMe.Serializer;
 
 namespace PagarMe.Converters
 {
-    public class PaymentMethodConverter : JsonConverter
+    internal class PaymentMethodConverter : JsonConverter, IUrlConverter
     {
         public override bool CanConvert(Type objectType)
         {
@@ -34,19 +35,20 @@ namespace PagarMe.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            string result = "";
+            writer.WriteValue(UrlConvert(value));
+        }
 
-            switch ((PaymentMethod)value)
+        public object UrlConvert(object input)
+        {
+            switch ((PaymentMethod)input)
             {
                 case PaymentMethod.CreditCard:
-                    result = "credit_card";
-                    break;
+                    return "credit_card";
                 case PaymentMethod.Boleto:
-                    result = "boleto";
-                    break;
+                    return "boleto";
             }
 
-            writer.WriteValue(result);
+            return null;
         }
     }
 }

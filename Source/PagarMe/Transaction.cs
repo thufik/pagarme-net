@@ -16,9 +16,6 @@ namespace PagarMe
     [PagarMeModel("transactions")]
     public class Transaction : PagarMeModel
     {
-        [JsonProperty(PropertyName = "id")]
-        public int Id { get; private set; }
-
         [JsonProperty(PropertyName = "status")]
         [JsonConverter(typeof(TransactionStatusConverter))]
         public TransactionStatus Status { get; private set; }
@@ -32,7 +29,6 @@ namespace PagarMe
 
         [JsonProperty(PropertyName = "amount")]
         [JsonConverter(typeof(AmountConverter))]
-        [PagarMeModelUrlConverter(typeof(AmountUrlConverter))]
         public decimal Amount { get; private set; }
 
         [JsonProperty(PropertyName = "installments")]
@@ -74,6 +70,22 @@ namespace PagarMe
 
         [JsonProperty(PropertyName = "phone")]
         public CustomerPhone Phone { get; private set; }
+
+        internal Transaction(PagarMeProvider provider)
+            : base(provider)
+        {
+        }
+
+        internal Transaction(PagarMeProvider provider, PagarMeQueryResponse result)
+            : base(provider, result)
+        {
+            
+        }
+
+        public void Refund()
+        {
+            Refresh(new PagarMeQuery(Provider, "POST", string.Format("transactions/{0}/refund", Id)).Execute());
+        }
 
         public override string ToString()
         {

@@ -49,11 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\AmountConverter.cs" />
-    <Compile Include="Converters\AmountUrlConverter.cs" />
     <Compile Include="Converters\CustomerDocumentTypeConverter.cs" />
     <Compile Include="Converters\CustomerSexConverter.cs" />
-    <Compile Include="Converters\PagarMeModelUrlConverter.cs" />
-    <Compile Include="Converters\PagarMeModelUrlConverterAttribute.cs" />
+    <Compile Include="Serializer\IUrlConverter.cs" />
+    <Compile Include="Converters\SingleItemConverter.cs" />
+    <Compile Include="Serializer\UrlConverterAttribute.cs" />
     <Compile Include="Converters\PaymentMethodConverter.cs" />
     <Compile Include="Converters\TransactionRefuseReasonConverter.cs" />
     <Compile Include="Converters\TransactionStatusConverter.cs" />
@@ -76,9 +76,12 @@
     <Compile Include="PagarMeQueryResponse.cs" />
     <Compile Include="PaymentMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serializer\UrlIgnoreAttribute.cs" />
+    <Compile Include="Serializer\UrlSerializer.cs" />
     <Compile Include="Transaction.cs" />
     <Compile Include="PagarMeQueryExecutor.cs" />
     <Compile Include="TransactionRefuseReason.cs" />
+    <Compile Include="TransactionSetup.cs" />
     <Compile Include="TransactionStatus.cs" />
   </ItemGroup>
   <ItemGroup>

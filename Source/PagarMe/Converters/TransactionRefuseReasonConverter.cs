@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using PagarMe.Serializer;
 
 namespace PagarMe.Converters
 {
-    public class TransactionRefuseReasonConverter : JsonConverter
+    internal class TransactionRefuseReasonConverter : JsonConverter, IUrlConverter
     {
         public override bool CanWrite
         {
@@ -40,6 +41,19 @@ namespace PagarMe.Converters
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             throw new InvalidOperationException("Status is read only.");
+        }
+
+        public object UrlConvert(object input)
+        {
+            switch ((TransactionRefuseReason)input)
+            {
+                case TransactionRefuseReason.Acquirer:
+                    return "acquirer";
+                case TransactionRefuseReason.Antifraud:
+                    return "antifraud";
+            }
+
+            return null;
         }
     }
 }

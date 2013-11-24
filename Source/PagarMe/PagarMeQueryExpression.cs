@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PagarMe.Converters;
+using PagarMe.Serializer;
 using Remotion.Linq.Clauses.Expressions;
 using Remotion.Linq.Clauses.ExpressionTreeVisitors;
 using Remotion.Linq.Parsing;
@@ -39,6 +40,17 @@ namespace PagarMe
         protected override Expression VisitQuerySourceReferenceExpression(QuerySourceReferenceExpression expression)
         {
             return expression;
+        }
+
+        protected override Expression VisitUnaryExpression(UnaryExpression expression)
+        {
+            if (expression.NodeType == ExpressionType.Convert)
+            {
+                VisitExpression(expression.Operand);
+                return expression;
+            }
+
+            return base.VisitUnaryExpression(expression);
         }
 
         protected override Expression VisitBinaryExpression(BinaryExpression expression)
@@ -106,15 +118,13 @@ namespace PagarMe
             if (expression.Expression is MemberExpression)
             {
                 _builder.AppendFormat("[{0}]", name);
-                _builder.Append(name);
-                _builder.Append("]");
             }
             else
             {
                 _builder.Append(name);
             }
 
-            if (_isLeft && _left == null)
+            if (_isLeft)
                 _left = expression.Member;
 
             return expression;
@@ -122,52 +132,10 @@ namespace PagarMe
 
         protected override Expression VisitConstantExpression(ConstantExpression expression)
         {
-            string value;
-            object expValue = expression.Value;
-            Type expType = expression.Type;
-
-            if (_left != null)
-            {
-                var converterAttribute = _left.GetCustomAttribute<PagarMeModelUrlConverterAttribute>();
-
-                if (converterAttribute != null)
-                {
-                    expValue =
-                        ((PagarMeModelUrlConverter)Activator.CreateInstance(converterAttribute.ConverterType)).Convert(
-                            expValue);
-                    expType = expValue.GetType();
-                }
-            }
-
-            if (
-                expType == typeof(Int32)
-                || expType == typeof(Int16)
-                || expType == typeof(Int64)
-                || expType == typeof(Decimal)
-                || expType == typeof(Double)
-                || expType == typeof(Boolean)
-                || expType == typeof(String)
-                )
-            {
-                value = expValue.ToString();
-            }
-            else if (expType == typeof(DateTime) || expType == typeof(DateTime?))
-            {
-                DateTime dt = default(DateTime);
-
-                if (expression.Type == typeof(DateTime))
-                    dt = (DateTime)expValue;
-                else if (expression.Type == typeof(DateTime?))
-                    dt = ((DateTime?)expValue).GetValueOrDefault();
-
-                value =
-                    ((int)(dt.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds).ToString(
-                        CultureInfo.InvariantCulture);
-            }
-            else
-            {
+            string value = UrlSerializer.ConvertValue(_left as PropertyInfo, expression.Value);
+            
+            if (value == null)
                 return base.VisitConstantExpression(expression);
-            }
 
             _builder.Append(value);
 

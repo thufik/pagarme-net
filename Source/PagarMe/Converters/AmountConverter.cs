@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using PagarMe.Serializer;
 
 namespace PagarMe.Converters
 {
-    public class AmountConverter : JsonConverter
+    internal class AmountConverter : JsonConverter, IUrlConverter
     {
         public override bool CanConvert(Type objectType)
         {
@@ -21,7 +22,12 @@ namespace PagarMe.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            writer.WriteValue((int)(decimal.Round((decimal)value, 2) * 100));
+            writer.WriteValue((int)UrlConvert(value));
+        }
+
+        public object UrlConvert(object input)
+        {
+            return (int)(decimal.Round((decimal)input, 2) * 100);
         }
     }
 }
