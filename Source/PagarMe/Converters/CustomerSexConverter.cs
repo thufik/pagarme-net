@@ -22,10 +22,10 @@ namespace PagarMe.Converters
 
             switch (status)
             {
-                case "m":
+                case "M":
                     result = CustumerSex.Male;
                     break;
-                case "f":
+                case "F":
                     result = CustumerSex.Female;
                     break;
             }
@@ -48,9 +48,9 @@ namespace PagarMe.Converters
             switch ((CustumerSex)input)
             {
                 case CustumerSex.Male:
-                    return "m";
+                    return "M";
                 case CustumerSex.Female:
-                    return "f";
+                    return "F";
             }
 
             return null;

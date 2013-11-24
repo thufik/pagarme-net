@@ -9,7 +9,7 @@ using Remotion.Linq.Parsing.Structure;
 
 namespace PagarMe
 {
-    public class PagarMeQueryable<T> : QueryableBase<T>
+    public class PagarMeQueryable<T> : QueryableBase<T> where T : PagarMeModel
     {
         public PagarMeQueryable(IQueryProvider provider, Expression expression)
             : base(provider, expression)

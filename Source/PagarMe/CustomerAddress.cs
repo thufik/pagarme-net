@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using PagarMe.Serializer;
 
 namespace PagarMe
 {
@@ -14,6 +15,10 @@ namespace PagarMe
         private string _street, _complementary, _number;
         private string _neighborhood, _city, _state;
         private string _zipcode, _country;
+
+        [UrlIgnore]
+        [JsonProperty(PropertyName = "id")]
+        public int Id { get; private set; }
 
         [JsonProperty(PropertyName = "street")]
         public string Street

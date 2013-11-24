@@ -30,6 +30,11 @@ namespace PagarMe.Serializer
                                 !Attribute.IsDefined(p, typeof(UrlIgnoreAttribute))))
             {
                 var propValue = prop.GetValue(obj);
+                var mutatorAttribute = prop.GetCustomAttribute<UrlMutatorAttribute>();
+
+                if (mutatorAttribute != null)
+                    propValue =
+                        ((IUrlConverter)Activator.CreateInstance(mutatorAttribute.ConverterType)).UrlConvert(propValue);
 
                 if (propValue == null)
                     continue;
@@ -103,7 +108,7 @@ namespace PagarMe.Serializer
                     dt = ((DateTime?)value).GetValueOrDefault();
 
                 result =
-                    ((int)(dt.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds).ToString(
+                    ((long)(dt.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0).ToUniversalTime()).TotalMilliseconds).ToString(
                         CultureInfo.InvariantCulture);
             }
 

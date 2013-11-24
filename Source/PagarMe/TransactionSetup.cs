@@ -21,7 +21,22 @@ namespace PagarMe
         [JsonProperty(PropertyName = "card_hash")]
         public string CardHash { get; set; }
 
+        [JsonProperty(PropertyName = "card_number")]
+        public string CardNumber { get; set; }
+
+        [JsonProperty(PropertyName = "card_holder_name")]
+        public string CardHolderName { get; set; }
+
+        [JsonProperty(PropertyName = "card_expiration_date")]
+        public string CardExpirationDate { get; set; }
+
+        [JsonProperty(PropertyName = "card_cvv")]
+        public string CardCvv { get; set; }
+
         [JsonProperty(PropertyName = "customer")]
         public Customer Customer { get; set; }
+
+        [JsonProperty(PropertyName = "postback_url")]
+        public string PostbackUrl { get; set; }
     }
 }

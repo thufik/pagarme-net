@@ -15,6 +15,7 @@ namespace PagarMe
     internal class PagarMeModelDefinition
     {
         private readonly Type _type;
+        private readonly ConstructorInfo _ctor;
         private readonly string _endpoint;
 
         public Type Type
@@ -31,6 +32,8 @@ namespace PagarMe
         public PagarMeModelDefinition(Type type)
         {
             _type = type;
+            _ctor = _type.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null,
+                new[] {typeof(PagarMeProvider)}, null);
 
             PagarMeModelAttribute model = _type.GetCustomAttribute<PagarMeModelAttribute>();
 
@@ -52,7 +55,7 @@ namespace PagarMe
 
         public object Build(JObject data, PagarMeProvider provider)
         {
-            PagarMeModel model = (PagarMeModel)Activator.CreateInstance(_type, provider);
+            PagarMeModel model = (PagarMeModel)_ctor.Invoke(new object[] {provider});
             model.Refresh(data);
             return model;
         }

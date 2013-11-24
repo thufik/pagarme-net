@@ -63,6 +63,7 @@ namespace PagarMe
         public string SubscriptionId { get; private set; }
 
         [JsonProperty(PropertyName = "customer")]
+        [JsonConverter(typeof(PagarMeModelConverter<Customer>))]
         public Customer Customer { get; private set; }
 
         [JsonProperty(PropertyName = "address")]

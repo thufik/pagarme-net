@@ -11,7 +11,8 @@ using PagarMe.Serializer;
 
 namespace PagarMe
 {
-    public class Customer : IFreezable
+    [PagarMeModel("customers")]
+    public class Customer : PagarMeModel, IFreezable
     {
         private readonly FreezableCollection<CustomerAddress> _addresses;
         private readonly FreezableCollection<CustomerPhone> _phones;
@@ -90,6 +91,7 @@ namespace PagarMe
         }
 
         [JsonProperty(PropertyName = "born_at")]
+        [UrlConverter(typeof(DateConverter))]
         public DateTime? BornAt
         {
             get { return _bornAt; }
@@ -116,20 +118,26 @@ namespace PagarMe
         }
 
         [JsonProperty(PropertyName = "addresses")]
-        [UrlConverter(typeof(SingleItemConverter))]
+        [UrlMutator(typeof(SingleItemConverter))]
         public ICollection<CustomerAddress> Addresses
         {
             get { return _addresses; }
         }
 
         [JsonProperty(PropertyName = "phones")]
-        [UrlConverter(typeof(SingleItemConverter))]
+        [UrlMutator(typeof(SingleItemConverter))]
         public ICollection<CustomerPhone> Phones
         {
             get { return _phones; }
         }
 
         public Customer()
+            : this(null)
+        {
+        }
+
+        internal Customer(PagarMeProvider provider)
+            : base(provider)
         {
             _addresses = new FreezableCollection<CustomerAddress>();
             _phones = new FreezableCollection<CustomerPhone>();
@@ -151,6 +159,11 @@ namespace PagarMe
             _addresses.Freeze();
             _phones.Freeze();
             _freezed = true;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("#{0} {1}", Id, Name);
         }
     }
 }

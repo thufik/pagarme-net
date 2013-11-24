@@ -11,6 +11,7 @@ namespace PagarMe
     {
         private readonly string _apiKey, _encryptionKey;
         private readonly PagarMeQueryable<Transaction> _transactions;
+        private readonly PagarMeQueryable<Customer> _customers;
 
         public string ApiKey
         {
@@ -27,11 +28,17 @@ namespace PagarMe
             get { return _transactions; }
         }
 
+        public PagarMeQueryable<Customer> Customers
+        {
+            get { return _customers; }
+        }
+
         public PagarMeProvider(string apiKey, string encryptionKey)
         {
             _apiKey = apiKey;
             _encryptionKey = encryptionKey;
             _transactions = new PagarMeQueryable<Transaction>(this);
+            _customers = new PagarMeQueryable<Customer>(this);
         }
 
         public Transaction PostTransaction(TransactionSetup setup)

@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using PagarMe.Serializer;
 
 namespace PagarMe
 {
@@ -12,6 +13,10 @@ namespace PagarMe
     {
         private bool _freezed;
         private int _ddi, _ddd, _number;
+
+        [UrlIgnore]
+        [JsonProperty(PropertyName = "id")]
+        public int Id { get; private set; }
 
         [JsonProperty(PropertyName = "ddi")]
         public int Ddi

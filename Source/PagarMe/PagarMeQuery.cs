@@ -44,7 +44,9 @@ namespace PagarMe
                     .TrimEnd('&');
 
             builder.Path += _path;
-            builder.Query = query;
+
+            if (_method != "POST")
+                builder.Query = query;
 
             if (Take > 0)
                 AddQuery("count", Take.ToString(CultureInfo.InvariantCulture));
@@ -54,6 +56,15 @@ namespace PagarMe
             request.Method = _method;
             request.Proxy = null;
             request.UserAgent = UserAgent;
+
+            if (_method == "POST")
+            {
+                byte[] payload = Encoding.UTF8.GetBytes(query);
+
+                request.ContentLength = payload.Length;
+                request.ContentType = "application/x-www-form-urlencoded; charset=utf8";
+                request.GetRequestStream().Write(payload, 0, payload.Length);
+            }
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             PagarMeQueryResponse queryResponse = new PagarMeQueryResponse();
