@@ -11,6 +11,8 @@
     <AssemblyName>PagarMe</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Net40|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +33,12 @@
     <AssemblyOriginatorKeyFile>..\..\PagarMe.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Linq">
+      <HintPath>..\..\packages\Remotion.Linq.1.15.2.0\lib\net45\Remotion.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,9 +48,45 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\AmountConverter.cs" />
+    <Compile Include="Converters\AmountUrlConverter.cs" />
+    <Compile Include="Converters\CustomerDocumentTypeConverter.cs" />
+    <Compile Include="Converters\CustomerSexConverter.cs" />
+    <Compile Include="Converters\PagarMeModelUrlConverter.cs" />
+    <Compile Include="Converters\PagarMeModelUrlConverterAttribute.cs" />
+    <Compile Include="Converters\PaymentMethodConverter.cs" />
+    <Compile Include="Converters\TransactionRefuseReasonConverter.cs" />
+    <Compile Include="Converters\TransactionStatusConverter.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="CustomerAddress.cs" />
+    <Compile Include="CustomerDocumentType.cs" />
+    <Compile Include="CustomerPhone.cs" />
+    <Compile Include="CustumerSex.cs" />
+    <Compile Include="FreezableList.cs" />
+    <Compile Include="IFreezable.cs" />
+    <Compile Include="PagarMeException.cs" />
+    <Compile Include="PagarMeModel.cs" />
+    <Compile Include="PagarMeModelDefinition.cs" />
+    <Compile Include="PagarMeModelQuery.cs" />
+    <Compile Include="PagarMeProvider.cs" />
+    <Compile Include="PagarMeQuery.cs" />
+    <Compile Include="PagarMeQueryable.cs" />
+    <Compile Include="PagarMeModelAttribute.cs" />
+    <Compile Include="PagarMeQueryExpression.cs" />
+    <Compile Include="PagarMeQueryResponse.cs" />
+    <Compile Include="PaymentMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transaction.cs" />
+    <Compile Include="PagarMeQueryExecutor.cs" />
+    <Compile Include="TransactionRefuseReason.cs" />
+    <Compile Include="TransactionStatus.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

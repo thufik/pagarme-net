@@ -1,0 +1,33 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/Description/@EntryValue">Freezable Json Property</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/Field/=TYPE/@KeyIndexDefined">True</s:Boolean>
+	
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/Field/=TYPE/Order/@EntryValue">2</s:Int64>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/Shortcut/@EntryValue">fjp</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/Text/@EntryValue">[Newtonsoft.Json.JsonProperty(PropertyName = "$FIELDNAME$")]&#xD;
+public $TYPE$ $NAME$&#xD;
+{&#xD;
+    get { return _$FIELDNAME$; }&#xD;
+    set&#xD;
+    {&#xD;
+        if (_freezed)&#xD;
+            throw new InvalidOperationException("This value is read-only.");&#xD;
+&#xD;
+        _$FIELDNAME$ = value;&#xD;
+    }&#xD;
+}</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/Scope/=C3001E7C0DA78E4487072B7E050D86C5/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/Scope/=C3001E7C0DA78E4487072B7E050D86C5/Type/@EntryValue">InCSharpFile</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/Scope/=C3001E7C0DA78E4487072B7E050D86C5/CustomProperties/=minimumLanguageVersion/@EntryIndexedValue">2.0</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/Field/=NAME/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/Field/=NAME/Order/@EntryValue">0</s:Int64>
+	
+	
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/Field/=FIELDNAME/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/Field/=FIELDNAME/Expression/@EntryValue">decapitalize(NAME)</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/Field/=FIELDNAME/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1C33CDFEFD68034BA2F42D78898DEC53/Field/=FIELDNAME/Order/@EntryValue">1</s:Int64></wpf:ResourceDictionary>
