@@ -7,13 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Main", "Main", "{DAF308B9-3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F034F553-EE86-452B-9C61-BD0F5E1A6E2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagarMe.Net40", "Source\PagarMe\PagarMe.Net40.csproj", "{25C4AFEB-E34A-498A-A921-955459BEF8B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagarMe.Net40", "src\PagarMe\PagarMe.Net40.csproj", "{25C4AFEB-E34A-498A-A921-955459BEF8B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagarMe.SL40", "Source\PagarMe\PagarMe.SL40.csproj", "{0C634208-3747-4499-A630-8D88D7B91AE2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagarMe.SL40", "src\PagarMe\PagarMe.SL40.csproj", "{0C634208-3747-4499-A630-8D88D7B91AE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagarMeTests.Net40", "Test\PagarMeTests\PagarMeTests.Net40.csproj", "{FF15E736-AF2A-4B6E-B5D4-CF8F9385AB68}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagarMeTests.Net40", "tests\PagarMeTests\PagarMeTests.Net40.csproj", "{FF15E736-AF2A-4B6E-B5D4-CF8F9385AB68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagarMeTests.SL40", "Test\PagarMeTests\PagarMeTests.SL40.csproj", "{7D378378-E86A-4ADD-AA8C-E10CC23993E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagarMeTests.SL40", "tests\PagarMeTests\PagarMeTests.SL40.csproj", "{7D378378-E86A-4ADD-AA8C-E10CC23993E7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D867C479-FA7C-4018-B7B8-5035C8A0DABA}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D867C4
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{34024E54-0642-409E-BBE7-7600B0232F40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "tests\TestApp\TestApp.csproj", "{34024E54-0642-409E-BBE7-7600B0232F40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

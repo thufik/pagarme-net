@@ -69,7 +69,7 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\PagarMe\PagarMe.SL40.csproj">
+    <ProjectReference Include="..\..\src\PagarMe\PagarMe.SL40.csproj">
       <Project>{0c634208-3747-4499-a630-8d88d7b91ae2}</Project>
       <Name>PagarMe.SL40</Name>
     </ProjectReference>
