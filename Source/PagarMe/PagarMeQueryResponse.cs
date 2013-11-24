@@ -26,7 +26,7 @@
 
 namespace PagarMe
 {
-    public class PagarMeQueryResponse
+    internal class PagarMeQueryResponse
     {
         public int Status { get; set; }
         public string Data { get; set; }

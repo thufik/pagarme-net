@@ -66,9 +66,10 @@ namespace PagarMe
                 return;
             }
 
-            if (resultOperator is TakeResultOperator)
+            var takeResult = resultOperator as TakeResultOperator;
+            if (takeResult != null)
             {
-                var exp = ((TakeResultOperator)resultOperator).Count;
+                var exp = takeResult.Count;
 
                 if (exp.NodeType == ExpressionType.Constant)
                 {

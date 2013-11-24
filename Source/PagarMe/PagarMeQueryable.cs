@@ -26,6 +26,7 @@
 
 using System.Linq;
 using System.Linq.Expressions;
+using JetBrains.Annotations;
 using Remotion.Linq;
 using Remotion.Linq.Parsing.Structure;
 
@@ -33,6 +34,7 @@ namespace PagarMe
 {
     public class PagarMeQueryable<T> : QueryableBase<T> where T : PagarMeModel
     {
+        [UsedImplicitly]
         public PagarMeQueryable(IQueryProvider provider, Expression expression)
             : base(provider, expression)
         {

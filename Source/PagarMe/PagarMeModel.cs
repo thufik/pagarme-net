@@ -26,6 +26,7 @@
 
 using System.Reflection;
 using System.Runtime.Serialization;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PagarMe.Serializer;
@@ -34,33 +35,28 @@ namespace PagarMe
 {
     public abstract class PagarMeModel
     {
-        private PagarMeProvider _provider;
+        internal PagarMeProvider Provider;
 
-        protected PagarMeModel()
+        internal PagarMeModel()
         {
         }
 
-        protected PagarMeModel(PagarMeProvider provider)
+        internal PagarMeModel(PagarMeProvider provider)
         {
-            _provider = provider;
+            Provider = provider;
         }
 
-        protected PagarMeModel(PagarMeProvider provider, PagarMeQueryResponse result)
+        internal PagarMeModel(PagarMeProvider provider, PagarMeQueryResponse result)
         {
-            _provider = provider;
+            Provider = provider;
             Refresh(result);
-        }
-
-        public PagarMeProvider Provider
-        {
-            get { return _provider; }
-            internal set { _provider = value; }
         }
 
         [UrlIgnore]
         [JsonProperty(PropertyName = "id")]
         public int Id { get; private set; }
 
+        [PublicAPI]
         public void Refresh()
         {
             if (Provider == null)
@@ -90,9 +86,9 @@ namespace PagarMe
             ProviderWrapper wrapper = ((ProviderWrapper)context.Context);
 
             if (wrapper.Provider == null)
-                wrapper.Provider = _provider;
-            else if (_provider == null)
-                _provider = wrapper.Provider;
+                wrapper.Provider = Provider;
+            else if (Provider == null)
+                Provider = wrapper.Provider;
         }
     }
 }

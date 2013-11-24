@@ -25,6 +25,7 @@
 #endregion
 
 using System;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using PagarMe.Converters;
 
@@ -43,62 +44,63 @@ namespace PagarMe
         {
         }
 
-        [JsonProperty(PropertyName = "status")]
+        [JsonProperty(PropertyName = "status"), UsedImplicitly]
         [JsonConverter(typeof(TransactionStatusConverter))]
         public TransactionStatus Status { get; private set; }
 
-        [JsonProperty(PropertyName = "refuse_reason")]
+        [JsonProperty(PropertyName = "refuse_reason"), UsedImplicitly]
         [JsonConverter(typeof(TransactionRefuseReasonConverter))]
         public TransactionRefuseReason RefuseReason { get; private set; }
 
-        [JsonProperty(PropertyName = "date_created")]
+        [JsonProperty(PropertyName = "date_created"), UsedImplicitly]
         public DateTime DateCreated { get; private set; }
 
-        [JsonProperty(PropertyName = "amount")]
+        [JsonProperty(PropertyName = "amount"), UsedImplicitly]
         [JsonConverter(typeof(AmountConverter))]
         public decimal Amount { get; private set; }
 
-        [JsonProperty(PropertyName = "installments")]
+        [JsonProperty(PropertyName = "installments"), UsedImplicitly]
         public int Installments { get; private set; }
 
-        [JsonProperty(PropertyName = "card_holder_name")]
+        [JsonProperty(PropertyName = "card_holder_name"), UsedImplicitly]
         public string CardHolderName { get; private set; }
 
-        [JsonProperty(PropertyName = "card_last_digits")]
+        [JsonProperty(PropertyName = "card_last_digits"), UsedImplicitly]
         public string CardLastDigits { get; private set; }
 
-        [JsonProperty(PropertyName = "card_brand")]
+        [JsonProperty(PropertyName = "card_brand"), UsedImplicitly]
         public string CardBrand { get; private set; }
 
-        [JsonProperty(PropertyName = "postback_url")]
+        [JsonProperty(PropertyName = "postback_url"), UsedImplicitly]
         public string PostbackUrl { get; private set; }
 
-        [JsonProperty(PropertyName = "payment_method")]
+        [JsonProperty(PropertyName = "payment_method"), UsedImplicitly]
         [JsonConverter(typeof(PaymentMethodConverter))]
         public PaymentMethod PaymentMethod { get; private set; }
 
-        [JsonProperty(PropertyName = "antifraud_score")]
+        [JsonProperty(PropertyName = "antifraud_score"), UsedImplicitly]
         public int? AntifraudScore { get; private set; }
 
-        [JsonProperty(PropertyName = "boleto_url")]
+        [JsonProperty(PropertyName = "boleto_url"), UsedImplicitly]
         public string BoletoUrl { get; private set; }
 
-        [JsonProperty(PropertyName = "boleto_barcode")]
+        [JsonProperty(PropertyName = "boleto_barcode"), UsedImplicitly]
         public string BoletoBarcode { get; private set; }
 
-        [JsonProperty(PropertyName = "subscription_id")]
+        [JsonProperty(PropertyName = "subscription_id"), UsedImplicitly]
         public string SubscriptionId { get; private set; }
 
-        [JsonProperty(PropertyName = "customer")]
+        [JsonProperty(PropertyName = "customer"), UsedImplicitly]
         [JsonConverter(typeof(PagarMeModelConverter<Customer>))]
         public Customer Customer { get; private set; }
 
-        [JsonProperty(PropertyName = "address")]
+        [JsonProperty(PropertyName = "address"), UsedImplicitly]
         public CustomerAddress Address { get; private set; }
 
-        [JsonProperty(PropertyName = "phone")]
+        [JsonProperty(PropertyName = "phone"), UsedImplicitly]
         public CustomerPhone Phone { get; private set; }
 
+        [PublicAPI]
         public void Refund()
         {
             Refresh(new PagarMeQuery(Provider, "POST", string.Format("transactions/{0}/refund", Id)).Execute());

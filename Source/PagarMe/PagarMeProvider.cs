@@ -24,6 +24,7 @@
 
 #endregion
 
+using JetBrains.Annotations;
 using PagarMe.Serializer;
 
 namespace PagarMe
@@ -43,26 +44,31 @@ namespace PagarMe
             _customers = new PagarMeQueryable<Customer>(this);
         }
 
+        [PublicAPI]
         public string ApiKey
         {
             get { return _apiKey; }
         }
 
+        [PublicAPI]
         public string EncryptionKey
         {
             get { return _encryptionKey; }
         }
 
+        [PublicAPI]
         public PagarMeQueryable<Transaction> Transactions
         {
             get { return _transactions; }
         }
 
+        [PublicAPI]
         public PagarMeQueryable<Customer> Customers
         {
             get { return _customers; }
         }
 
+        [PublicAPI]
         public Transaction PostTransaction(TransactionSetup setup)
         {
             PagarMeQuery query = new PagarMeQuery(this, "POST", "transactions");

@@ -26,14 +26,16 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 
 namespace PagarMe
 {
-    internal class FreezableCollection<T> : Collection<T>, IFreezable
+    internal class FreezableCollection<T> : Collection<T>
     {
         private bool _freezed;
 
-        public void Freeze()
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext context)
         {
             _freezed = true;
         }

@@ -33,7 +33,7 @@ using Newtonsoft.Json;
 
 namespace PagarMe.Serializer
 {
-    internal class UrlSerializer
+    internal static class UrlSerializer
     {
         internal static IEnumerable<Tuple<string, string>> Serialize(object value)
         {

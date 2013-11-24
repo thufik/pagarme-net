@@ -26,12 +26,13 @@
 
 using System;
 using System.Runtime.Serialization;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using PagarMe.Serializer;
 
 namespace PagarMe
 {
-    public class CustomerPhone : IFreezable
+    public class CustomerPhone
     {
         private int _ddd;
         private int _ddi;
@@ -39,10 +40,10 @@ namespace PagarMe
         private int _number;
 
         [UrlIgnore]
-        [JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id"), UsedImplicitly]
         public int Id { get; private set; }
 
-        [JsonProperty(PropertyName = "ddi")]
+        [JsonProperty(PropertyName = "ddi"), UsedImplicitly]
         public int Ddi
         {
             get { return _ddi; }
@@ -55,7 +56,7 @@ namespace PagarMe
             }
         }
 
-        [JsonProperty(PropertyName = "ddd")]
+        [JsonProperty(PropertyName = "ddd"), UsedImplicitly]
         public int Ddd
         {
             get { return _ddd; }
@@ -68,7 +69,7 @@ namespace PagarMe
             }
         }
 
-        [JsonProperty(PropertyName = "number")]
+        [JsonProperty(PropertyName = "number"), UsedImplicitly]
         public int Number
         {
             get { return _number; }
@@ -81,18 +82,8 @@ namespace PagarMe
             }
         }
 
-        void IFreezable.Freeze()
-        {
-            Freeze();
-        }
-
         [OnDeserialized]
         private void OnDeserialized(StreamingContext context)
-        {
-            Freeze();
-        }
-
-        internal void Freeze()
         {
             _freezed = true;
         }

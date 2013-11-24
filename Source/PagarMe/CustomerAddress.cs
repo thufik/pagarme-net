@@ -26,12 +26,13 @@
 
 using System;
 using System.Runtime.Serialization;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using PagarMe.Serializer;
 
 namespace PagarMe
 {
-    public class CustomerAddress : IFreezable
+    public class CustomerAddress
     {
         private string _city;
         private string _complementary;
@@ -44,10 +45,10 @@ namespace PagarMe
         private string _zipcode;
 
         [UrlIgnore]
-        [JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id"), UsedImplicitly]
         public int Id { get; private set; }
 
-        [JsonProperty(PropertyName = "street")]
+        [JsonProperty(PropertyName = "street"), UsedImplicitly]
         public string Street
         {
             get { return _street; }
@@ -60,7 +61,7 @@ namespace PagarMe
             }
         }
 
-        [JsonProperty(PropertyName = "complementary")]
+        [JsonProperty(PropertyName = "complementary"), UsedImplicitly]
         public string Complementary
         {
             get { return _complementary; }
@@ -73,7 +74,7 @@ namespace PagarMe
             }
         }
 
-        [JsonProperty(PropertyName = "street_number")]
+        [JsonProperty(PropertyName = "street_number"), UsedImplicitly]
         public string Number
         {
             get { return _number; }
@@ -86,7 +87,7 @@ namespace PagarMe
             }
         }
 
-        [JsonProperty(PropertyName = "neighborhood")]
+        [JsonProperty(PropertyName = "neighborhood"), UsedImplicitly]
         public string Neighborhood
         {
             get { return _neighborhood; }
@@ -99,7 +100,7 @@ namespace PagarMe
             }
         }
 
-        [JsonProperty(PropertyName = "city")]
+        [JsonProperty(PropertyName = "city"), UsedImplicitly]
         public string City
         {
             get { return _city; }
@@ -112,7 +113,7 @@ namespace PagarMe
             }
         }
 
-        [JsonProperty(PropertyName = "state")]
+        [JsonProperty(PropertyName = "state"), UsedImplicitly]
         public string State
         {
             get { return _state; }
@@ -125,7 +126,7 @@ namespace PagarMe
             }
         }
 
-        [JsonProperty(PropertyName = "zipcode")]
+        [JsonProperty(PropertyName = "zipcode"), UsedImplicitly]
         public string ZipCode
         {
             get { return _zipcode; }
@@ -138,7 +139,7 @@ namespace PagarMe
             }
         }
 
-        [JsonProperty(PropertyName = "country")]
+        [JsonProperty(PropertyName = "country"), UsedImplicitly]
         public string Country
         {
             get { return _country; }
@@ -151,18 +152,8 @@ namespace PagarMe
             }
         }
 
-        void IFreezable.Freeze()
-        {
-            Freeze();
-        }
-
         [OnDeserialized]
         private void OnDeserialized(StreamingContext context)
-        {
-            Freeze();
-        }
-
-        internal void Freeze()
         {
             _freezed = true;
         }

@@ -53,8 +53,10 @@
     <Compile Include="Converters\PagarMeModelConverter.cs" />
     <Compile Include="Converters\CustomerDocumentTypeConverter.cs" />
     <Compile Include="Converters\CustomerSexConverter.cs" />
+    <Compile Include="PagarMeBackendAdaptor.cs" />
     <Compile Include="PagarMeModelExtensions.cs" />
     <Compile Include="ProviderWrapper.cs" />
+    <Compile Include="ResharperAnnotations.cs" />
     <Compile Include="Serializer\IUrlConverter.cs" />
     <Compile Include="Converters\SingleItemConverter.cs" />
     <Compile Include="Serializer\UrlConverterAttribute.cs" />
@@ -67,7 +69,6 @@
     <Compile Include="CustomerPhone.cs" />
     <Compile Include="CustumerSex.cs" />
     <Compile Include="FreezableList.cs" />
-    <Compile Include="IFreezable.cs" />
     <Compile Include="PagarMeException.cs" />
     <Compile Include="PagarMeModel.cs" />
     <Compile Include="PagarMeModelDefinition.cs" />

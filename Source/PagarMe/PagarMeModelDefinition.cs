@@ -51,11 +51,6 @@ namespace PagarMe
             _endpoint = model.Endpoint;
         }
 
-        public Type Type
-        {
-            get { return _type; }
-        }
-
         public string Endpoint
         {
             get { return _endpoint; }
