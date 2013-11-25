@@ -25,16 +25,18 @@
 #endregion
 
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace PagarMe
 {
     /// <summary>
-    /// Provides LINQ extensions to API objects
+    ///     Provides LINQ extensions to API objects
     /// </summary>
     public static class PagarMeModelExtensions
     {
         /// <summary>
-        /// Finds an object by ID
+        ///     Finds an object by ID
         /// </summary>
         /// <typeparam name="T">Object type</typeparam>
         /// <param name="queryable">Object queryable collection</param>
@@ -43,6 +45,20 @@ namespace PagarMe
         public static T Find<T>(this PagarMeQueryable<T> queryable, int id) where T : PagarMeModel
         {
             return queryable.Single(t => t.Id == id);
+        }
+
+        internal static MemberInfo GetMemberInfo(this Expression expression)
+        {
+            MemberExpression memberExpression;
+            LambdaExpression lambda = (LambdaExpression)expression;
+            UnaryExpression body = lambda.Body as UnaryExpression;
+
+            if (body != null)
+                memberExpression = (MemberExpression)body.Operand;
+            else
+                memberExpression = (MemberExpression)lambda.Body;
+
+            return memberExpression.Member;
         }
     }
 }

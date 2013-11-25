@@ -24,17 +24,29 @@
 
 #endregion
 
-using System;
+using JetBrains.Annotations;
+using Newtonsoft.Json;
 
 namespace PagarMe
 {
     /// <summary>
-    ///     Pagar.me remote API exception
+    ///     Subscription creation data
     /// </summary>
-    public class PagarMeException : Exception
+    [PublicAPI]
+    public class SubscriptionSetup : TransactionSetup
     {
-        internal PagarMeException(PagarMeQueryResponse response)
-        {
-        }
+        /// <summary>
+        ///     Customer Email
+        /// </summary>
+        [PublicAPI]
+        [JsonProperty(PropertyName = "customer_email")]
+        public string CustomerEmail { get; set; }
+
+        /// <summary>
+        ///     Plan ID
+        /// </summary>
+        [PublicAPI]
+        [JsonProperty(PropertyName = "plan_id")]
+        public int Plan { get; set; }
     }
 }

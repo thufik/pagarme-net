@@ -70,7 +70,7 @@ namespace PagarMe
 
             builder.Path += _path;
 
-            if (_method != "POST")
+            if (_method != "POST" || _method == "PUT")
                 builder.Query = query;
 
             if (Take > 0)
@@ -82,7 +82,7 @@ namespace PagarMe
             request.Proxy = null;
             request.UserAgent = UserAgent;
 
-            if (_method == "POST")
+            if (_method == "POST" || _method == "PUT")
             {
                 byte[] payload = Encoding.UTF8.GetBytes(query);
 
@@ -91,8 +91,22 @@ namespace PagarMe
                 request.GetRequestStream().Write(payload, 0, payload.Length);
             }
 
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            HttpWebResponse response;
             PagarMeQueryResponse queryResponse = new PagarMeQueryResponse();
+
+            try
+            {
+                response = (HttpWebResponse)request.GetResponse();
+            }
+            catch (WebException ex)
+            {
+                queryResponse.Status = (int)ex.Status;
+
+                using (StreamReader reader = new StreamReader(ex.Response.GetResponseStream(), Encoding.UTF8))
+                    queryResponse.Data = reader.ReadToEnd();
+
+                return queryResponse;
+            }
 
             queryResponse.Status = (int)response.StatusCode;
 

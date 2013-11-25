@@ -58,6 +58,7 @@
     <Compile Include="Converters\CustomerSexConverter.cs" />
     <Compile Include="PagarMeBackendAdaptor.cs" />
     <Compile Include="PagarMeModelExtensions.cs" />
+    <Compile Include="Plan.cs" />
     <Compile Include="ProviderWrapper.cs" />
     <Compile Include="ResharperAnnotations.cs" />
     <Compile Include="Serializer\IUrlConverter.cs" />
@@ -87,6 +88,8 @@
     <Compile Include="Serializer\UrlIgnoreAttribute.cs" />
     <Compile Include="Serializer\UrlMutatorAttribute.cs" />
     <Compile Include="Serializer\UrlSerializer.cs" />
+    <Compile Include="Subscription.cs" />
+    <Compile Include="SubscriptionSetup.cs" />
     <Compile Include="Transaction.cs" />
     <Compile Include="PagarMeQueryExecutor.cs" />
     <Compile Include="TransactionRefuseReason.cs" />

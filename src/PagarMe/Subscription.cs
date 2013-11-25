@@ -25,6 +25,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using PagarMe.Converters;
@@ -32,65 +33,45 @@ using PagarMe.Converters;
 namespace PagarMe
 {
     /// <summary>
-    ///     Represents a transaction
+    ///     Represents a subscription
     /// </summary>
-    [PagarMeModel("transactions")]
-    public class Transaction : PagarMeModel
+    [PagarMeModel("subscriptions")]
+    public class Subscription : PagarMeModel
     {
-        internal Transaction(PagarMeProvider provider)
+        internal Subscription(PagarMeProvider provider)
             : base(provider)
         {
         }
 
-        internal Transaction(PagarMeProvider provider, PagarMeQueryResponse result)
+        internal Subscription(PagarMeProvider provider, PagarMeQueryResponse result)
             : base(provider, result)
         {
         }
 
         /// <summary>
+        ///     Subscription plan
+        /// </summary>
+        [JsonProperty(PropertyName = "plan"), UsedImplicitly]
+        [JsonConverter(typeof(PagarMeModelConverter<Plan>))]
+        public Plan Plan { get; private set; }
+
+        /// <summary>
         ///     Transaction status
         /// </summary>
         [JsonProperty(PropertyName = "status"), UsedImplicitly]
-        [JsonConverter(typeof(TransactionStatusConverter))]
-        public TransactionStatus Status { get; private set; }
+        public string Status { get; private set; }
 
         /// <summary>
-        ///     Transaction refuse reason
+        ///     Current period start date
         /// </summary>
-        [JsonProperty(PropertyName = "refuse_reason"), UsedImplicitly]
-        [JsonConverter(typeof(TransactionRefuseReasonConverter))]
-        public TransactionRefuseReason RefuseReason { get; private set; }
+        [JsonProperty(PropertyName = "current_period_start"), UsedImplicitly]
+        public DateTime? CurrentPeriodStart { get; private set; }
 
         /// <summary>
-        ///     Transaction value
+        ///     Current period end date
         /// </summary>
-        [JsonProperty(PropertyName = "amount"), UsedImplicitly]
-        [JsonConverter(typeof(AmountConverter))]
-        public decimal Amount { get; private set; }
-
-        /// <summary>
-        ///     Number of installments
-        /// </summary>
-        [JsonProperty(PropertyName = "installments"), UsedImplicitly]
-        public int Installments { get; private set; }
-
-        /// <summary>
-        ///     Cardholder name
-        /// </summary>
-        [JsonProperty(PropertyName = "card_holder_name"), UsedImplicitly]
-        public string CardHolderName { get; private set; }
-
-        /// <summary>
-        ///     Credit card last digits
-        /// </summary>
-        [JsonProperty(PropertyName = "card_last_digits"), UsedImplicitly]
-        public string CardLastDigits { get; private set; }
-
-        /// <summary>
-        ///     Credit card brand
-        /// </summary>
-        [JsonProperty(PropertyName = "card_brand"), UsedImplicitly]
-        public string CardBrand { get; private set; }
+        [JsonProperty(PropertyName = "current_period_end"), UsedImplicitly]
+        public DateTime? CurrentPeriodEnd { get; private set; }
 
         /// <summary>
         ///     Postback URL
@@ -106,28 +87,17 @@ namespace PagarMe
         public PaymentMethod PaymentMethod { get; private set; }
 
         /// <summary>
-        ///     Antifraud score
+        ///     Customer Email
         /// </summary>
-        [JsonProperty(PropertyName = "antifraud_score"), UsedImplicitly]
-        public int? AntifraudScore { get; private set; }
+        [JsonProperty(PropertyName = "customer_email"), UsedImplicitly]
+        public string CustomerEmail { get; private set; }
 
         /// <summary>
-        ///     URL to the boleto for priting
+        ///     Customer information associated with this transaction
         /// </summary>
-        [JsonProperty(PropertyName = "boleto_url"), UsedImplicitly]
-        public string BoletoUrl { get; private set; }
-
-        /// <summary>
-        ///     Boleto barcode
-        /// </summary>
-        [JsonProperty(PropertyName = "boleto_barcode"), UsedImplicitly]
-        public string BoletoBarcode { get; private set; }
-
-        /// <summary>
-        ///     Subscription ID associated with this transaction
-        /// </summary>
-        [JsonProperty(PropertyName = "subscription_id"), UsedImplicitly]
-        public int? SubscriptionId { get; private set; }
+        [UsedImplicitly]
+        [JsonProperty(PropertyName = "transactions", ItemConverterType = typeof(PagarMeModelConverter<Transaction>))]
+        public IEnumerable<Transaction> Transactions { get; private set; }
 
         /// <summary>
         ///     Customer information associated with this transaction
@@ -149,24 +119,12 @@ namespace PagarMe
         public CustomerPhone Phone { get; private set; }
 
         /// <summary>
-        ///     Chargeback the transaction
+        ///     Cancels the subscription
         /// </summary>
         [PublicAPI]
-        public void Refund()
+        public void CancelSubscription()
         {
-            Refresh(new PagarMeQuery(Provider, "POST", string.Format("transactions/{0}/refund", Id)).Execute());
-        }
-
-        /// <summary>
-        ///     Retrieves the subscription associated to this transaction
-        /// </summary>
-        [PublicAPI]
-        public Subscription GetSubscription()
-        {
-            if (!SubscriptionId.HasValue)
-                throw new InvalidOperationException("This transaction isn't associated to any subscription.");
-
-            return Provider.Subscriptions.Find(SubscriptionId.Value);
+            Refresh(new PagarMeQuery(Provider, "DELETE", string.Format("subscriptions/{0}", Id)).Execute());
         }
 
         /// <summary>
@@ -175,7 +133,7 @@ namespace PagarMe
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("#{0} {1:#.00}", Id, Amount);
+            return string.Format("#{0} {1}", Id, CustomerEmail);
         }
     }
 }

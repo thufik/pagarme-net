@@ -35,14 +35,16 @@ namespace PagarMe.Serializer
 {
     internal static class UrlSerializer
     {
-        internal static IEnumerable<Tuple<string, string>> Serialize(object value)
+        internal static IEnumerable<Tuple<string, string>> Serialize(object value, IEnumerable<string> dirty = null)
         {
-            return Serialize(value, null);
+            return Serialize(value, null, null, dirty);
         }
 
-        private static IEnumerable<Tuple<string, string>> Serialize(object obj, string root)
+        private static IEnumerable<Tuple<string, string>> Serialize(object obj, string root, string dirtyRoot,
+            IEnumerable<string> dirty)
         {
             string rootFormat = root == null ? "{1}" : "{0}[{1}]";
+            string dirtyRootFormat = dirtyRoot == null ? "{1}" : "{0}.{1}";
 
             foreach (
                 var prop in
@@ -53,6 +55,11 @@ namespace PagarMe.Serializer
                                 Attribute.IsDefined(p, typeof(JsonPropertyAttribute)) &&
                                 !Attribute.IsDefined(p, typeof(UrlIgnoreAttribute))))
             {
+                string dirtyName = string.Format(dirtyRootFormat, dirtyRoot, prop.Name);
+
+                if (dirty != null && !dirty.Contains(dirtyName))
+                    continue;
+
                 var propValue = prop.GetValue(obj);
                 var mutatorAttribute = prop.GetCustomAttribute<UrlMutatorAttribute>();
 
@@ -69,7 +76,7 @@ namespace PagarMe.Serializer
 
                 if (value == null && propValue.GetType().IsClass)
                 {
-                    foreach (var tuple in Serialize(propValue, name))
+                    foreach (var tuple in Serialize(propValue, name, dirtyName, dirty))
                         yield return tuple;
                 }
                 else if (value != null)

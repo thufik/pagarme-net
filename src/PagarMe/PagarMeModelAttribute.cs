@@ -31,11 +31,19 @@ namespace PagarMe
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     internal class PagarMeModelAttribute : Attribute
     {
+        private readonly string _endpoint;
+
         public PagarMeModelAttribute(string endpoint)
         {
-            Endpoint = endpoint;
+            _endpoint = endpoint;
+            ReadOnly = false;
         }
 
-        public string Endpoint { get; private set; }
+        public string Endpoint
+        {
+            get { return _endpoint; }
+        }
+
+        public bool ReadOnly { get; set; }
     }
 }

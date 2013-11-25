@@ -7,12 +7,18 @@ using PagarMe;
 
 namespace TestApp
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
-            var pagarme = new PagarMeProvider("ak_test_8ZDwjvWumtZmSE4xUVhqBVaSkuU3l9", "ek_test_nV2WKtwCedTzEGSLKQpbgDpRj8jdfR");
-            var transaction = pagarme.Transactions.Find(3377);
+            var pagarme = new PagarMeProvider("ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY", "ek_test_nV2WKtwCedTzEGSLKQpbgDpRj8jdfR");
+            var plan = new Plan(pagarme);
+            plan.Name += "_Test";
+            plan.Amount = 133.34m;
+            plan.Days = 30;
+            plan.TrialDays = 0;
+            plan.Color = "#FF88FF";
+            plan.Save();
         }
     }
 }

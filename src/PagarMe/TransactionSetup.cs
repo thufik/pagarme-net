@@ -31,13 +31,13 @@ using PagarMe.Converters;
 namespace PagarMe
 {
     /// <summary>
-    /// Transaction creation data
+    ///     Transaction creation data
     /// </summary>
     [PublicAPI]
     public class TransactionSetup
     {
         /// <summary>
-        /// Amount in R$
+        ///     Amount in R$
         /// </summary>
         [PublicAPI]
         [JsonProperty(PropertyName = "amount")]
@@ -45,7 +45,7 @@ namespace PagarMe
         public decimal Amount { get; set; }
 
         /// <summary>
-        /// Payment method
+        ///     Payment method
         /// </summary>
         [PublicAPI]
         [JsonProperty(PropertyName = "payment_method")]
@@ -53,27 +53,27 @@ namespace PagarMe
         public PaymentMethod PaymentMethod { get; set; }
 
         /// <summary>
-        /// Card hash
+        ///     Card hash
         /// </summary>
         /// <remarks>
-        /// This hash should be generated in the web browser or using the CreditCard class
+        ///     This hash should be generated in the web browser or using the CreditCard class
         /// </remarks>
         [PublicAPI]
         [JsonProperty(PropertyName = "card_hash")]
         public string CardHash { get; set; }
 
         /// <summary>
-        /// Customer owning this transaction
+        ///     Customer owning this transaction
         /// </summary>
         /// <remarks>
-        /// Optional if antifraud is disabled
+        ///     Optional if antifraud is disabled
         /// </remarks>
         [PublicAPI]
         [JsonProperty(PropertyName = "customer")]
         public Customer Customer { get; set; }
 
         /// <summary>
-        /// URL to send updates about this transaction
+        ///     URL to send updates about this transaction
         /// </summary>
         [PublicAPI]
         [JsonProperty(PropertyName = "postback_url")]

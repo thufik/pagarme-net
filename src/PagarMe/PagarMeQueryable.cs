@@ -33,13 +33,13 @@ using Remotion.Linq.Parsing.Structure;
 namespace PagarMe
 {
     /// <summary>
-    /// Manages access underlying object in Pagar.me API
+    ///     Manages access underlying object in Pagar.me API
     /// </summary>
     /// <typeparam name="T">Object type</typeparam>
     public class PagarMeQueryable<T> : QueryableBase<T> where T : PagarMeModel
     {
         /// <summary>
-        /// Infrastructure.
+        ///     Infrastructure.
         /// </summary>
         /// <param name="provider"></param>
         /// <param name="expression"></param>

@@ -24,6 +24,9 @@
 
 #endregion
 
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
@@ -34,36 +37,48 @@ using PagarMe.Serializer;
 namespace PagarMe
 {
     /// <summary>
-    /// Base class for API objects
+    ///     Base class for API objects
     /// </summary>
     public abstract class PagarMeModel
     {
+        private readonly List<string> _dirtyValues;
         internal PagarMeProvider Provider;
+        private bool _doNotTrack, _local;
 
         internal PagarMeModel()
         {
+            _dirtyValues = new List<string>();
+            _local = true;
         }
 
         internal PagarMeModel(PagarMeProvider provider)
+            : this()
         {
             Provider = provider;
         }
 
         internal PagarMeModel(PagarMeProvider provider, PagarMeQueryResponse result)
+            : this(provider)
         {
-            Provider = provider;
             Refresh(result);
         }
 
         /// <summary>
-        /// Object ID
+        ///     Object ID
         /// </summary>
         [UrlIgnore]
         [JsonProperty(PropertyName = "id")]
         public int Id { get; private set; }
 
         /// <summary>
-        /// Refresh the object data from the remote API
+        ///     Date when the transaction was created
+        /// </summary>
+        [UrlIgnore]
+        [JsonProperty(PropertyName = "date_created"), UsedImplicitly]
+        public DateTime DateCreated { get; private set; }
+
+        /// <summary>
+        ///     Refresh the object data from the remote API
         /// </summary>
         [PublicAPI]
         public void Refresh()
@@ -75,6 +90,53 @@ namespace PagarMe
                 new PagarMeQuery(Provider, "GET",
                     string.Format("{0}/{1}", GetType().GetCustomAttribute<PagarMeModelAttribute>().Endpoint, Id))
                     .Execute());
+        }
+
+        /// <summary>
+        ///     Save the object state
+        /// </summary>
+        [PublicAPI]
+        public void Save()
+        {
+            Validate();
+
+            PagarMeQuery query;
+
+            if (_local)
+                query = new PagarMeQuery(Provider, "POST",
+                    GetType().GetCustomAttribute<PagarMeModelAttribute>().Endpoint);
+            else
+                query = new PagarMeQuery(Provider, "PUT",
+                    string.Format("{0}/{1}", GetType().GetCustomAttribute<PagarMeModelAttribute>().Endpoint, Id));
+
+            foreach (var tuple in UrlSerializer.Serialize(this, _dirtyValues))
+                query.AddQuery(tuple.Item1, tuple.Item2);
+
+            _doNotTrack = true;
+            Refresh(query.Execute());
+            _doNotTrack = false;
+            _dirtyValues.Clear();
+        }
+
+        protected virtual void Validate()
+        {
+        }
+
+        protected void AddToDirtyList(string name)
+        {
+            if (_doNotTrack)
+                return;
+
+            if (!_dirtyValues.Contains(name))
+            {
+                _dirtyValues.RemoveAll(t => t.StartsWith(name + "."));
+                _dirtyValues.Add(name);
+            }
+        }
+
+        protected void OnPropertyChanged<T>(Expression<Func<T>> property)
+        {
+            AddToDirtyList(property.GetMemberInfo().Name);
         }
 
         internal void Refresh(PagarMeQueryResponse response)
@@ -98,6 +160,12 @@ namespace PagarMe
                 wrapper.Provider = Provider;
             else if (Provider == null)
                 Provider = wrapper.Provider;
+        }
+
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext context)
+        {
+            _local = false;
         }
     }
 }

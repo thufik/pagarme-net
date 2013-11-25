@@ -33,7 +33,7 @@ using PagarMe.Serializer;
 namespace PagarMe
 {
     /// <summary>
-    /// Customer phone
+    ///     Customer phone
     /// </summary>
     public class CustomerPhone
     {
@@ -43,17 +43,17 @@ namespace PagarMe
         private int _number;
 
         /// <summary>
-        /// Phone ID in the remote API
+        ///     Phone ID in the remote API
         /// </summary>
         [UrlIgnore]
         [JsonProperty(PropertyName = "id"), UsedImplicitly]
         public int Id { get; private set; }
 
         /// <summary>
-        /// Phone DDI
+        ///     Phone DDI
         /// </summary>
         /// <remarks>
-        /// Optional.
+        ///     Optional.
         /// </remarks>
         [JsonProperty(PropertyName = "ddi"), UsedImplicitly]
         public int Ddi
@@ -69,7 +69,7 @@ namespace PagarMe
         }
 
         /// <summary>
-        /// Phone DDD
+        ///     Phone DDD
         /// </summary>
         [JsonProperty(PropertyName = "ddd"), UsedImplicitly]
         public int Ddd
@@ -83,9 +83,9 @@ namespace PagarMe
                 _ddd = value;
             }
         }
-        
+
         /// <summary>
-        /// Phone number
+        ///     Phone number
         /// </summary>
         [JsonProperty(PropertyName = "number"), UsedImplicitly]
         public int Number

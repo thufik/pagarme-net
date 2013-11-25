@@ -27,37 +27,37 @@
 namespace PagarMe
 {
     /// <summary>
-    /// Transaction status
+    ///     Transaction status
     /// </summary>
     public enum TransactionStatus
     {
         /// <summary>
-        /// Local transaction
+        ///     Local transaction
         /// </summary>
         Local,
 
         /// <summary>
-        /// Payment is being processed
+        ///     Payment is being processed
         /// </summary>
         Processing,
 
         /// <summary>
-        /// Waiting boleto payment
+        ///     Waiting boleto payment
         /// </summary>
         WaitingPayment,
 
         /// <summary>
-        /// Transaction refused
+        ///     Transaction refused
         /// </summary>
         Refused,
 
         /// <summary>
-        /// Transaction paid
+        ///     Transaction paid
         /// </summary>
         Paid,
 
         /// <summary>
-        /// Transaction refunded
+        ///     Transaction refunded
         /// </summary>
         Refunded
     }

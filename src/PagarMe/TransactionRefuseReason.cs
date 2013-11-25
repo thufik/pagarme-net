@@ -27,22 +27,22 @@
 namespace PagarMe
 {
     /// <summary>
-    /// Transaction refuse reason
+    ///     Transaction refuse reason
     /// </summary>
     public enum TransactionRefuseReason
     {
         /// <summary>
-        /// Transaction was not refused
+        ///     Transaction was not refused
         /// </summary>
         None,
 
         /// <summary>
-        /// Refused by the acquirer
+        ///     Refused by the acquirer
         /// </summary>
         Acquirer,
 
         /// <summary>
-        /// Refused by the antifraud system
+        ///     Refused by the antifraud system
         /// </summary>
         Antifraud
     }
