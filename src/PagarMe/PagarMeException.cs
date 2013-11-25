@@ -28,6 +28,9 @@ using System;
 
 namespace PagarMe
 {
+    /// <summary>
+    /// Pagar.me remote API exception
+    /// </summary>
     public class PagarMeException : Exception
     {
         internal PagarMeException(PagarMeQueryResponse response)

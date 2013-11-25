@@ -32,6 +32,9 @@ using PagarMe.Serializer;
 
 namespace PagarMe
 {
+    /// <summary>
+    /// Customer address
+    /// </summary>
     public class CustomerAddress
     {
         private string _city;
@@ -44,10 +47,16 @@ namespace PagarMe
         private string _street;
         private string _zipcode;
 
+        /// <summary>
+        /// Address ID in the remote API
+        /// </summary>
         [UrlIgnore]
         [JsonProperty(PropertyName = "id"), UsedImplicitly]
         public int Id { get; private set; }
 
+        /// <summary>
+        /// Street name
+        /// </summary>
         [JsonProperty(PropertyName = "street"), UsedImplicitly]
         public string Street
         {
@@ -61,6 +70,9 @@ namespace PagarMe
             }
         }
 
+        /// <summary>
+        /// Complementary address
+        /// </summary>
         [JsonProperty(PropertyName = "complementary"), UsedImplicitly]
         public string Complementary
         {
@@ -74,6 +86,9 @@ namespace PagarMe
             }
         }
 
+        /// <summary>
+        /// Street number
+        /// </summary>
         [JsonProperty(PropertyName = "street_number"), UsedImplicitly]
         public string Number
         {
@@ -87,6 +102,9 @@ namespace PagarMe
             }
         }
 
+        /// <summary>
+        /// Neighborhood
+        /// </summary>
         [JsonProperty(PropertyName = "neighborhood"), UsedImplicitly]
         public string Neighborhood
         {
@@ -100,6 +118,9 @@ namespace PagarMe
             }
         }
 
+        /// <summary>
+        /// City
+        /// </summary>
         [JsonProperty(PropertyName = "city"), UsedImplicitly]
         public string City
         {
@@ -113,6 +134,9 @@ namespace PagarMe
             }
         }
 
+        /// <summary>
+        /// State
+        /// </summary>
         [JsonProperty(PropertyName = "state"), UsedImplicitly]
         public string State
         {
@@ -126,6 +150,9 @@ namespace PagarMe
             }
         }
 
+        /// <summary>
+        /// Zipcode
+        /// </summary>
         [JsonProperty(PropertyName = "zipcode"), UsedImplicitly]
         public string ZipCode
         {
@@ -139,6 +166,9 @@ namespace PagarMe
             }
         }
 
+        /// <summary>
+        /// Country
+        /// </summary>
         [JsonProperty(PropertyName = "country"), UsedImplicitly]
         public string Country
         {

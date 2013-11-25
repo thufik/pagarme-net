@@ -33,6 +33,9 @@ using PagarMe.Serializer;
 
 namespace PagarMe
 {
+    /// <summary>
+    /// Base class for API objects
+    /// </summary>
     public abstract class PagarMeModel
     {
         internal PagarMeProvider Provider;
@@ -52,10 +55,16 @@ namespace PagarMe
             Refresh(result);
         }
 
+        /// <summary>
+        /// Object ID
+        /// </summary>
         [UrlIgnore]
         [JsonProperty(PropertyName = "id")]
         public int Id { get; private set; }
 
+        /// <summary>
+        /// Refresh the object data from the remote API
+        /// </summary>
         [PublicAPI]
         public void Refresh()
         {

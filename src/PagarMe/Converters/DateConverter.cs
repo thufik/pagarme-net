@@ -29,7 +29,7 @@ using PagarMe.Serializer;
 
 namespace PagarMe.Converters
 {
-    public class DateConverter : IUrlConverter
+    internal class DateConverter : IUrlConverter
     {
         public object UrlConvert(object input)
         {

@@ -26,10 +26,24 @@
 
 namespace PagarMe
 {
+    /// <summary>
+    /// Customer sex
+    /// </summary>
     public enum CustumerSex
     {
+        /// <summary>
+        /// None sex specified
+        /// </summary>
         None,
+
+        /// <summary>
+        /// Male
+        /// </summary>
         Male,
+
+        /// <summary>
+        /// Female
+        /// </summary>
         Female
     }
 }

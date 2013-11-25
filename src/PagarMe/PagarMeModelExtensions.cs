@@ -28,8 +28,18 @@ using System.Linq;
 
 namespace PagarMe
 {
+    /// <summary>
+    /// Provides LINQ extensions to API objects
+    /// </summary>
     public static class PagarMeModelExtensions
     {
+        /// <summary>
+        /// Finds an object by ID
+        /// </summary>
+        /// <typeparam name="T">Object type</typeparam>
+        /// <param name="queryable">Object queryable collection</param>
+        /// <param name="id">Object ID</param>
+        /// <returns>The object if found, null otherwise</returns>
         public static T Find<T>(this PagarMeQueryable<T> queryable, int id) where T : PagarMeModel
         {
             return queryable.Single(t => t.Id == id);

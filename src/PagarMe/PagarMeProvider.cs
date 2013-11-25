@@ -29,6 +29,9 @@ using PagarMe.Serializer;
 
 namespace PagarMe
 {
+    /// <summary>
+    /// Root class for accessing Pagar.me API
+    /// </summary>
     public class PagarMeProvider
     {
         private readonly string _apiKey;
@@ -36,6 +39,11 @@ namespace PagarMe
         private readonly string _encryptionKey;
         private readonly PagarMeQueryable<Transaction> _transactions;
 
+        /// <summary>
+        /// Instantiate a new PagarMeProvider
+        /// </summary>
+        /// <param name="apiKey">API key</param>
+        /// <param name="encryptionKey">Encryption key</param>
         public PagarMeProvider(string apiKey, string encryptionKey)
         {
             _apiKey = apiKey;
@@ -44,30 +52,47 @@ namespace PagarMe
             _customers = new PagarMeQueryable<Customer>(this);
         }
 
+        /// <summary>
+        /// Currently used API key
+        /// </summary>
         [PublicAPI]
         public string ApiKey
         {
             get { return _apiKey; }
         }
 
+        /// <summary>
+        /// Currently used encryption key
+        /// </summary>
         [PublicAPI]
         public string EncryptionKey
         {
             get { return _encryptionKey; }
         }
 
+        /// <summary>
+        /// Transactions collection to be accessed via LINQ
+        /// </summary>
         [PublicAPI]
         public PagarMeQueryable<Transaction> Transactions
         {
             get { return _transactions; }
         }
 
+        /// <summary>
+        /// Customers collection to be accessed via LINQ
+        /// </summary>
         [PublicAPI]
         public PagarMeQueryable<Customer> Customers
         {
             get { return _customers; }
         }
 
+        /// <summary>
+        /// Creates a new transaction
+        /// </summary>
+        /// <param name="setup">Transaction data</param>
+        /// <returns>Transaction object representing the new transaction</returns>
         [PublicAPI]
         public Transaction PostTransaction(TransactionSetup setup)
         {

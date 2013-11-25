@@ -26,10 +26,24 @@
 
 namespace PagarMe
 {
+    /// <summary>
+    /// Customer document type
+    /// </summary>
     public enum CustomerDocumentType
     {
+        /// <summary>
+        /// None document number informed
+        /// </summary>
         None,
+
+        /// <summary>
+        /// CPF
+        /// </summary>
         Cpf,
+
+        /// <summary>
+        /// CPNJ
+        /// </summary>
         Cnpj
     }
 }

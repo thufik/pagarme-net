@@ -31,6 +31,9 @@ using PagarMe.Converters;
 
 namespace PagarMe
 {
+    /// <summary>
+    /// Represents a transaction
+    /// </summary>
     [PagarMeModel("transactions")]
     public class Transaction : PagarMeModel
     {
@@ -44,68 +47,126 @@ namespace PagarMe
         {
         }
 
+        /// <summary>
+        /// Transaction status
+        /// </summary>
         [JsonProperty(PropertyName = "status"), UsedImplicitly]
         [JsonConverter(typeof(TransactionStatusConverter))]
         public TransactionStatus Status { get; private set; }
 
+        /// <summary>
+        /// Transaction refuse reason
+        /// </summary>
         [JsonProperty(PropertyName = "refuse_reason"), UsedImplicitly]
         [JsonConverter(typeof(TransactionRefuseReasonConverter))]
         public TransactionRefuseReason RefuseReason { get; private set; }
 
+        /// <summary>
+        /// Date when the transaction was created
+        /// </summary>
         [JsonProperty(PropertyName = "date_created"), UsedImplicitly]
         public DateTime DateCreated { get; private set; }
 
+        /// <summary>
+        /// Transaction value
+        /// </summary>
         [JsonProperty(PropertyName = "amount"), UsedImplicitly]
         [JsonConverter(typeof(AmountConverter))]
         public decimal Amount { get; private set; }
 
+        /// <summary>
+        /// Number of installments
+        /// </summary>
         [JsonProperty(PropertyName = "installments"), UsedImplicitly]
         public int Installments { get; private set; }
 
+        /// <summary>
+        /// Cardholder name
+        /// </summary>
         [JsonProperty(PropertyName = "card_holder_name"), UsedImplicitly]
         public string CardHolderName { get; private set; }
 
+        /// <summary>
+        /// Credit card last digits
+        /// </summary>
         [JsonProperty(PropertyName = "card_last_digits"), UsedImplicitly]
         public string CardLastDigits { get; private set; }
 
+        /// <summary>
+        /// Credit card brand
+        /// </summary>
         [JsonProperty(PropertyName = "card_brand"), UsedImplicitly]
         public string CardBrand { get; private set; }
 
+        /// <summary>
+        /// Postback URL
+        /// </summary>
         [JsonProperty(PropertyName = "postback_url"), UsedImplicitly]
         public string PostbackUrl { get; private set; }
 
+        /// <summary>
+        /// Payment method
+        /// </summary>
         [JsonProperty(PropertyName = "payment_method"), UsedImplicitly]
         [JsonConverter(typeof(PaymentMethodConverter))]
         public PaymentMethod PaymentMethod { get; private set; }
 
+        /// <summary>
+        /// Antifraud score
+        /// </summary>
         [JsonProperty(PropertyName = "antifraud_score"), UsedImplicitly]
         public int? AntifraudScore { get; private set; }
 
+        /// <summary>
+        /// URL to the boleto for priting
+        /// </summary>
         [JsonProperty(PropertyName = "boleto_url"), UsedImplicitly]
         public string BoletoUrl { get; private set; }
 
+        /// <summary>
+        /// Boleto barcode
+        /// </summary>
         [JsonProperty(PropertyName = "boleto_barcode"), UsedImplicitly]
         public string BoletoBarcode { get; private set; }
 
+        /// <summary>
+        /// Subscription ID associated with this transaction
+        /// </summary>
         [JsonProperty(PropertyName = "subscription_id"), UsedImplicitly]
         public string SubscriptionId { get; private set; }
 
+        /// <summary>
+        /// Customer information associated with this transaction
+        /// </summary>
         [JsonProperty(PropertyName = "customer"), UsedImplicitly]
         [JsonConverter(typeof(PagarMeModelConverter<Customer>))]
         public Customer Customer { get; private set; }
 
+        /// <summary>
+        /// Address used in this transaction
+        /// </summary>
         [JsonProperty(PropertyName = "address"), UsedImplicitly]
         public CustomerAddress Address { get; private set; }
 
+        /// <summary>
+        /// Phone used in this transaction
+        /// </summary>
         [JsonProperty(PropertyName = "phone"), UsedImplicitly]
         public CustomerPhone Phone { get; private set; }
 
+        /// <summary>
+        /// Chargeback the transaction
+        /// </summary>
         [PublicAPI]
         public void Refund()
         {
             Refresh(new PagarMeQuery(Provider, "POST", string.Format("transactions/{0}/refund", Id)).Execute());
         }
 
+        /// <summary>
+        /// Converts this class to it string representation
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return string.Format("#{0} {1:#.00}", Id, Amount);

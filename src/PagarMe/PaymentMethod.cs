@@ -26,9 +26,19 @@
 
 namespace PagarMe
 {
+    /// <summary>
+    /// Payment method
+    /// </summary>
     public enum PaymentMethod
     {
+        /// <summary>
+        /// Credit card
+        /// </summary>
         CreditCard,
+
+        /// <summary>
+        /// Boleto
+        /// </summary>
         Boleto
     }
 }

@@ -30,43 +30,51 @@ using PagarMe.Converters;
 
 namespace PagarMe
 {
+    /// <summary>
+    /// Transaction creation data
+    /// </summary>
     [PublicAPI]
     public class TransactionSetup
     {
+        /// <summary>
+        /// Amount in R$
+        /// </summary>
         [PublicAPI]
         [JsonProperty(PropertyName = "amount")]
         [JsonConverter(typeof(AmountConverter))]
         public decimal Amount { get; set; }
 
+        /// <summary>
+        /// Payment method
+        /// </summary>
         [PublicAPI]
         [JsonProperty(PropertyName = "payment_method")]
         [JsonConverter(typeof(PaymentMethodConverter))]
         public PaymentMethod PaymentMethod { get; set; }
 
+        /// <summary>
+        /// Card hash
+        /// </summary>
+        /// <remarks>
+        /// This hash should be generated in the web browser or using the CreditCard class
+        /// </remarks>
         [PublicAPI]
         [JsonProperty(PropertyName = "card_hash")]
         public string CardHash { get; set; }
 
-        [PublicAPI]
-        [JsonProperty(PropertyName = "card_number")]
-        public string CardNumber { get; set; }
-
-        [PublicAPI]
-        [JsonProperty(PropertyName = "card_holder_name")]
-        public string CardHolderName { get; set; }
-
-        [PublicAPI]
-        [JsonProperty(PropertyName = "card_expiration_date")]
-        public string CardExpirationDate { get; set; }
-
-        [PublicAPI]
-        [JsonProperty(PropertyName = "card_cvv")]
-        public string CardCvv { get; set; }
-
+        /// <summary>
+        /// Customer owning this transaction
+        /// </summary>
+        /// <remarks>
+        /// Optional if antifraud is disabled
+        /// </remarks>
         [PublicAPI]
         [JsonProperty(PropertyName = "customer")]
         public Customer Customer { get; set; }
 
+        /// <summary>
+        /// URL to send updates about this transaction
+        /// </summary>
         [PublicAPI]
         [JsonProperty(PropertyName = "postback_url")]
         public string PostbackUrl { get; set; }

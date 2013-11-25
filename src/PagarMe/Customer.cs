@@ -34,6 +34,9 @@ using PagarMe.Serializer;
 
 namespace PagarMe
 {
+    /// <summary>
+    /// Represents a customer
+    /// </summary>
     [PagarMeModel("customers")]
     public class Customer : PagarMeModel
     {
@@ -48,6 +51,9 @@ namespace PagarMe
         private string _name;
         private CustumerSex _sex;
 
+        /// <summary>
+        /// Create a new customer
+        /// </summary>
         public Customer()
             : this(null)
         {
@@ -60,6 +66,9 @@ namespace PagarMe
             _phones = new FreezableCollection<CustomerPhone>();
         }
 
+        /// <summary>
+        /// Customer name
+        /// </summary>
         [JsonProperty(PropertyName = "name"), UsedImplicitly]
         public string Name
         {
@@ -73,6 +82,9 @@ namespace PagarMe
             }
         }
 
+        /// <summary>
+        /// Customer email
+        /// </summary>
         [JsonProperty(PropertyName = "email"), UsedImplicitly]
         public string Email
         {
@@ -86,6 +98,9 @@ namespace PagarMe
             }
         }
 
+        /// <summary>
+        /// Customer document number, CPF or CPNJ
+        /// </summary>
         [JsonProperty(PropertyName = "document_number"), UsedImplicitly]
         public string DocumentNumber
         {
@@ -99,6 +114,13 @@ namespace PagarMe
             }
         }
 
+        /// <summary>
+        /// Customer document type
+        /// </summary>
+        /// <remarks>
+        /// Don't need to be set when creating a new customer.
+        /// </remarks>
+        [UrlIgnore]
         [JsonProperty(PropertyName = "document_type"), UsedImplicitly]
         [JsonConverter(typeof(CustomerDocumentTypeConverter))]
         public CustomerDocumentType DocumentType
@@ -113,6 +135,12 @@ namespace PagarMe
             }
         }
 
+        /// <summary>
+        /// Customer sex
+        /// </summary>
+        /// <remarks>
+        /// Optional when creating a new customer.
+        /// </remarks>
         [JsonProperty(PropertyName = "sex"), UsedImplicitly]
         [JsonConverter(typeof(CustomerSexConverter))]
         public CustumerSex Sex
@@ -127,6 +155,12 @@ namespace PagarMe
             }
         }
 
+        /// <summary>
+        /// Customer birthday
+        /// </summary>
+        /// <remarks>
+        /// Optional when creating a new customer.
+        /// </remarks>
         [JsonProperty(PropertyName = "born_at"), UsedImplicitly]
         [UrlConverter(typeof(DateConverter))]
         public DateTime? BornAt
@@ -141,6 +175,10 @@ namespace PagarMe
             }
         }
 
+        /// <summary>
+        /// Date when the customer was created
+        /// </summary>
+        [UrlIgnore]
         [JsonProperty(PropertyName = "date_created"), UsedImplicitly]
         public DateTime? DateCreated
         {
@@ -154,6 +192,12 @@ namespace PagarMe
             }
         }
 
+        /// <summary>
+        /// Addresses of the customer
+        /// </summary>
+        /// <remarks>
+        /// When sending a transaction, just the first one in this list will be used.
+        /// </remarks>
         [JsonProperty(PropertyName = "addresses"), UsedImplicitly]
         [UrlMutator(typeof(SingleItemConverter))]
         public ICollection<CustomerAddress> Addresses
@@ -161,6 +205,12 @@ namespace PagarMe
             get { return _addresses; }
         }
 
+        /// <summary>
+        /// Phones of the customer
+        /// </summary>
+        /// <remarks>
+        /// When sending a transaction, just the first one in this list will be used.
+        /// </remarks>
         [JsonProperty(PropertyName = "phones"), UsedImplicitly]
         [UrlMutator(typeof(SingleItemConverter))]
         public ICollection<CustomerPhone> Phones
@@ -174,6 +224,10 @@ namespace PagarMe
             _freezed = true;
         }
 
+        /// <summary>
+        /// Converts this class to it string representation
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return string.Format("#{0} {1}", Id, Name);
