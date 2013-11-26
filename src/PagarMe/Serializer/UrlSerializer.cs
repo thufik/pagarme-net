@@ -35,7 +35,8 @@ namespace PagarMe.Serializer
 {
     internal static class UrlSerializer
     {
-        internal static IEnumerable<Tuple<string, string>> Serialize(object value, IEnumerable<string> dirty = null, UrlEncodingContext context = null)
+        internal static IEnumerable<Tuple<string, string>> Serialize(object value, IEnumerable<string> dirty = null,
+            UrlEncodingContext context = null)
         {
             return Serialize(value, null, null, dirty, context);
         }
@@ -65,7 +66,8 @@ namespace PagarMe.Serializer
 
                 if (mutatorAttribute != null)
                     propValue =
-                        ((IUrlConverter)Activator.CreateInstance(mutatorAttribute.ConverterType)).UrlConvert(propValue, context);
+                        ((IUrlConverter)Activator.CreateInstance(mutatorAttribute.ConverterType)).UrlConvert(propValue,
+                            context);
 
                 if (propValue == null)
                     continue;

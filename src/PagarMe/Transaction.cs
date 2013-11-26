@@ -25,7 +25,6 @@
 #endregion
 
 using System;
-using System.Dynamic;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using PagarMe.Converters;

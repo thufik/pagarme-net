@@ -1,33 +1,28 @@
-﻿//
-// ASN1.cs: Abstract Syntax Notation 1 - micro-parser and generator
-//
-// Authors:
-//	Sebastien Pouliot  <sebastien@ximian.com>
-//	Jesper Pedersen  <jep@itplus.dk>
-//
-// (C) 2002, 2003 Motus Technologies Inc. (http://www.motus.com)
-// Copyright (C) 2004 Novell, Inc (http://www.novell.com)
-// (C) 2004 IT+ A/S (http://www.itplus.dk)
-//
-// Permission is hereby granted, free of charge, to any person obtaining
-// a copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to
-// permit persons to whom the Software is furnished to do so, subject to
-// the following conditions:
+﻿#region License
+
+// The MIT License (MIT)
 // 
-// The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.
+// Copyright (c) 2013 Pagar.me
 // 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+#endregion
 
 using System;
 using System.Collections;
@@ -35,6 +30,7 @@ using System.IO;
 using System.Text;
 
 // ReSharper disable CheckNamespace
+
 namespace Mono.Security
 {
     // References:
@@ -43,13 +39,17 @@ namespace Mono.Security
 
     internal class ASN1
     {
-        private byte m_nTag;
-        private byte[] m_aValue;
+        private readonly byte m_nTag;
         private ArrayList elist;
+        private byte[] m_aValue;
 
-        public ASN1() : this(0x00, null) { }
+        public ASN1() : this(0x00, null)
+        {
+        }
 
-        public ASN1(byte tag) : this(tag, null) { }
+        public ASN1(byte tag) : this(tag, null)
+        {
+        }
 
         public ASN1(byte tag, byte[] data)
         {
@@ -112,8 +112,7 @@ namespace Mono.Security
             {
                 if (m_aValue != null)
                     return m_aValue.Length;
-                else
-                    return 0;
+                return 0;
             }
         }
 
@@ -129,6 +128,23 @@ namespace Mono.Security
             {
                 if (value != null)
                     m_aValue = (byte[])value.Clone();
+            }
+        }
+
+        public ASN1 this[int index]
+        {
+            get
+            {
+                try
+                {
+                    if ((elist == null) || (index >= elist.Count))
+                        return null;
+                    return (ASN1)elist[index];
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    return null;
+                }
             }
         }
 
@@ -148,7 +164,7 @@ namespace Mono.Security
 
         public bool Equals(byte[] asn1)
         {
-            return CompareArray(this.GetBytes(), asn1);
+            return CompareArray(GetBytes(), asn1);
         }
 
         public bool CompareValue(byte[] value)
@@ -305,23 +321,6 @@ namespace Mono.Security
             Buffer.BlockCopy(asn1, pos, content, 0, length);
         }
 
-        public ASN1 this[int index]
-        {
-            get
-            {
-                try
-                {
-                    if ((elist == null) || (index >= elist.Count))
-                        return null;
-                    return (ASN1)elist[index];
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    return null;
-                }
-            }
-        }
-
         public ASN1 Element(int index, byte anTag)
         {
             try
@@ -332,8 +331,7 @@ namespace Mono.Security
                 ASN1 elm = (ASN1)elist[index];
                 if (elm.Tag == anTag)
                     return elm;
-                else
-                    return null;
+                return null;
             }
             catch (ArgumentOutOfRangeException)
             {
