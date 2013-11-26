@@ -60,6 +60,7 @@
     <Compile Include="Converters\CustomerSexConverter.cs" />
     <Compile Include="CreditCard.cs" />
     <Compile Include="PagarMeBackendAdaptor.cs" />
+    <Compile Include="PagarMeError.cs" />
     <Compile Include="PagarMeModelExtensions.cs" />
     <Compile Include="Plan.cs" />
     <Compile Include="ProviderWrapper.cs" />

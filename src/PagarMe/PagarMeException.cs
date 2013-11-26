@@ -25,16 +25,40 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
+using JetBrains.Annotations;
+using Newtonsoft.Json;
 
 namespace PagarMe
 {
     /// <summary>
     ///     Pagar.me remote API exception
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public class PagarMeException : Exception
     {
+        /// <summary>
+        /// API URL that caused this error
+        /// </summary>
+        [JsonProperty(PropertyName = "url"), UsedImplicitly]
+        public string Url { get; private set; }
+
+        /// <summary>
+        /// HTTP method that caused this error
+        /// </summary>
+        [JsonProperty(PropertyName = "method"), UsedImplicitly]
+        public string Method { get; private set; }
+
+        /// <summary>
+        /// Description of the errors
+        /// </summary>
+        [JsonProperty(PropertyName = "errors"), UsedImplicitly]
+        public List<PagarMeError> Errors { get; private set; }
+
+        [JsonConstructor]
         internal PagarMeException(PagarMeQueryResponse response)
         {
+            JsonConvert.PopulateObject(response.Data, this);
         }
     }
 }

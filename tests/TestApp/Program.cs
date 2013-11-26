@@ -60,6 +60,7 @@ namespace TestApp
                     }
                 }
             });
+            transaction.Refresh();
         }
 
         public class Test
