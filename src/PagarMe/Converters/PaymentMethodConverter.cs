@@ -32,7 +32,7 @@ namespace PagarMe.Converters
 {
     internal class PaymentMethodConverter : JsonConverter, IUrlConverter
     {
-        public object UrlConvert(object input)
+        public object UrlConvert(object input, UrlEncodingContext context)
         {
             switch ((PaymentMethod)input)
             {
@@ -71,7 +71,7 @@ namespace PagarMe.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            writer.WriteValue(UrlConvert(value));
+            writer.WriteValue(UrlConvert(value, null));
         }
     }
 }

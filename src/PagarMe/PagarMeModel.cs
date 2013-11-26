@@ -98,6 +98,13 @@ namespace PagarMe
         [PublicAPI]
         public void Save()
         {
+            if (Provider == null)
+                throw new InvalidOperationException("The PagarMeProvider must be set in order to use this method.");
+
+            UrlEncodingContext context = new UrlEncodingContext();
+
+            context.MetadataSerializerSettings = Provider.MetadataSerializerSettings;
+
             Validate();
 
             PagarMeQuery query;
@@ -109,7 +116,7 @@ namespace PagarMe
                 query = new PagarMeQuery(Provider, "PUT",
                     string.Format("{0}/{1}", GetType().GetCustomAttribute<PagarMeModelAttribute>().Endpoint, Id));
 
-            foreach (var tuple in UrlSerializer.Serialize(this, _dirtyValues))
+            foreach (var tuple in UrlSerializer.Serialize(this, _dirtyValues, context))
                 query.AddQuery(tuple.Item1, tuple.Item2);
 
             _doNotTrack = true;

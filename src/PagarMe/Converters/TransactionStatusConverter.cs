@@ -37,7 +37,7 @@ namespace PagarMe.Converters
             get { return false; }
         }
 
-        public object UrlConvert(object input)
+        public object UrlConvert(object input, UrlEncodingContext context)
         {
             switch ((TransactionStatus)input)
             {
@@ -91,7 +91,7 @@ namespace PagarMe.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new InvalidOperationException("Status is read only.");
+            throw new NotSupportedException();
         }
     }
 }

@@ -119,6 +119,13 @@ namespace PagarMe
         public CustomerPhone Phone { get; private set; }
 
         /// <summary>
+        ///     Subscription metadata
+        /// </summary>
+        [JsonProperty(PropertyName = "metadata"), UsedImplicitly]
+        [JsonConverter(typeof(MetadataConverter))]
+        public dynamic Metadata { get; private set; }
+
+        /// <summary>
         ///     Cancels the subscription
         /// </summary>
         [PublicAPI]

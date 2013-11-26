@@ -28,6 +28,6 @@ namespace PagarMe.Serializer
 {
     internal interface IUrlConverter
     {
-        object UrlConvert(object input);
+        object UrlConvert(object input, UrlEncodingContext context);
     }
 }

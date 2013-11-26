@@ -32,7 +32,7 @@ namespace PagarMe.Converters
 {
     internal class CustomerSexConverter : JsonConverter, IUrlConverter
     {
-        public object UrlConvert(object input)
+        public object UrlConvert(object input, UrlEncodingContext context)
         {
             switch ((CustumerSex)input)
             {
@@ -71,7 +71,7 @@ namespace PagarMe.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            object result = UrlConvert(value);
+            object result = UrlConvert(value, null);
 
             if (result != null)
                 writer.WriteValue(result);

@@ -31,7 +31,7 @@ namespace PagarMe.Converters
 {
     internal class SingleItemConverter : IUrlConverter
     {
-        public object UrlConvert(object input)
+        public object UrlConvert(object input, UrlEncodingContext context)
         {
             IList list = input as IList;
 

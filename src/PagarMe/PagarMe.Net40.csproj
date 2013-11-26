@@ -51,10 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicPemReader.cs" />
     <Compile Include="CardHashKey.cs" />
     <Compile Include="Converters\AmountConverter.cs" />
     <Compile Include="Converters\DateConverter.cs" />
+    <Compile Include="Converters\MetadataConverter.cs" />
     <Compile Include="Converters\PagarMeModelConverter.cs" />
     <Compile Include="Converters\CustomerDocumentTypeConverter.cs" />
     <Compile Include="Converters\CustomerSexConverter.cs" />
@@ -65,7 +65,6 @@
     <Compile Include="ProviderWrapper.cs" />
     <Compile Include="ResharperAnnotations.cs" />
     <Compile Include="Security\ASN1.cs" />
-    <Compile Include="Security\ASN1Convert.cs" />
     <Compile Include="Serializer\IUrlConverter.cs" />
     <Compile Include="Converters\SingleItemConverter.cs" />
     <Compile Include="Serializer\UrlConverterAttribute.cs" />
@@ -90,6 +89,7 @@
     <Compile Include="PagarMeQueryResponse.cs" />
     <Compile Include="PaymentMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serializer\UrlEncodingContext.cs" />
     <Compile Include="Serializer\UrlIgnoreAttribute.cs" />
     <Compile Include="Serializer\UrlMutatorAttribute.cs" />
     <Compile Include="Serializer\UrlSerializer.cs" />

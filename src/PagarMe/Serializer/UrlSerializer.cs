@@ -35,13 +35,13 @@ namespace PagarMe.Serializer
 {
     internal static class UrlSerializer
     {
-        internal static IEnumerable<Tuple<string, string>> Serialize(object value, IEnumerable<string> dirty = null)
+        internal static IEnumerable<Tuple<string, string>> Serialize(object value, IEnumerable<string> dirty = null, UrlEncodingContext context = null)
         {
-            return Serialize(value, null, null, dirty);
+            return Serialize(value, null, null, dirty, context);
         }
 
         private static IEnumerable<Tuple<string, string>> Serialize(object obj, string root, string dirtyRoot,
-            IEnumerable<string> dirty)
+            IEnumerable<string> dirty, UrlEncodingContext context)
         {
             string rootFormat = root == null ? "{1}" : "{0}[{1}]";
             string dirtyRootFormat = dirtyRoot == null ? "{1}" : "{0}.{1}";
@@ -65,18 +65,18 @@ namespace PagarMe.Serializer
 
                 if (mutatorAttribute != null)
                     propValue =
-                        ((IUrlConverter)Activator.CreateInstance(mutatorAttribute.ConverterType)).UrlConvert(propValue);
+                        ((IUrlConverter)Activator.CreateInstance(mutatorAttribute.ConverterType)).UrlConvert(propValue, context);
 
                 if (propValue == null)
                     continue;
 
                 var propAttribute = prop.GetCustomAttribute<JsonPropertyAttribute>();
                 string name = string.Format(rootFormat, root, propAttribute.PropertyName);
-                var value = ConvertValue(prop, propValue);
+                var value = ConvertValue(prop, propValue, context);
 
                 if (value == null && propValue.GetType().IsClass)
                 {
-                    foreach (var tuple in Serialize(propValue, name, dirtyName, dirty))
+                    foreach (var tuple in Serialize(propValue, name, dirtyName, dirty, context))
                         yield return tuple;
                 }
                 else if (value != null)
@@ -86,7 +86,7 @@ namespace PagarMe.Serializer
             }
         }
 
-        internal static string ConvertValue(PropertyInfo propInfo, object value)
+        internal static string ConvertValue(PropertyInfo propInfo, object value, UrlEncodingContext context)
         {
             Type expType = value.GetType();
             string result = null;
@@ -108,7 +108,7 @@ namespace PagarMe.Serializer
                         ? converterAttribute.ConverterType
                         : jsonConverterAttribute.ConverterType;
 
-                    value = ((IUrlConverter)Activator.CreateInstance(converter)).UrlConvert(value);
+                    value = ((IUrlConverter)Activator.CreateInstance(converter)).UrlConvert(value, context);
 
                     if (value == null)
                         return null;

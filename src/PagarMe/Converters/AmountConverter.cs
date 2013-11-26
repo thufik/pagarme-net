@@ -32,7 +32,7 @@ namespace PagarMe.Converters
 {
     internal class AmountConverter : JsonConverter, IUrlConverter
     {
-        public object UrlConvert(object input)
+        public object UrlConvert(object input, UrlEncodingContext context)
         {
             return (int)(decimal.Round((decimal)input, 2) * 100);
         }
@@ -50,7 +50,7 @@ namespace PagarMe.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            writer.WriteValue((int)UrlConvert(value));
+            writer.WriteValue((int)UrlConvert(value, null));
         }
     }
 }

@@ -118,6 +118,12 @@ namespace PagarMe
         }
 
         /// <summary>
+        ///     Settings to serialize metadata as JSON
+        /// </summary>
+        [PublicAPI]
+        public JsonSerializerSettings MetadataSerializerSettings { get; set; }
+
+        /// <summary>
         ///     Creates a new transaction
         /// </summary>
         /// <param name="setup">Transaction data</param>
@@ -125,11 +131,15 @@ namespace PagarMe
         [PublicAPI]
         public Transaction PostTransaction(TransactionSetup setup)
         {
+            UrlEncodingContext context = new UrlEncodingContext();
+
+            context.MetadataSerializerSettings = MetadataSerializerSettings;
+
             PagarMeQuery query = new PagarMeQuery(this, "POST", "transactions");
 
             ValidateTransaction(setup);
 
-            foreach (var tuple in UrlSerializer.Serialize(setup))
+            foreach (var tuple in UrlSerializer.Serialize(setup, null, context))
                 query.AddQuery(tuple.Item1, tuple.Item2);
 
             PagarMeQueryResponse response = query.Execute();
@@ -147,11 +157,15 @@ namespace PagarMe
         [PublicAPI]
         public Subscription PostSubscription(SubscriptionSetup setup)
         {
+            UrlEncodingContext context = new UrlEncodingContext();
+
+            context.MetadataSerializerSettings = MetadataSerializerSettings;
+
             PagarMeQuery query = new PagarMeQuery(this, "POST", "subscriptions");
 
             ValidateSubscription(setup);
 
-            foreach (var tuple in UrlSerializer.Serialize(setup))
+            foreach (var tuple in UrlSerializer.Serialize(setup, null, context))
                 query.AddQuery(tuple.Item1, tuple.Item2);
 
             PagarMeQueryResponse response = query.Execute();

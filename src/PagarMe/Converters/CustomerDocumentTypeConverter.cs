@@ -32,7 +32,7 @@ namespace PagarMe.Converters
 {
     internal class CustomerDocumentTypeConverter : JsonConverter, IUrlConverter
     {
-        public object UrlConvert(object input)
+        public object UrlConvert(object input, UrlEncodingContext context)
         {
             switch ((CustomerDocumentType)input)
             {
@@ -71,17 +71,7 @@ namespace PagarMe.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            string result = null;
-
-            switch ((CustomerDocumentType)value)
-            {
-                case CustomerDocumentType.Cpf:
-                    result = "cpf";
-                    break;
-                case CustomerDocumentType.Cnpj:
-                    result = "cnpj";
-                    break;
-            }
+            object result = UrlConvert(value, null);
 
             if (result != null)
                 writer.WriteValue(result);

@@ -31,7 +31,7 @@ namespace PagarMe.Converters
 {
     internal class DateConverter : IUrlConverter
     {
-        public object UrlConvert(object input)
+        public object UrlConvert(object input, UrlEncodingContext context)
         {
             return ((DateTime)input).ToString("MM-dd-yyyy");
         }

@@ -25,6 +25,7 @@
 #endregion
 
 using System;
+using System.Dynamic;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using PagarMe.Converters;
@@ -147,6 +148,13 @@ namespace PagarMe
         /// </summary>
         [JsonProperty(PropertyName = "phone"), UsedImplicitly]
         public CustomerPhone Phone { get; private set; }
+
+        /// <summary>
+        ///     Transaction metadata
+        /// </summary>
+        [JsonProperty(PropertyName = "metadata"), UsedImplicitly]
+        [JsonConverter(typeof(MetadataConverter))]
+        public dynamic Metadata { get; private set; }
 
         /// <summary>
         ///     Chargeback the transaction

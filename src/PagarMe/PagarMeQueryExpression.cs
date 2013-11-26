@@ -150,7 +150,7 @@ namespace PagarMe
 
         protected override Expression VisitConstantExpression(ConstantExpression expression)
         {
-            string value = UrlSerializer.ConvertValue(_left as PropertyInfo, expression.Value);
+            string value = UrlSerializer.ConvertValue(_left as PropertyInfo, expression.Value, null);
 
             if (value == null)
                 return base.VisitConstantExpression(expression);

@@ -27,6 +27,7 @@
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using PagarMe.Converters;
+using PagarMe.Serializer;
 
 namespace PagarMe
 {
@@ -78,5 +79,12 @@ namespace PagarMe
         [PublicAPI]
         [JsonProperty(PropertyName = "postback_url")]
         public string PostbackUrl { get; set; }
+
+        /// <summary>
+        ///     Transaction metadata
+        /// </summary>
+        [JsonProperty(PropertyName = "metadata"), UsedImplicitly]
+        [UrlConverter(typeof(MetadataConverter))]
+        public dynamic Metadata { get; set; }
     }
 }
