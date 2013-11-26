@@ -30,5 +30,11 @@ namespace PagarMe
     {
         public int Status { get; set; }
         public string Data { get; set; }
+
+        public void Validate()
+        {
+            if (Status != 200)
+                throw new PagarMeException(this);
+        }
     }
 }

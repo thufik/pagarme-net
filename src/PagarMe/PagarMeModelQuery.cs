@@ -52,8 +52,7 @@ namespace PagarMe
         {
             PagarMeQueryResponse response = _query.Execute();
 
-            if (response.Status != 200)
-                throw new PagarMeException(response);
+            response.Validate();
 
             return from JObject obj in JArray.Parse(response.Data) select (T)_model.Build(obj, _provider);
         }

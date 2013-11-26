@@ -24,8 +24,14 @@
 
 #endregion
 
+using System;
+using System.Linq;
 using System.Security;
+using System.Security.Cryptography;
+using System.Text;
 using JetBrains.Annotations;
+using Mono.Security;
+using Newtonsoft.Json;
 using PagarMe.Serializer;
 
 namespace PagarMe
@@ -126,7 +132,11 @@ namespace PagarMe
             foreach (var tuple in UrlSerializer.Serialize(setup))
                 query.AddQuery(tuple.Item1, tuple.Item2);
 
-            return new Transaction(this, query.Execute());
+            PagarMeQueryResponse response = query.Execute();
+
+            response.Validate();
+
+            return new Transaction(this, response);
         }
 
         /// <summary>
@@ -135,7 +145,7 @@ namespace PagarMe
         /// <param name="setup">Subscription data</param>
         /// <returns>Transaction object representing the new transaction</returns>
         [PublicAPI]
-        public Transaction PostSubscription(SubscriptionSetup setup)
+        public Subscription PostSubscription(SubscriptionSetup setup)
         {
             PagarMeQuery query = new PagarMeQuery(this, "POST", "subscriptions");
 
@@ -144,7 +154,47 @@ namespace PagarMe
             foreach (var tuple in UrlSerializer.Serialize(setup))
                 query.AddQuery(tuple.Item1, tuple.Item2);
 
-            return new Transaction(this, query.Execute());
+            PagarMeQueryResponse response = query.Execute();
+
+            response.Validate();
+
+            return new Subscription(this, response);
+        }
+
+        /// <summary>
+        ///     Generates a secure hash for a credit card
+        /// </summary>
+        /// <param name="creditCard">Credit card information</param>
+        /// <returns>Credit card hash</returns>
+        [PublicAPI]
+        public string GenerateCardHash(CreditCard creditCard)
+        {
+            string hashParameters = UrlSerializer.Serialize(creditCard).Aggregate("",
+                (current, tuple) =>
+                    current + (Uri.EscapeUriString(tuple.Item1) + "=" + Uri.EscapeUriString(tuple.Item2) + "&"))
+                .TrimEnd('&');
+
+            PagarMeQuery keyQuery = new PagarMeQuery(this, "GET", "transactions/card_hash_key");
+            keyQuery.AddQuery("encryption_key", _encryptionKey);
+
+            PagarMeQueryResponse keyResponse = keyQuery.Execute();
+            keyResponse.Validate();
+
+            CardHashKey key = JsonConvert.DeserializeObject<CardHashKey>(keyResponse.Data);
+            using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(2048))
+            {
+                RSAParameters parameters = rsa.ExportParameters(false);
+                string publicKeyData = key.PublicKey.Substring(27, key.PublicKey.Length - 52);
+                byte[] data = Convert.FromBase64String(publicKeyData);
+                ASN1 root = new ASN1(data);
+                ASN1 keyRoot = new ASN1(root[1].Value.Skip(1).ToArray());
+
+                parameters.Modulus = keyRoot[0].Value.Skip(1).ToArray();
+                parameters.Exponent = keyRoot[1].Value;
+                rsa.ImportParameters(parameters);
+
+                return key.Id + "_" + Convert.ToBase64String(rsa.Encrypt(Encoding.UTF8.GetBytes(hashParameters), false));
+            }
         }
 
         private static void ValidateSubscription(SubscriptionSetup setup)
