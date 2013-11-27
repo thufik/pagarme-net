@@ -119,6 +119,15 @@ namespace PagarMe.Serializer
                 }
             }
 
+            if ((
+                expType == typeof(Int32)
+                || expType == typeof(Int16)
+                || expType == typeof(Int64)
+                || expType == typeof(Decimal)
+                || expType == typeof(Double)) &&
+                value.ToString() == "0")
+                return null;
+
             if (
                 expType == typeof(Int32)
                 || expType == typeof(Int16)

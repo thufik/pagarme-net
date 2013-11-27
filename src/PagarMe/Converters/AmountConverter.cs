@@ -32,9 +32,14 @@ namespace PagarMe.Converters
 {
     internal class AmountConverter : JsonConverter, IUrlConverter
     {
+        public static int Convert(decimal input)
+        {
+            return (int)(decimal.Round(input, 2) * 100);;
+        }
+
         public object UrlConvert(object input, UrlEncodingContext context)
         {
-            return (int)(decimal.Round((decimal)input, 2) * 100);
+            return Convert((decimal)input);
         }
 
         public override bool CanConvert(Type objectType)

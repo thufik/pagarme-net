@@ -25,6 +25,7 @@
 #endregion
 
 using System;
+using System.Dynamic;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using PagarMe.Converters;
@@ -155,13 +156,23 @@ namespace PagarMe
         [JsonConverter(typeof(MetadataConverter))]
         public dynamic Metadata { get; private set; }
 
+        internal Transaction()
+        {
+        }
+
         /// <summary>
         ///     Chargeback the transaction
         /// </summary>
         [PublicAPI]
         public void Refund()
         {
-            Refresh(new PagarMeQuery(Provider, "POST", string.Format("transactions/{0}/refund", Id)).Execute());
+            var query = new PagarMeQuery(Provider, "DELETE", string.Format("subscriptions/{0}/refund", Id));
+
+            query.AddQuery("api_key", Provider.ApiKey);
+
+            var response = query.Execute();
+            response.Validate();
+            Refresh(response);
         }
 
         /// <summary>

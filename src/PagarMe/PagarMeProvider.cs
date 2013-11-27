@@ -215,8 +215,8 @@ namespace PagarMe
         {
             ValidateTransaction(setup);
 
-            if (setup.Plan == 0)
-                throw new VerificationException("Plan ID is required");
+            if (setup.Plan < 0)
+                throw new VerificationException("Plan ID must be equal or greater than 0");
         }
 
         private static void ValidateTransaction(TransactionSetup setup)

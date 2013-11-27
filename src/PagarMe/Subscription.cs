@@ -26,6 +26,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.Globalization;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using PagarMe.Converters;
@@ -125,13 +127,39 @@ namespace PagarMe
         [JsonConverter(typeof(MetadataConverter))]
         public dynamic Metadata { get; private set; }
 
+        internal Subscription()
+        {
+        }
+
         /// <summary>
         ///     Cancels the subscription
         /// </summary>
         [PublicAPI]
         public void CancelSubscription()
         {
-            Refresh(new PagarMeQuery(Provider, "DELETE", string.Format("subscriptions/{0}", Id)).Execute());
+            var query = new PagarMeQuery(Provider, "DELETE", string.Format("subscriptions/{0}", Id));
+
+            query.AddQuery("api_key", Provider.ApiKey);
+
+            var response = query.Execute();
+            response.Validate();
+            Refresh(response);
+        }
+
+        /// <summary>
+        ///     Charges the subscription
+        /// </summary>
+        [PublicAPI]
+        public void Charge(decimal value)
+        {
+            var query = new PagarMeQuery(Provider, "DELETE", string.Format("subscriptions/{0}", Id));
+
+            query.AddQuery("api_key", Provider.ApiKey);
+            query.AddQuery("amount", AmountConverter.Convert(value).ToString(CultureInfo.InvariantCulture));
+
+            var response = query.Execute();
+            response.Validate();
+            Refresh(response);
         }
 
         /// <summary>
