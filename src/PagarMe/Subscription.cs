@@ -141,9 +141,7 @@ namespace PagarMe
 
             query.AddQuery("api_key", Provider.ApiKey);
 
-            var response = query.Execute();
-            response.Validate();
-            Refresh(response);
+            Refresh(query.Execute());
         }
 
         /// <summary>
@@ -157,9 +155,7 @@ namespace PagarMe
             query.AddQuery("api_key", Provider.ApiKey);
             query.AddQuery("amount", AmountConverter.Convert(value).ToString(CultureInfo.InvariantCulture));
 
-            var response = query.Execute();
-            response.Validate();
-            Refresh(response);
+            Refresh(query.Execute());
         }
 
         /// <summary>

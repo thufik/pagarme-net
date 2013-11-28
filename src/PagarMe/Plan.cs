@@ -139,10 +139,10 @@ namespace PagarMe
         protected override void Validate()
         {
             if (_days <= 0)
-                throw new VerificationException("Days should be positive");
+                throw new FormatException("Days should be positive");
 
             if (_trialDays < 0)
-                throw new VerificationException("TrialDays should be zero or positive");
+                throw new FormatException("TrialDays should be zero or positive");
 
             base.Validate();
         }

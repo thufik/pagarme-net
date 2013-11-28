@@ -55,6 +55,12 @@ namespace PagarMe
         /// <param name="encryptionKey">Encryption key</param>
         public PagarMeProvider(string apiKey, string encryptionKey)
         {
+            if (apiKey == null || !apiKey.StartsWith("ak_"))
+                throw new ArgumentException("Invalid API key.", "apiKey");
+
+            if (encryptionKey == null || !encryptionKey.StartsWith("ek_"))
+                throw new ArgumentException("Invalid encryption key.", "encryptionKey");
+
             _apiKey = apiKey;
             _encryptionKey = encryptionKey;
             _transactions = new PagarMeQueryable<Transaction>(this);
@@ -142,11 +148,7 @@ namespace PagarMe
             foreach (var tuple in UrlSerializer.Serialize(setup, null, context))
                 query.AddQuery(tuple.Item1, tuple.Item2);
 
-            PagarMeQueryResponse response = query.Execute();
-
-            response.Validate();
-
-            return new Transaction(this, response);
+            return new Transaction(this, query.Execute());
         }
 
         /// <summary>
@@ -168,11 +170,7 @@ namespace PagarMe
             foreach (var tuple in UrlSerializer.Serialize(setup, null, context))
                 query.AddQuery(tuple.Item1, tuple.Item2);
 
-            PagarMeQueryResponse response = query.Execute();
-
-            response.Validate();
-
-            return new Subscription(this, response);
+            return new Subscription(this, query.Execute());
         }
 
         /// <summary>
@@ -211,18 +209,24 @@ namespace PagarMe
             }
         }
 
-        private static void ValidateSubscription(SubscriptionSetup setup)
+        internal static void ValidateSubscription(SubscriptionSetup setup)
         {
-            ValidateTransaction(setup);
+            ValidateTransaction(setup, true);
 
             if (setup.Plan < 0)
-                throw new VerificationException("Plan ID must be equal or greater than 0");
+                throw new FormatException("Plan ID must be equal or greater than zero.");
         }
 
-        private static void ValidateTransaction(TransactionSetup setup)
+        internal static void ValidateTransaction(TransactionSetup setup, bool subset = false)
         {
             if (setup.PaymentMethod == PaymentMethod.CreditCard && string.IsNullOrEmpty(setup.CardHash))
-                throw new VerificationException("CardHash is required");
+                throw new FormatException("CardHash is required.");
+
+            if (!subset)
+            {
+                if (setup.Amount <= 0)
+                    throw new FormatException("Amount must be greater than zero.");
+            }
         }
     }
 }

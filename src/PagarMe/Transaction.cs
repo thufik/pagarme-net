@@ -170,9 +170,7 @@ namespace PagarMe
 
             query.AddQuery("api_key", Provider.ApiKey);
 
-            var response = query.Execute();
-            response.Validate();
-            Refresh(response);
+            Refresh(query.Execute());
         }
 
         /// <summary>

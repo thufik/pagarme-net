@@ -86,11 +86,8 @@ namespace PagarMe
             if (Provider == null)
                 return;
 
-            PagarMeQueryResponse response = new PagarMeQuery(Provider, "GET",
-                string.Format("{0}/{1}", GetType().GetCustomAttribute<PagarMeModelAttribute>().Endpoint, Id)).Execute();
-
-            response.Validate();
-            Refresh(response);
+            Refresh(new PagarMeQuery(Provider, "GET",
+                string.Format("{0}/{1}", GetType().GetCustomAttribute<PagarMeModelAttribute>().Endpoint, Id)).Execute());
         }
 
         /// <summary>
@@ -149,6 +146,8 @@ namespace PagarMe
 
         internal void Refresh(PagarMeQueryResponse response)
         {
+            response.Validate();
+
             Refresh(JObject.Parse(response.Data));
         }
 
