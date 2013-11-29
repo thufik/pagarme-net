@@ -2,14 +2,15 @@ language: c
  
 install:
   - sudo wget -q -P "/opt" "http://download.mono-project.com/sources/mono/mono-3.2.5.tar.bz2"
-  - sudo tar xjk -C "/opt" -f /opt/mono-3.2.5.tar.bz2 >> ./travis.sh
-  - echo DIR=`pwd` >> ./travis.sh
+  - sudo tar xjk -C "/opt" -f /opt/mono-3.2.5.tar.bz2
+  - echo set -e >> ./travis.sh
+  - echo set -o pipefail >> ./travis.sh
+  - echo SRCDIR=`pwd` >> ./travis.sh
   - echo cd /opt/mono-3.2.5 >> ./travis.sh
   - echo ./configure --prefix=/usr >> ./travis.sh
   - echo make >> ./travis.sh
   - echo sudo make install >> ./travis.sh
-  - echo set -e >> ./travis.sh
-  - echo set -o pipefail >> ./travis.sh
+  - echo cd $SRCDIR >> ./travis.sh
   - echo echo Running on Mono 3.x >> ./travis.sh
   - echo xbuild CI.proj >> ./travis.sh
   - echo nunit-console ./Test/PagarMe.Tests/bin/Debug_Net40/PagarMe.Tests.dll -exclude NotWorkingOnMono >> ./travis.sh
