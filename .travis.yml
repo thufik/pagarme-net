@@ -1,14 +1,16 @@
 language: c
  
 install:
-  - sudo wget -q -P "/opt"  "http://samples.nancyfx.org/content/mono-3.0.12-x64-bin.tar.bz2"
+  - sudo wget -q -P "/opt" "http://download.mono-project.com/sources/mono/mono-3.2.5.tar.bz2"
+  - sudo tar xjk -C "/opt" -f /opt/mono-3.2.5.tar.bz2 >> ./travis.sh
+  - echo DIR=`pwd` >> ./travis.sh
+  - echo cd /opt/mono-3.2.5 >> ./travis.sh
+  - echo ./configure --prefix=/usr >> ./travis.sh
+  - echo make >> ./travis.sh
+  - echo sudo make install >> ./travis.sh
   - echo set -e >> ./travis.sh
   - echo set -o pipefail >> ./travis.sh
   - echo echo Running on Mono 3.x >> ./travis.sh
-  - echo sudo tar xkv -C "/opt" -f /opt/mono-3.0.12-x64-bin.tar.bz2 >> ./travis.sh
-  - echo export PATH="/opt/mono/bin:$PATH" >> ./travis.sh
-  - echo export LD_LIBRARY_PATH="/opt/mono/bin" >> ./travis.sh
-  - echo mozroots --import --sync >> ./travis.sh
   - echo xbuild CI.proj >> ./travis.sh
   - echo nunit-console ./Test/PagarMe.Tests/bin/Debug_Net40/PagarMe.Tests.dll -exclude NotWorkingOnMono >> ./travis.sh
   - chmod +x ./travis.sh
