@@ -1,8 +1,15 @@
 language: c
  
 install:
-  - sudo apt-get install mono-devel mono-gmcs nunit-console
+  - sudo wget -q -P "/opt"  "http://samples.nancyfx.org/content/mono-3.0.12-x64-bin.tar.bz2"
+  - echo set -e >> ./travis.sh
+  - echo set -o pipefail >> ./travis.sh
+  - echo echo Running on Mono 3.x >> ./travis.sh
+  - echo sudo tar xkv -C "/opt" -f /opt/mono-3.0.12-x64-bin.tar.bz2 >> ./travis.sh
+  - echo export PATH="/opt/mono/bin:$PATH" >> ./travis.sh
+  - echo export LD_LIBRARY_PATH="/opt/mono/bin" >> ./travis.sh
+  - echo xbuild CI.proj >> ./travis.sh
+  - echo nunit-console ./Test/PagarMe.Tests/bin/Debug_Net40/PagarMe.Tests.dll -exclude NotWorkingOnMono >> ./travis.sh
+  - chmod +x ./travis.sh
  
-script:
-  - xbuild CI.proj
-  - nunit-console ./Test/PagarMe.Tests/bin/Debug_Net40/PagarMe.Tests.dll -exclude NotWorkingOnMono
+script: ./travis.sh
