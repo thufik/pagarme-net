@@ -3,6 +3,6 @@
 	<Target Name="CI" DependsOnTargets="Build" />
 
 	<Target Name="Build">
-		<MSBuild Projects="PagarMe.sln" Properties="Configuration=Debug_Net40;Platform=Any CPU" />
+		<MSBuild Projects="PagarMe.sln" Properties="Configuration=Debug;Platform=Any CPU" />
 	</Target>
 </Project>
