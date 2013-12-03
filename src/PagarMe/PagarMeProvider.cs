@@ -195,7 +195,7 @@ namespace PagarMe
             CardHashKey key = JsonConvert.DeserializeObject<CardHashKey>(keyResponse.Data);
             using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(2048))
             {
-                RSAParameters parameters = rsa.ExportParameters(false);
+                RSAParameters parameters = new RSAParameters();
                 string publicKeyData = key.PublicKey.Substring(27, key.PublicKey.Length - 52);
                 byte[] data = Convert.FromBase64String(publicKeyData);
                 ASN1 root = new ASN1(data);
