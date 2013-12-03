@@ -1,7 +1,6 @@
 language: c
  
 install:
-  - sudo apt-get install nunit-console
   - sudo wget -q -P "/opt"  "https://github.com/pagarme/pagarme-net/releases/download/1.0/mono.tar.bz2"
   - sudo tar xk -C "/opt" -f /opt/mono.tar.bz2
   - chmod +x ./travis.sh
