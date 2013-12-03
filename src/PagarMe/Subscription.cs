@@ -137,11 +137,7 @@ namespace PagarMe
         [PublicAPI]
         public void CancelSubscription()
         {
-            var query = new PagarMeQuery(Provider, "DELETE", string.Format("subscriptions/{0}", Id));
-
-            query.AddQuery("api_key", Provider.ApiKey);
-
-            Refresh(query.Execute());
+            Refresh(new PagarMeQuery(Provider, "DELETE", string.Format("subscriptions/{0}", Id)).Execute());
         }
 
         /// <summary>
@@ -150,9 +146,8 @@ namespace PagarMe
         [PublicAPI]
         public void Charge(decimal value)
         {
-            var query = new PagarMeQuery(Provider, "DELETE", string.Format("subscriptions/{0}", Id));
+            var query = new PagarMeQuery(Provider, "POST", string.Format("subscriptions/{0}", Id));
 
-            query.AddQuery("api_key", Provider.ApiKey);
             query.AddQuery("amount", AmountConverter.Convert(value).ToString(CultureInfo.InvariantCulture));
 
             Refresh(query.Execute());

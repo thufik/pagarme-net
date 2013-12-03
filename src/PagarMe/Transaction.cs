@@ -166,11 +166,7 @@ namespace PagarMe
         [PublicAPI]
         public void Refund()
         {
-            var query = new PagarMeQuery(Provider, "DELETE", string.Format("subscriptions/{0}/refund", Id));
-
-            query.AddQuery("api_key", Provider.ApiKey);
-
-            Refresh(query.Execute());
+            Refresh(new PagarMeQuery(Provider, "POST", string.Format("transactions/{0}/refund", Id)).Execute());
         }
 
         /// <summary>

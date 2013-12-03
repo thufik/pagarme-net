@@ -36,7 +36,7 @@ namespace PagarMe.Converters
 
         public PagarMeModelConverter()
         {
-            _ctor = typeof(T).GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null,
+            _ctor = typeof(T).GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, null,
                 new[] {typeof(PagarMeProvider)}, null);
         }
 

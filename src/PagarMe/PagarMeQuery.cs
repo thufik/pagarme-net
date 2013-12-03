@@ -70,7 +70,7 @@ namespace PagarMe
 
             builder.Path += _path;
 
-            if (_method != "POST" || _method == "PUT")
+            if (_method != "POST" && _method != "PUT")
                 builder.Query = query;
 
             if (Take > 0)
