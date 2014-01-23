@@ -215,6 +215,9 @@ namespace PagarMe
 
             if (setup.Plan < 0)
                 throw new FormatException("Plan ID must be equal or greater than zero.");
+
+			if (setup.Customer == null || string.IsNullOrEmpty(setup.Customer.Email))
+				throw new FormatException("Customer email is required.");
         }
 
         internal static void ValidateTransaction(TransactionSetup setup, bool subset = false)

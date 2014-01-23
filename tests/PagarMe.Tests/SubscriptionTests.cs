@@ -20,8 +20,11 @@ namespace PagarMe.Tests
 
             var setup = new SubscriptionSetup
             {
-                CardHash = GetCardHash(),
-                CustomerEmail = "josedasilva@pagar.me",
+				CardHash = GetCardHash(),
+				Customer = new Customer
+				{
+					Email = "josedasilva@pagar.me"
+				},
                 Plan = plan.Id
             };
 
@@ -34,7 +37,10 @@ namespace PagarMe.Tests
             var setup = new SubscriptionSetup
             {
                 CardHash = GetCardHash(),
-                CustomerEmail = "josedasilva@pagar.me"
+				Customer = new Customer
+				{
+					Email = "josedasilva@pagar.me"
+				}
             };
 
             CreateProvider().PostSubscription(setup).Charge(10.99m);

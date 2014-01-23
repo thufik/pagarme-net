@@ -44,7 +44,7 @@ namespace PagarMe
             : base(provider)
         {
         }
-
+		 
         internal Subscription(PagarMeProvider provider, PagarMeQueryResponse result)
             : base(provider, result)
         {
@@ -87,12 +87,6 @@ namespace PagarMe
         [JsonProperty(PropertyName = "payment_method"), UsedImplicitly]
         [JsonConverter(typeof(PaymentMethodConverter))]
         public PaymentMethod PaymentMethod { get; private set; }
-
-        /// <summary>
-        ///     Customer Email
-        /// </summary>
-        [JsonProperty(PropertyName = "customer_email"), UsedImplicitly]
-        public string CustomerEmail { get; private set; }
 
         /// <summary>
         ///     Customer information associated with this transaction
@@ -159,7 +153,7 @@ namespace PagarMe
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("#{0} {1}", Id, CustomerEmail);
+			return string.Format("#{0} {1}", Id, Customer != null ? (Customer.Email ?? "") : "");
         }
     }
 }

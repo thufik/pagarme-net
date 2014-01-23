@@ -36,13 +36,6 @@ namespace PagarMe
     public class SubscriptionSetup : TransactionSetup
     {
         /// <summary>
-        ///     Customer Email
-        /// </summary>
-        [PublicAPI]
-        [JsonProperty(PropertyName = "customer_email")]
-        public string CustomerEmail { get; set; }
-
-        /// <summary>
         ///     Plan ID
         /// </summary>
         [PublicAPI]
