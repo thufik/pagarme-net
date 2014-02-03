@@ -50,7 +50,7 @@ namespace PagarMe.Converters
                 case TransactionStatus.Refunded:
                     return "refunded";
                 case TransactionStatus.Refused:
-                    return "refused";
+					return "refused";
             }
 
             return null;

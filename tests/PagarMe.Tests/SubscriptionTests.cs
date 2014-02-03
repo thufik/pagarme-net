@@ -28,7 +28,7 @@ namespace PagarMe.Tests
                 Plan = plan.Id
             };
 
-            CreateProvider().PostSubscription(setup);
+			Assert.AreEqual(CreateProvider().PostSubscription(setup).Status, SubscriptionStatus.Paid);
         }
 
         [Test]
@@ -43,7 +43,38 @@ namespace PagarMe.Tests
 				}
             };
 
-            CreateProvider().PostSubscription(setup).Charge(10.99m);
+			var subscription = CreateProvider().PostSubscription(setup);
+
+			Assert.AreEqual(subscription.Status, SubscriptionStatus.PendingPayment);
+
+			subscription.Charge(10.99m);
+
+			Assert.AreEqual(subscription.Status, SubscriptionStatus.Paid);
         }
+
+		[Test]
+		public void CancelSubscription()
+		{
+			var plan = CreateTestPlan();
+			plan.Save();
+
+			Assert.AreNotEqual(plan.Id, 0);
+
+			var setup = new SubscriptionSetup
+			{
+				CardHash = GetCardHash(),
+				Customer = new Customer
+				{
+					Email = "josedasilva@pagar.me"
+				},
+				Plan = plan.Id
+			};
+
+			var subscription = CreateProvider().PostSubscription(setup);
+
+			subscription.CancelSubscription();
+
+			Assert.AreEqual(subscription.Status, SubscriptionStatus.Canceled);
+		}
     }
 }

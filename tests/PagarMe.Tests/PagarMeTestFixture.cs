@@ -24,7 +24,7 @@ namespace PagarMe.Tests
             {
                 Name = "Test Plan",
                 Days = 30,
-                TrialDays = 2,
+				TrialDays = 0,
                 Amount = 10.99m,
                 Color = "#787878"
             };

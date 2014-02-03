@@ -59,9 +59,10 @@ namespace PagarMe
 
         /// <summary>
         ///     Transaction status
-        /// </summary>
-        [JsonProperty(PropertyName = "status"), UsedImplicitly]
-        public string Status { get; private set; }
+		/// </summary>
+		[JsonProperty(PropertyName = "status"), UsedImplicitly]
+		[JsonConverter(typeof(SubscriptionStatusConverter))]
+		public SubscriptionStatus Status { get; private set; }
 
         /// <summary>
         ///     Current period start date
@@ -131,7 +132,7 @@ namespace PagarMe
         [PublicAPI]
         public void CancelSubscription()
         {
-            Refresh(new PagarMeQuery(Provider, "DELETE", string.Format("subscriptions/{0}", Id)).Execute());
+			Refresh(new PagarMeQuery(Provider, "POST", string.Format("subscriptions/{0}/cancel", Id)).Execute());
         }
 
         /// <summary>

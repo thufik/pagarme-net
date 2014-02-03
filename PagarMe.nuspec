@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 	<id>Pagar.me</id>
-	<version>1.0.0</version>
+	<version>1.0.4</version>
 	<authors>Joathan Lima</authors>
 	<owners>Pagar.me</owners>
 	<licenseUrl>http://www.opensource.org/licenses/MIT</licenseUrl>
@@ -15,12 +15,11 @@
 	<tags>pagarme payment</tags>
 	<dependencies>
 		<dependency id="Newtonsoft.Json" version="5.0.8" />
-		<dependency id="Remotion.Linq" version="1.15.2.0" />
+		<dependency id="Remotion.Linq" version="1.15.9" />
 	</dependencies>
 	</metadata>
 	<files>
-		<file src="src\PagarMe\bin\Release_Net40\PagarMe.dll" target="lib\net40\" />
-		<file src="src\PagarMe\bin\Release_Net40\PagarMe.pdb" target="lib\net40\" />
-		<file src="src\PagarMe\bin\Release_Net40\PagarMe.xml" target="lib\net40\" />
+		<file src="src/PagarMe/bin/Release_Net40/PagarMe.dll" target="lib/net45" />
+		<file src="src/PagarMe/bin/Release_Net40/PagarMe.xml" target="lib/net45" />
 	</files>
 </package>
