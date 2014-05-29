@@ -112,4 +112,5 @@ UpgradeLog*.XML
 
 /lib
 
+*.userprefs
 
