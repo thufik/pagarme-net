@@ -68,18 +68,14 @@ namespace PagarMe
             var takeResult = resultOperator as TakeResultOperator;
             if (takeResult != null)
             {
-                var exp = takeResult.Count;
+                _query.Take = ParseConstantExpression(takeResult.Count);
+                return;
+            }
 
-                if (exp.NodeType == ExpressionType.Constant)
-                {
-                    _query.Take = (int)((ConstantExpression)exp).Value;
-                }
-                else
-                {
-                    throw new NotSupportedException(
-                        "Currently not supporting methods or variables in the Take clause.");
-                }
-
+            var skipResult = resultOperator as SkipResultOperator;
+            if (skipResult != null)
+            {
+                _query.Skip = ParseConstantExpression(skipResult.Count);
                 return;
             }
 
@@ -104,6 +100,19 @@ namespace PagarMe
                 _query.AddQuery(clause.Item1, clause.Item2);
 
             base.VisitWhereClause(whereClause, queryModel, index);
+        }
+
+        private int ParseConstantExpression(Expression exp)
+        {
+            if (exp.NodeType == ExpressionType.Constant)
+            {
+                return (int)((ConstantExpression)exp).Value;
+            }
+            else
+            {
+                throw new NotSupportedException(
+                    "Currently not supporting methods or variables in the Take clause.");
+            }
         }
     }
 }

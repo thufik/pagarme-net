@@ -1,0 +1,25 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/PagarMe/PagarMeQuery.cs">
+    <Files>
+      <File FileName="src/PagarMe/PagarMeQuery.cs" Line="81" Column="79" />
+      <File FileName="src/PagarMe/PagarMeModelQuery.cs" Line="1" Column="1" />
+      <File FileName="tests/TestApp/Program.cs" Line="1" Column="1" />
+      <File FileName="src/PagarMe/PagarMeProvider.cs" Line="1" Column="1" />
+      <File FileName="src/PagarMe/PagarMeQueryable.cs" Line="1" Column="1" />
+      <File FileName="src/PagarMe/PagarMeQueryExecutor.cs" Line="1" Column="1" />
+      <File FileName="src/PagarMe/PagarMeQueryExpression.cs" Line="1" Column="1" />
+      <File FileName="src/PagarMe/PagarMeQueryResponse.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/jonathanlima/Documents/pagarme/pagarme-net/tests/PagarMe.Tests/CreditCardTests.cs" line="16" column="1" />
+      <Breakpoint file="/Users/jonathanlima/Documents/pagarme/pagarme-net/tests/TestApp/Program.cs" line="42" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="tests/TestApp/Program.cs" line="49" offsetX="607" offsetY="720" expression="transaction" liveUpdate="False" />
+    <Watch file="tests/TestApp/Program.cs" line="68" offsetX="303" offsetY="1005" expression="transaction" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+</Properties>

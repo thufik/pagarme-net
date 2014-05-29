@@ -40,7 +40,7 @@ namespace PagarMe
         public PagarMeModelDefinition(Type type)
         {
             _type = type;
-            _ctor = _type.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null,
+            _ctor = _type.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, null,
                 new[] {typeof(PagarMeProvider)}, null);
 
             PagarMeModelAttribute model = _type.GetCustomAttribute<PagarMeModelAttribute>();

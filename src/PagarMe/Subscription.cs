@@ -141,7 +141,7 @@ namespace PagarMe
         [PublicAPI]
         public void Charge(decimal value)
         {
-            var query = new PagarMeQuery(Provider, "POST", string.Format("subscriptions/{0}", Id));
+            var query = new PagarMeQuery(Provider, "POST", string.Format("subscriptions/{0}/transactions", Id));
 
             query.AddQuery("amount", AmountConverter.Convert(value).ToString(CultureInfo.InvariantCulture));
 

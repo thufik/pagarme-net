@@ -53,6 +53,7 @@ namespace PagarMe
         }
 
         public int Take { get; set; }
+        public int Skip { get; set; }
 
         public void AddQuery(string key, string value)
         {
@@ -62,6 +63,13 @@ namespace PagarMe
         public PagarMeQueryResponse Execute()
         {
             UriBuilder builder = new UriBuilder(ApiEndpoint);
+
+            if (Take > 0)
+                AddQuery("count", Take.ToString(CultureInfo.InvariantCulture));
+
+            if (Skip > 0)
+                AddQuery("skip", Skip.ToString(CultureInfo.InvariantCulture));
+
             string query =
                 _query.Aggregate("",
                     (current, tuple) =>
@@ -72,9 +80,6 @@ namespace PagarMe
 
             if (_method != "POST" && _method != "PUT")
                 builder.Query = query;
-
-            if (Take > 0)
-                AddQuery("count", Take.ToString(CultureInfo.InvariantCulture));
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(builder.Uri);
 
