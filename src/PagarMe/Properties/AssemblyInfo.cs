@@ -42,7 +42,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCopyright("Copyright © Pagar.me Pagamentos S.A. 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.2.*")]
+[assembly: AssemblyFileVersion("1.2.0.0")]
 
 [assembly: InternalsVisibleTo("PagarMe.Tests")]
