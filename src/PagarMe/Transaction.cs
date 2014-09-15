@@ -26,6 +26,7 @@
 
 using System;
 using System.Dynamic;
+using System.Globalization;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using PagarMe.Converters;
@@ -167,7 +168,29 @@ namespace PagarMe
         public void Refund()
         {
             Refresh(new PagarMeQuery(Provider, "POST", string.Format("transactions/{0}/refund", Id)).Execute());
-        }
+		}
+
+		/// <summary>
+		/// Capture this transaction
+		/// </summary>
+		[PublicAPI]
+		public void Capture()
+		{
+			Refresh(new PagarMeQuery(Provider, "POST", string.Format("transactions/{0}/capture", Id)).Execute());
+		}
+
+		/// <summary>
+		///     Capture the transaction with an amount
+		/// </summary>
+		[PublicAPI]
+		public void Capture(decimal value)
+		{
+			var query = new PagarMeQuery(Provider, "POST", string.Format("transactions/{0}/capture", Id));
+
+			query.AddQuery("amount", AmountConverter.Convert(value).ToString(CultureInfo.InvariantCulture));
+
+			Refresh(query.Execute());
+		}
 
         /// <summary>
         ///     Retrieves the subscription associated to this transaction

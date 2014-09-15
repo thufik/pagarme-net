@@ -42,6 +42,11 @@ namespace PagarMe
         Processing,
 
         /// <summary>
+        ///     Payments was authorized
+        /// </summary>
+        Authorized,
+
+        /// <summary>
         ///     Waiting boleto payment
         /// </summary>
         WaitingPayment,

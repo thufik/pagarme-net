@@ -37,6 +37,11 @@ namespace PagarMe
     [PublicAPI]
     public class TransactionSetup
     {
+        public TransactionSetup()
+        {
+            Installments = 1;
+        }
+
         /// <summary>
         ///     Amount in R$
         /// </summary>
@@ -74,6 +79,20 @@ namespace PagarMe
         public Customer Customer { get; set; }
 
         /// <summary>
+        ///     Number of installments
+        /// </summary>
+        [PublicAPI]
+        [JsonProperty(PropertyName = "installments")]
+        public int Installments { get; set; }
+
+        /// <summary>
+        ///     Name in the client 
+        /// </summary>
+        [PublicAPI]
+        [JsonProperty(PropertyName = "soft_descriptor")]
+        public int SoftDescriptor { get; set; }
+
+        /// <summary>
         ///     URL to send updates about this transaction
         /// </summary>
         [PublicAPI]
@@ -85,6 +104,6 @@ namespace PagarMe
         /// </summary>
         [JsonProperty(PropertyName = "metadata"), UsedImplicitly]
         [UrlConverter(typeof(MetadataConverter))]
-        public dynamic Metadata { get; set; }
+		public dynamic Metadata { get; set; }
     }
 }

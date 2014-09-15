@@ -13,13 +13,31 @@ namespace PagarMe.Tests
         [Test]
         public void Charge()
         {
-            CreateProvider().PostTransaction(CreateTestTransaction());
+            var transaction = CreateProvider().PostTransaction(CreateTestTransaction());
+
+            Assert.IsTrue(transaction.Status == TransactionStatus.Paid);
+        }
+
+        [Test]
+        public void Authorize()
+        {
+            var transaction = CreateProvider().PostTransaction(CreateTestTransaction(), false);
+
+            Assert.IsTrue(transaction.Status == TransactionStatus.Authorized);
+
+            transaction.Capture();
+
+            Assert.IsTrue(transaction.Status == TransactionStatus.Paid);
         }
 
         [Test]
         public void Refund()
         {
-            CreateProvider().PostTransaction(CreateTestTransaction()).Refund();
+            var transaction = CreateProvider().PostTransaction(CreateTestTransaction());
+
+            transaction.Refund();
+
+            Assert.IsTrue(transaction.Status == TransactionStatus.Refunded);
         }
 
         [Test]

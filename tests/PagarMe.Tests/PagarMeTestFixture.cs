@@ -43,7 +43,7 @@ namespace PagarMe.Tests
             {
                 Amount = 10.99m,
                 PaymentMethod = PaymentMethod.CreditCard,
-                CardHash = GetCardHash(),
+                CardHash = GetCardHash()
             };
         }
 

@@ -51,6 +51,8 @@ namespace PagarMe.Converters
                     return "refunded";
                 case TransactionStatus.Refused:
 					return "refused";
+                case TransactionStatus.Authorized:
+                    return "authorized";
             }
 
             return null;
@@ -83,6 +85,9 @@ namespace PagarMe.Converters
                     break;
                 case "refunded":
                     result = TransactionStatus.Refunded;
+                    break;
+                case "authorized":
+                    result = TransactionStatus.Authorized;
                     break;
             }
 

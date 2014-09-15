@@ -135,7 +135,7 @@ namespace PagarMe
         /// <param name="setup">Transaction data</param>
         /// <returns>Transaction object representing the new transaction</returns>
         [PublicAPI]
-        public Transaction PostTransaction(TransactionSetup setup)
+        public Transaction PostTransaction(TransactionSetup setup, bool capture = true)
         {
             UrlEncodingContext context = new UrlEncodingContext();
 
@@ -147,6 +147,9 @@ namespace PagarMe
 
             foreach (var tuple in UrlSerializer.Serialize(setup, null, context))
                 query.AddQuery(tuple.Item1, tuple.Item2);
+
+            if (!capture)
+                query.AddQuery("capture", "false");
 
             return new Transaction(this, query.Execute());
         }
