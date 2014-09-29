@@ -182,7 +182,7 @@ namespace PagarMe
         ///     When sending a transaction, just the first one in this list will be used.
         /// </remarks>
         [JsonProperty(PropertyName = "addresses"), UsedImplicitly]
-        [UrlMutator(typeof(SingleItemConverter))]
+        [UrlMutator(typeof(SingleItemConverter), FieldName = "address")]
         public ICollection<CustomerAddress> Addresses
         {
             get { return _addresses; }
@@ -195,7 +195,7 @@ namespace PagarMe
         ///     When sending a transaction, just the first one in this list will be used.
         /// </remarks>
         [JsonProperty(PropertyName = "phones"), UsedImplicitly]
-        [UrlMutator(typeof(SingleItemConverter))]
+        [UrlMutator(typeof(SingleItemConverter), FieldName = "phone")]
         public ICollection<CustomerPhone> Phones
         {
             get { return _phones; }

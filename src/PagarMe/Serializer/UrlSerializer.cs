@@ -73,7 +73,12 @@ namespace PagarMe.Serializer
                     continue;
 
                 var propAttribute = prop.GetCustomAttribute<JsonPropertyAttribute>();
-                string name = string.Format(rootFormat, root, propAttribute.PropertyName);
+                string fieldName = propAttribute.PropertyName;
+
+                if (mutatorAttribute != null && mutatorAttribute.FieldName != null)
+                    fieldName = mutatorAttribute.FieldName;
+
+                string name = string.Format(rootFormat, root, fieldName);
                 var value = ConvertValue(prop, propValue, context);
 
                 if (value == null && propValue.GetType().IsClass)

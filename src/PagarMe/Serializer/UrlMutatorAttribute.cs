@@ -37,5 +37,6 @@ namespace PagarMe.Serializer
         }
 
         public Type ConverterType { get; private set; }
+        public string FieldName { get; set; }
     }
 }

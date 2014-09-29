@@ -37,9 +37,29 @@ namespace TestApp
             var pagarme = new PagarMeProvider("ak_test_KGXIjQ4GicOa2BLGZrDRTR5qNQxDWo",
                 "ek_test_nV2WKtwCedTzEGSLKQpbgDpRj8jdfR");
 
-            var plan1 = pagarme.Plans.First();
-            var plan2 = pagarme.Plans.Find(plan1.Id);
-            
+            var customer = new Customer
+            {
+                Email = "jonathan@pagar.me"
+            };
+
+            customer.Addresses.Add(new CustomerAddress
+                {
+                    ZipCode = "22260000"
+                });
+
+            customer.Phones.Add(new CustomerPhone
+                {
+                    Ddd = 11,
+                    Number = 962617113
+                });
+
+            var transaction = pagarme.PostTransaction(new TransactionSetup
+                {
+                    Amount = 10.99m,
+                    PaymentMethod = PaymentMethod.Boleto,
+                    Customer = customer
+                });
+
         }
     }
 }
