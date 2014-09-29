@@ -111,7 +111,7 @@ namespace PagarMe
         ///     Antifraud score
         /// </summary>
         [JsonProperty(PropertyName = "antifraud_score"), UsedImplicitly]
-        public int? AntifraudScore { get; private set; }
+        public float? AntifraudScore { get; private set; }
 
         /// <summary>
         ///     URL to the boleto for priting
