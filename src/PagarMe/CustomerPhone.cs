@@ -100,6 +100,12 @@ namespace PagarMe
             }
         }
 
+        [OnDeserializing]
+        private void OnDeserializing(StreamingContext context)
+        {
+            _freezed = false;
+        }
+
         [OnDeserialized]
         private void OnDeserialized(StreamingContext context)
         {

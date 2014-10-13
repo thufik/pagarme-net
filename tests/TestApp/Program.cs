@@ -44,7 +44,14 @@ namespace TestApp
 
             customer.Addresses.Add(new CustomerAddress
                 {
-                    ZipCode = "22260000"
+                    ZipCode = "22260000",
+                    City = "São Paulo",
+                    Neighborhood = "Jardim Paulistano",
+                    State = "São Paulo",
+                    Country = "Brasil",
+                    Number = "2941",
+                    Complementary = "8 andar",
+                    Street = "Av Brigadeiro Faria Lima"
                 });
 
             customer.Phones.Add(new CustomerPhone
@@ -56,10 +63,17 @@ namespace TestApp
             var transaction = pagarme.PostTransaction(new TransactionSetup
                 {
                     Amount = 10.99m,
-                    PaymentMethod = PaymentMethod.Boleto,
-                    Customer = customer
+                    PaymentMethod = PaymentMethod.CreditCard,
+                    Customer = customer,
+                    CardHash = pagarme.GenerateCardHash(new CreditCard {
+                        CardNumber = "4242424242424242",
+                        CardCvv = "321",
+                        CardExpirationDate = "1117",
+                        CardholderName = "Test"
+                    })
                 });
 
+            transaction.Refund();
         }
     }
 }
