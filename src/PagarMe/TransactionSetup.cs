@@ -24,6 +24,7 @@
 
 #endregion
 
+using System;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using PagarMe.Converters;
@@ -84,6 +85,13 @@ namespace PagarMe
         [PublicAPI]
         [JsonProperty(PropertyName = "installments")]
         public int Installments { get; set; }
+
+        /// <summary>
+        ///     Boleto expiration date
+        /// </summary>
+        [PublicAPI]
+        [JsonProperty(PropertyName = "boleto_expiration_date")]
+        public DateTime? BoletoExpirationDate { get; set; }
 
         /// <summary>
         ///     Name in the client 

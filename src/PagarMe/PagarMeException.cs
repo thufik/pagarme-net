@@ -38,6 +38,11 @@ namespace PagarMe
     public class PagarMeException : Exception
     {
         [JsonConstructor]
+        internal PagarMeException()
+        {
+
+        }
+
         internal PagarMeException(PagarMeQueryResponse response)
         {
             JsonConvert.PopulateObject(response.Data, this);

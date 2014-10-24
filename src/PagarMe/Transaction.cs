@@ -126,6 +126,12 @@ namespace PagarMe
         public string BoletoBarcode { get; private set; }
 
         /// <summary>
+        ///     Boleto expiration date
+        /// </summary>
+        [JsonProperty(PropertyName = "boleto_expiration_date"), UsedImplicitly]
+        public DateTime? BoletoExpirationDate { get; private set; }
+
+        /// <summary>
         ///     Subscription ID associated with this transaction
         /// </summary>
         [JsonProperty(PropertyName = "subscription_id"), UsedImplicitly]
