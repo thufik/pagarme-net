@@ -50,6 +50,8 @@ namespace PagarMe.Base
             ModelMap.Add("transaction", typeof(Transaction));
             ModelMap.Add("card", typeof(Card));
             ModelMap.Add("customer", typeof(Customer));
+            ModelMap.Add("plan", typeof(Plan));
+            ModelMap.Add("subscription", typeof(Subscription));
         }
 
         private bool _loaded;
@@ -71,47 +73,84 @@ namespace PagarMe.Base
             _dirtyKeys = new Dictionary<string, object>();
         }
 
-        internal object ConvertObject(object obj)
+        private object ConvertToken(JToken token)
         {
-            if (obj is Array)
+            object result = token;
+
+            if (token is JArray)
             {
-                obj = ((object[])obj).Select((x) => ConvertObject(x));
+                result = ((JArray)token).Select(ConvertToken).ToArray();
             }
-            else if (obj is JContainer)
-            {
-                obj = ConvertObject(((JContainer)obj).ToObject<Dictionary<string, object>>());
-            }
-            else if (obj is IEnumerable<KeyValuePair<string, object>>)
+            else if (token is JObject)
             {
                 var type = typeof(AbstractModel);
-                var keys = (IEnumerable<KeyValuePair<string, object>>)obj;
-                object typeString = keys.FirstOrDefault((x) => x.Key == "object").Value;
+                var obj = (JObject)token;
+                var typeNameProperty = obj.Property("object");
 
-                if (typeString != null)
-                    ModelMap.TryGetValue(typeString.ToString(), out type);
+                if (typeNameProperty != null)
+                if (!ModelMap.TryGetValue(typeNameProperty.Value.ToObject<string>(), out type))
+                    type = typeof(AbstractModel);
 
                 var model = (AbstractModel)Activator.CreateInstance(type, new object[] { _service });
 
-                model.LoadFrom(keys);
+                model.LoadFrom(obj);
 
-                obj = model;
+                result = model;
+            }
+            else if (token is JValue)
+            {
+                result = ((JValue)token).Value;
             }
 
-            return obj;
+            return result;
+        }
+
+        private KeyValuePair<string, object> ConvertProperty(JProperty prop)
+        {
+            return new KeyValuePair<string, object>(prop.Name, ConvertToken(prop.Value));
         }
 
         internal void LoadFrom(string json)
         {
-            LoadFrom(JsonConvert.DeserializeObject<Dictionary<string, object>>(json));
+            LoadFrom(JObject.Parse(json));
         }
 
-        internal void LoadFrom(IEnumerable<KeyValuePair<string, object>> keys)
+        internal void LoadFrom(AbstractModel model)
         {
-            _keys = keys.Select((x) => new KeyValuePair<string, object>(x.Key, ConvertObject(x.Value))).ToDictionary((x) => x.Key, (x) => x.Value);
+            LoadFrom(model._keys);
+        }
 
+        internal void LoadFrom(JObject obj)
+        {
+            LoadFrom(obj.Properties().Select(ConvertProperty).ToDictionary((x) => x.Key, (x) => x.Value));
+        }
+
+        internal void LoadFrom(IDictionary<string, object> keys)
+        {
+            _keys = new Dictionary<string, object>(keys);
+
+            CoerceTypes();
             ClearDirtyCache();
 
             _loaded = true;
+        }
+
+        protected virtual void CoerceTypes()
+        {
+
+        }
+
+        protected virtual NestedModelSerializationRule SerializationRuleForField(string field, bool full)
+        {
+            return NestedModelSerializationRule.IdParameter;
+        }
+
+        protected void CoerceAttribute(string name, Type type)
+        {
+            object value;
+
+            if (_keys.TryGetValue(name, out value))
+                _keys[name] = CastAttribute(type, value);
         }
 
         internal KeyValuePair<string, object> ConvertKey(KeyValuePair<string, object> obj, bool full)
@@ -125,18 +164,29 @@ namespace PagarMe.Base
             }
             else if (value is Model)
             {
-                key += "_id";
-                value = ((Model)value).Id;
+                if (SerializationRuleForField(key, full) == NestedModelSerializationRule.IdParameter)
+                {
+                    key += "_id";
+                    value = ((Model)value).Id;
+                }
+                else
+                {
+                    value = ((Model)value).GetKeys(full);
+                }
             }
             else if (value is AbstractModel)
             {
                 value = ((AbstractModel)value).GetKeys(full);
             }
-
+            else if (value != null && value.GetType().GetTypeInfo().IsEnum)
+            {
+                value = EnumMagic.ConvertToString((Enum)value);
+            }
+            
             return new KeyValuePair<string, object>(key, value);
         }
 
-        internal IEnumerable<KeyValuePair<string, object>> GetKeys(bool full)
+        internal IDictionary<string, object> GetKeys(bool full)
         {
             IEnumerable<KeyValuePair<string, object>> keys;
 
@@ -145,16 +195,66 @@ namespace PagarMe.Base
             else
                 keys = _dirtyKeys;
 
-            keys = keys.ToList().Select((x) => {
-                return ConvertKey(x, full);
-            });
+            keys = keys.Select((x) => ConvertKey(x, full));
 
-            return keys;
+            return keys.ToDictionary((x) => x.Key, (x) => x.Value);
         }
 
         internal string ToJson(bool full = false)
         {
-            return JsonConvert.SerializeObject(GetKeys(full).ToDictionary((x) => x.Key, (x) => x.Value));
+
+            return JsonConvert.SerializeObject(GetKeys(full));
+        }
+
+        protected object CastAttribute(Type type, object obj)
+        {
+            var info = type.GetTypeInfo();
+
+            if (obj != null && info.IsAssignableFrom(obj.GetType().GetTypeInfo()))
+            {
+                return obj;
+            }
+            else if (info.IsEnum)
+            {
+                return EnumMagic.ConvertFromString(type, obj.ToString());
+            }
+            else if (info.IsArray)
+            {
+                var elementType = type.GetElementType();
+                var old = (Array)obj;
+                var arr = Array.CreateInstance(elementType, old.Length);
+
+                for (var i = 0; i < arr.Length; i++)
+                    arr.SetValue(CastAttribute(elementType, old.GetValue(i)), i);
+
+                return arr;
+            }
+            else if (info.IsPrimitive)
+            {
+                return Convert.ChangeType(obj, type);
+            }
+            else if (info.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                object[] args = obj == null ? null : new[] { CastAttribute(type.GetTypeInfo().GenericTypeParameters[0], obj) };
+                return Activator.CreateInstance(type, args);
+            }
+            else if (obj != null && info.IsSubclassOf(typeof(AbstractModel)) && (obj.GetType() == typeof(AbstractModel) || obj.GetType().GetTypeInfo().IsSubclassOf(typeof(AbstractModel))))
+            {
+                var oldModel = (AbstractModel)obj;
+                var model = (AbstractModel)Activator.CreateInstance
+                    (type, new object[] { _service });
+
+                model.LoadFrom(oldModel);
+
+                return model;
+            }
+
+            return obj;
+        }
+
+        protected T CastAttribute<T>(object obj)
+        {
+            return (T)CastAttribute(typeof(T), obj);
         }
 
         protected T GetAttribute<T>(string name)
@@ -165,17 +265,11 @@ namespace PagarMe.Base
             if (!_keys.TryGetValue(name, out result))
                 return default(T);
 
-            if (typeof(T).GetTypeInfo().IsEnum)
-                result = JValue.FromObject(result).ToObject(typeof(T));
-
-            return (T)result;
+            return CastAttribute<T>(result);
         }
 
         protected void SetAttribute(string name, object value)
         {
-            if (value is Enum)
-                value = JValue.FromObject(value).ToObject<string>();
-
             _dirtyKeys[name] = value;
         }
 

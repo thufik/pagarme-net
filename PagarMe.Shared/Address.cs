@@ -31,20 +31,16 @@ namespace PagarMe
     {
         public string Id
         {
-            get { return GetAttribute<object>("id").ToString(); }
+            get
+            {
+                var result = GetAttribute<object>("id");
+
+                if (result == null)
+                    return null;
+
+                return result.ToString();
+            }
             set { SetAttribute("id", value); }
-        }
-
-        public DateTime DateCreated
-        {
-            get { return GetAttribute<DateTime>("date_created"); }
-            set { SetAttribute("date_created", value); }
-        }
-
-        public DateTime DateUpdated
-        {
-            get { return GetAttribute<DateTime>("date_updated"); }
-            set { SetAttribute("date_updated", value); }
         }
 
         public string Street
@@ -95,12 +91,12 @@ namespace PagarMe
             set { SetAttribute("country", value); }
         }
 
-        private Address()
+        public Address()
             : this(null)
         {
         }
 
-        protected Address(PagarMeService service)
+        public Address(PagarMeService service)
             : base(service)
         {
         }

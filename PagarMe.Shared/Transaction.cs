@@ -68,6 +68,24 @@ namespace PagarMe
             set { SetAttribute("status", value); }
         }
 
+        public string CardHash
+        {
+            get { return GetAttribute<string>("card_hash"); }
+            set { SetAttribute("card_hash", value); }
+        }
+
+        public string CardNumber
+        {
+            get { return GetAttribute<string>("card_number"); }
+            set { SetAttribute("card_number", value); }
+        }
+
+        public string CardExpirationDate
+        {
+            get { return GetAttribute<string>("card_expiration_date"); }
+            set { SetAttribute("card_expiration_date", value); }
+        }
+
         public string StatusReason
         {
             get { return GetAttribute<string>("status_reason"); }
@@ -256,6 +274,14 @@ namespace PagarMe
             var request = CreateRequest("POST", "/refund");
 
             await ExecuteSelfRequestAsync(request);
+        }
+
+        protected override PagarMe.Base.NestedModelSerializationRule SerializationRuleForField(string field, bool full)
+        {
+            if (field == "customer" && full)
+                return PagarMe.Base.NestedModelSerializationRule.Full;
+
+            return base.SerializationRuleForField(field, full);
         }
     }
 }

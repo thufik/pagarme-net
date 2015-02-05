@@ -30,25 +30,25 @@ namespace PagarMe
 {
     public enum CardBrand
     {
-        [EnumMember(Value = "unknown")]
+        [Base.EnumValue("unknown")]
         Unknown,
-        [EnumMember(Value = "visa")]
+        [Base.EnumValue("visa")]
         Visa,
-        [EnumMember(Value = "mastercard")]
+        [Base.EnumValue("mastercard")]
         MasterCard,
-        [EnumMember(Value = "amex")]
+        [Base.EnumValue("amex")]
         AmericanExpress,
-        [EnumMember(Value = "hipercard")]
+        [Base.EnumValue("hipercard")]
         Hipercard,
-        [EnumMember(Value = "elo")]
+        [Base.EnumValue("elo")]
         Elo,
-        [EnumMember(Value = "discover")]
+        [Base.EnumValue("discover")]
         Discover,
-        [EnumMember(Value = "diners")]
+        [Base.EnumValue("diners")]
         Diners,
-        [EnumMember(Value = "jcb")]
+        [Base.EnumValue("jcb")]
         JCB,
-        [EnumMember(Value = "aura")]
+        [Base.EnumValue("aura")]
         Aura
     }
 }

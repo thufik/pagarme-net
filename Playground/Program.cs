@@ -34,10 +34,54 @@ namespace Playground
     {
         public static void Main(string[] args)
         {
-            PagarMeService.DefaultApiKey = "ak_live_JPHX33BR4omHj3ewCEghXsh12BH8VG";
+            PagarMeService.DefaultApiEndpoint = "http://localhost:3000";
+            PagarMeService.DefaultApiKey = "ak_test_dGriCyFx57fga91zmBXJ6Hp3oRjcTb";
             PagarMeService.DefaultEncryptionKey = "ek_test_Ec8KhxISQ1tug1b8bCGxC2nXfxqRmk";
 
-            var subscription = PagarMeService.GetDefaultService().Subscriptions.Find(12251);
+            var creditCard = new PagarMe.CardHash();
+
+            creditCard.CardCvv = "123";
+            creditCard.CardExpirationDate = "1018";
+            creditCard.CardHolderName = "Jonathan";
+            creditCard.CardNumber = "4242424242424242";
+
+            var cardHash = creditCard.Generate();
+
+            var plan = new Plan();
+
+            plan.Name = "Test";
+            plan.Amount = 1099;
+            plan.Days = 30;
+            plan.TrialDays = 15;
+
+            plan.Save();
+
+            var customer = new Customer();
+
+            customer.Name = "Jonathan Lima";
+            customer.Email = "jonathan@pagar.me";
+            customer.Phone = new Phone() { Ddd = "11", Number = "962617113" };
+            customer.Address = new Address()
+            {
+                Street = "Rua Agenor de Lima Franco",
+                StreetNumber = "116",
+                Zipcode = "05537120",
+                City = "São Paulo",
+                State = "São Paulo",
+                Country = "Brasil",
+                Complementary = "APTO 34A",
+                Neighborhood = "Jardim Peri Peri"
+            };
+
+            var subscription = new Subscription();
+
+            subscription.CardHash = cardHash;
+            subscription.Plan = plan;
+            subscription.Customer = customer;
+
+            subscription.Save();
+
+            var address = subscription.Address;
         }
     }
 }

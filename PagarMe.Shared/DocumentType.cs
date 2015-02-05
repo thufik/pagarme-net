@@ -30,9 +30,9 @@ namespace PagarMe
 {
     public enum DocumentType
     {
-        [EnumMember(Value = "cpf")]
+        [Base.EnumValue("cpf")]
         Cpf,
-        [EnumMember(Value = "cnpj")]
+        [Base.EnumValue("cnpj")]
         Cnpj
     }
 }

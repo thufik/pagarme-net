@@ -1,10 +1,10 @@
 ﻿//
-// TransactionStatus.cs
+// EnumValueAttribute.cs
 //
 // Author:
 //       Jonathan Lima <jonathan@pagar.me>
 //
-// Copyright (c) 2014 Pagar.me
+// Copyright (c) 2015 Pagar.me
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,26 +24,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Runtime.Serialization;
 
-namespace PagarMe
+namespace PagarMe.Base
 {
-    public enum SubscriptionStatus
+    public class EnumValueAttribute : Attribute
     {
-        [Base.EnumValue("")]
-        None,
-        [Base.EnumValue("trialing")]
-        Trialing,
-        [Base.EnumValue("paid")]
-        Paid,
-        [Base.EnumValue("pending_payment")]
-        PendingPayment,
-        [Base.EnumValue("unpaid")]
-        Unpaid,
-        [Base.EnumValue("canceled")]
-        Canceled,
-        [Base.EnumValue("ended")]
-        Ended
+        public string Value { get; private set; }
+
+        public EnumValueAttribute(string value)
+        {
+            Value = value;
+        }
     }
 }
 

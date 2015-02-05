@@ -30,9 +30,9 @@ namespace PagarMe
 {
     public enum Gender
     {
-        [EnumMember(Value = "m")]
+        [Base.EnumValue("m")]
         Male,
-        [EnumMember(Value = "f")]
+        [Base.EnumValue("f")]
         Female
     }
 }

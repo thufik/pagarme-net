@@ -30,19 +30,19 @@ namespace PagarMe
 {
     public enum TransactionStatus
     {
-        [EnumMember(Value = "")]
+        [Base.EnumValue("")]
         None,
-        [EnumMember(Value = "refused")]
+        [Base.EnumValue("refused")]
         Refused,
-        [EnumMember(Value = "authorized")]
+        [Base.EnumValue("authorized")]
         Authorized,
-        [EnumMember(Value = "waiting_payment")]
+        [Base.EnumValue("waiting_payment")]
         WaitingPayment,
-        [EnumMember(Value = "paid")]
+        [Base.EnumValue("paid")]
         Paid,
-        [EnumMember(Value = "pending_refund")]
+        [Base.EnumValue("pending_refund")]
         PendingRefund,
-        [EnumMember(Value = "refunded")]
+        [Base.EnumValue("refunded")]
         Refunded
     }
 }

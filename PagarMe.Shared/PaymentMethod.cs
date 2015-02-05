@@ -30,9 +30,9 @@ namespace PagarMe
 {
     public enum PaymentMethod
     {
-        [EnumMember(Value = "credit_card")]
+        [Base.EnumValue("credit_card")]
         CreditCard,
-        [EnumMember(Value = "boleto")]
+        [Base.EnumValue("boleto")]
         Boleto
     }
 }

@@ -93,7 +93,6 @@ namespace PagarMe
 
             try
             {
-
                 response = (HttpWebResponse)request.GetResponse();
             }
             catch (WebException e)
@@ -102,11 +101,8 @@ namespace PagarMe
                 response = (HttpWebResponse)e.Response;
 
                 if (response == null)
-
-
                     throw e;
             }
-
 
             var body = "";
 

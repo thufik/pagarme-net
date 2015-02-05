@@ -65,13 +65,37 @@ namespace PagarMe
         public Plan Plan
         {
             get { return GetAttribute<Plan>("plan"); }
-            set { SetAttribute("plan", value); }
+            set { SetAttribute("plan", value); }    
         }
 
         public SubscriptionStatus Status
         {
             get { return GetAttribute<SubscriptionStatus>("status"); }
             set { SetAttribute("status", value); }
+        }
+
+        public string CardHash
+        {
+            get { return GetAttribute<string>("card_hash"); }
+            set { SetAttribute("card_hash", value); }
+        }
+
+        public string CardNumber
+        {
+            get { return GetAttribute<string>("card_number"); }
+            set { SetAttribute("card_number", value); }
+        }
+
+        public string CardExpirationDate
+        {
+            get { return GetAttribute<string>("card_expiration_date"); }
+            set { SetAttribute("card_expiration_date", value); }
+        }
+
+        public string CardCvv
+        {
+            get { return GetAttribute<string>("cvv"); }
+            set { SetAttribute("cvv", value); }
         }
 
         public int Charges
@@ -138,6 +162,28 @@ namespace PagarMe
             : base(service)
         {
             Metadata = new Base.AbstractModel(Service);
+        }
+
+        public void Cancel(int? amount)
+        {
+            var request = CreateRequest("POST", "/cancel");
+
+            ExecuteSelfRequest(request);
+        }
+
+        public async void CancelAsync(int? amount)
+        {
+            var request = CreateRequest("POST", "/cancel");
+
+            await ExecuteSelfRequestAsync(request);
+        }
+
+        protected override PagarMe.Base.NestedModelSerializationRule SerializationRuleForField(string field, bool full)
+        {
+            if (field == "customer" && full)
+                return PagarMe.Base.NestedModelSerializationRule.Full;
+
+            return base.SerializationRuleForField(field, full);
         }
     }
 }
