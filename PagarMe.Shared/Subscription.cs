@@ -164,11 +164,6 @@ namespace PagarMe
             Metadata = new Base.AbstractModel(Service);
         }
 
-        public Transaction CreateTransaction()
-        {
-            return new Transaction(Service) { Subscription = this };
-        }
-
         public void Cancel()
         {
             var request = CreateRequest("POST", "/cancel");
