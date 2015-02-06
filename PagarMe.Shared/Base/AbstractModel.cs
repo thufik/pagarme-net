@@ -268,9 +268,12 @@ namespace PagarMe.Base
             return CastAttribute<T>(result);
         }
 
-        protected void SetAttribute(string name, object value)
+        protected void SetAttribute(string name, object value, bool dirty = true)
         {
-            _dirtyKeys[name] = value;
+            if (dirty)
+                _dirtyKeys[name] = value;
+            else
+                _keys[name] = value;
         }
 
         protected void ClearDirtyCache()

@@ -242,7 +242,7 @@ namespace PagarMe
             Metadata = new Base.AbstractModel(Service);
         }
 
-        public void Capture(int? amount)
+        public void Capture(int? amount = null)
         {
             var request = CreateRequest("POST", "/capture");
 
@@ -252,14 +252,7 @@ namespace PagarMe
             ExecuteSelfRequest(request);
         }
 
-        public void Refund(int? amount)
-        {
-            var request = CreateRequest("POST", "/refund");
-
-            ExecuteSelfRequest(request);
-        }
-
-        public async void CaptureAsync(int? amount)
+        public async void CaptureAsync(int? amount = null)
         {
             var request = CreateRequest("POST", "/capture");
 
@@ -269,11 +262,33 @@ namespace PagarMe
             await ExecuteSelfRequestAsync(request);
         }
 
-        public async void RefundAsync(int? amount)
+        public void Refund()
+        {
+            var request = CreateRequest("POST", "/refund");
+
+            ExecuteSelfRequest(request);
+        }
+
+        public async void RefundAsync()
         {
             var request = CreateRequest("POST", "/refund");
 
             await ExecuteSelfRequestAsync(request);
+        }
+
+        protected override void CoerceTypes()
+        {
+            base.CoerceTypes();
+
+            CoerceAttribute("card", typeof(Card));
+            CoerceAttribute("customer", typeof(Customer));
+            CoerceAttribute("address", typeof(Address));
+            CoerceAttribute("phone", typeof(Phone));
+
+            var subscriptionId = GetAttribute<object>("subscription_id");
+
+            if (subscriptionId != null)
+                SetAttribute("subscription", Service.Subscriptions.Find(subscriptionId.ToString(), false));
         }
 
         protected override PagarMe.Base.NestedModelSerializationRule SerializationRuleForField(string field, bool full)

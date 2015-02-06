@@ -52,7 +52,7 @@ namespace Playground
             plan.Name = "Test";
             plan.Amount = 1099;
             plan.Days = 30;
-            plan.TrialDays = 15;
+            plan.TrialDays = 0;
 
             plan.Save();
 
@@ -80,6 +80,8 @@ namespace Playground
             subscription.Customer = customer;
 
             subscription.Save();
+
+            subscription.CurrentTransaction.Refund();
 
             var address = subscription.Address;
         }

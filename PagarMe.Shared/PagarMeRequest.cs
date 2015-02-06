@@ -71,6 +71,7 @@ namespace PagarMe
             Path = path;
 
             Query = new List<Tuple<string, string>>();
+            Body = "{}";
         }
 
         #if !PCL
@@ -80,7 +81,7 @@ namespace PagarMe
             var request = GetRequest();
             bool isError = false;
 
-            if (Body != null)
+            if (Body != null && (Method == "POST" || Method == "PUT"))
             {
                 var encoding = new UTF8Encoding(false);
 
@@ -114,7 +115,6 @@ namespace PagarMe
                 throw new PagarMeException(new PagarMeError(response.StatusCode, body));
             else
                 return new PagarMeResponse(response.StatusCode, body);
-
         }
         #else
         public PagarMeResponse Execute()

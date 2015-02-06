@@ -164,18 +164,35 @@ namespace PagarMe
             Metadata = new Base.AbstractModel(Service);
         }
 
-        public void Cancel(int? amount)
+        public Transaction CreateTransaction()
+        {
+            return new Transaction(Service) { Subscription = this };
+        }
+
+        public void Cancel()
         {
             var request = CreateRequest("POST", "/cancel");
 
             ExecuteSelfRequest(request);
         }
 
-        public async void CancelAsync(int? amount)
+        public async void CancelAsync()
         {
             var request = CreateRequest("POST", "/cancel");
 
             await ExecuteSelfRequestAsync(request);
+        }
+
+        protected override void CoerceTypes()
+        {
+            base.CoerceTypes();
+
+            CoerceAttribute("card", typeof(Card));
+            CoerceAttribute("customer", typeof(Customer));
+            CoerceAttribute("current_transaction", typeof(Transaction));
+            CoerceAttribute("address", typeof(Address));
+            CoerceAttribute("phone", typeof(Phone));
+            CoerceAttribute("plan", typeof(Plan));
         }
 
         protected override PagarMe.Base.NestedModelSerializationRule SerializationRuleForField(string field, bool full)

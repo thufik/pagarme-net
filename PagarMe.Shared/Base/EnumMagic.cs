@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 
@@ -49,11 +50,15 @@ namespace PagarMe.Base
 
                 foreach (string name in names)
                 {
-                    var member = type.GetTypeInfo().GetField(name, BindingFlags.Static | BindingFlags.Public);
+                    #if !PCL
+                    var member = type.GetTypeInfo().GetRuntimeFields().Single((x) => x.Name == name);
+                    #else
+                    var member = type.GetTypeInfo().GetDeclaredField(name);
+                    #endif
                     var value = Enum.Parse(type, name);
                     var realName = name;
 
-                    var attr = (EnumValueAttribute)member.GetCustomAttribute(typeof(EnumValueAttribute));
+                    var attr = member.GetCustomAttribute<EnumValueAttribute>();
 
                     if (attr != null)
                         realName = attr.Value;
