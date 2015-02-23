@@ -190,7 +190,7 @@ namespace PagarMe.Base
         {
             IEnumerable<KeyValuePair<string, object>> keys;
 
-            if (SerializationType.Shallow != SerializationType.Shallow)
+            if (type != SerializationType.Shallow)
                 keys = _keys.Concat(_dirtyKeys);
             else
                 keys = _dirtyKeys;
@@ -235,7 +235,11 @@ namespace PagarMe.Base
             }
             else if (info.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
+                #if PCL
+                var valueType = type.GetTypeInfo().GenericTypeParameters;
+                #else
                 var valueType = type.GetTypeInfo().GetGenericArguments();
+                #endif
                 object[] args = obj == null ? null : new[] { CastAttribute(valueType[0], obj) };
                 return Activator.CreateInstance(type, args);
             }

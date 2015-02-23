@@ -8,8 +8,6 @@ namespace PagarMe.Tests
 {
     public class PagarMeTestFixture
     {
-        private static PagarMeService _provider;
-
         static PagarMeTestFixture()
         {
             PagarMeService.DefaultApiKey = "ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY";
