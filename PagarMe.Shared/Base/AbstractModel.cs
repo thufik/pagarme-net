@@ -140,7 +140,7 @@ namespace PagarMe.Base
 
         }
 
-        protected virtual NestedModelSerializationRule SerializationRuleForField(string field, bool full)
+        protected virtual NestedModelSerializationRule SerializationRuleForField(string field, SerializationType type)
         {
             return NestedModelSerializationRule.IdParameter;
         }
@@ -153,30 +153,30 @@ namespace PagarMe.Base
                 _keys[name] = CastAttribute(type, value);
         }
 
-        internal KeyValuePair<string, object> ConvertKey(KeyValuePair<string, object> obj, bool full)
+        internal KeyValuePair<string, object> ConvertKey(KeyValuePair<string, object> obj, SerializationType type)
         {
             var key = obj.Key;
             var value = obj.Value;
 
             if (value is Array)
             {
-                value = ((object[])value).Select((x) => ConvertKey(new KeyValuePair<string, object>("", x), full).Value);
+                value = ((object[])value).Select((x) => ConvertKey(new KeyValuePair<string, object>("", x), type).Value);
             }
             else if (value is Model)
             {
-                if (SerializationRuleForField(key, full) == NestedModelSerializationRule.IdParameter)
+                if (type != SerializationType.Plain && SerializationRuleForField(key, type) == NestedModelSerializationRule.IdParameter)
                 {
                     key += "_id";
                     value = ((Model)value).Id;
                 }
                 else
                 {
-                    value = ((Model)value).GetKeys(full);
+                    value = ((Model)value).GetKeys(type);
                 }
             }
             else if (value is AbstractModel)
             {
-                value = ((AbstractModel)value).GetKeys(full);
+                value = ((AbstractModel)value).GetKeys(type);
             }
             else if (value != null && value.GetType().GetTypeInfo().IsEnum)
             {
@@ -186,24 +186,24 @@ namespace PagarMe.Base
             return new KeyValuePair<string, object>(key, value);
         }
 
-        internal IDictionary<string, object> GetKeys(bool full)
+        internal IDictionary<string, object> GetKeys(SerializationType type)
         {
             IEnumerable<KeyValuePair<string, object>> keys;
 
-            if (full)
+            if (SerializationType.Shallow != SerializationType.Shallow)
                 keys = _keys.Concat(_dirtyKeys);
             else
                 keys = _dirtyKeys;
 
-            keys = keys.Select((x) => ConvertKey(x, full));
+            keys = keys.Select((x) => ConvertKey(x, type));
 
             return keys.ToDictionary((x) => x.Key, (x) => x.Value);
         }
 
-        internal string ToJson(bool full = false)
+        internal string ToJson(SerializationType type = SerializationType.Shallow)
         {
 
-            return JsonConvert.SerializeObject(GetKeys(full));
+            return JsonConvert.SerializeObject(GetKeys(type));
         }
 
         protected object CastAttribute(Type type, object obj)
@@ -235,7 +235,8 @@ namespace PagarMe.Base
             }
             else if (info.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
-                object[] args = obj == null ? null : new[] { CastAttribute(type.GetTypeInfo().GenericTypeParameters[0], obj) };
+                var valueType = type.GetTypeInfo().GetGenericArguments();
+                object[] args = obj == null ? null : new[] { CastAttribute(valueType[0], obj) };
                 return Activator.CreateInstance(type, args);
             }
             else if (obj != null && info.IsSubclassOf(typeof(AbstractModel)) && (obj.GetType() == typeof(AbstractModel) || obj.GetType().GetTypeInfo().IsSubclassOf(typeof(AbstractModel))))

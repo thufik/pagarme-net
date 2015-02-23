@@ -190,12 +190,12 @@ namespace PagarMe
             CoerceAttribute("plan", typeof(Plan));
         }
 
-        protected override PagarMe.Base.NestedModelSerializationRule SerializationRuleForField(string field, bool full)
+        protected override PagarMe.Base.NestedModelSerializationRule SerializationRuleForField(string field, Base.SerializationType type)
         {
-            if (field == "customer" && full)
+            if (field == "customer" && type != Base.SerializationType.Shallow)
                 return PagarMe.Base.NestedModelSerializationRule.Full;
 
-            return base.SerializationRuleForField(field, full);
+            return base.SerializationRuleForField(field, type);
         }
     }
 }

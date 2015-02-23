@@ -105,7 +105,7 @@ namespace PagarMe.Base
             {
                 var request = CreateCollectionRequest("POST");
 
-                request.Body = ToJson(true);
+                request.Body = ToJson(SerializationType.Full);
 
                 var response = request.Execute();
 
@@ -115,7 +115,7 @@ namespace PagarMe.Base
             {
                 var request = CreateRequest("PUT");
 
-                request.Body = ToJson(false);
+                request.Body = ToJson(SerializationType.Shallow);
 
                 var response = request.Execute();
 
@@ -130,7 +130,7 @@ namespace PagarMe.Base
             {
                 var request = CreateCollectionRequest("POST");
 
-                request.Body = ToJson(true);
+                request.Body = ToJson(SerializationType.Full);
 
                 var response = await request.ExecuteAsync();
 
@@ -140,7 +140,7 @@ namespace PagarMe.Base
             {
                 var request = CreateRequest("PUT");
 
-                request.Body = ToJson(false);
+                request.Body = ToJson(SerializationType.Shallow);
 
                 var response = await request.ExecuteAsync();
 

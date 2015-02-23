@@ -83,11 +83,11 @@ namespace PagarMe
             _encryptionKey = encryptionKey;
             _apiEndpoint = apiEndpoint;
 
-            Cards = new PagarMe.Base.ModelCollection<Card>(this);
-            Subscriptions = new PagarMe.Base.ModelCollection<Subscription>(this);
-            Transactions = new PagarMe.Base.ModelCollection<Transaction>(this);
-            Plans = new PagarMe.Base.ModelCollection<Plan>(this);
-            Customers = new PagarMe.Base.ModelCollection<Customer>(this);
+            Cards = new PagarMe.Base.ModelCollection<Card>(this, "/cards");
+            Subscriptions = new PagarMe.Base.ModelCollection<Subscription>(this, "/subscriptions");
+            Transactions = new PagarMe.Base.ModelCollection<Transaction>(this, "/transactions");
+            Plans = new PagarMe.Base.ModelCollection<Plan>(this, "/plans");
+            Customers = new PagarMe.Base.ModelCollection<Customer>(this, "/customers");
         }
     }
 }

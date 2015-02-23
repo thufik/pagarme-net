@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PagarMe;
 using Newtonsoft.Json;
 
@@ -34,9 +35,12 @@ namespace Playground
     {
         public static void Main(string[] args)
         {
-            PagarMeService.DefaultApiEndpoint = "http://localhost:3000";
-            PagarMeService.DefaultApiKey = "ak_test_dGriCyFx57fga91zmBXJ6Hp3oRjcTb";
+            PagarMeService.DefaultApiKey = "ak_live_JPHX33BR4omHj3ewCEghXsh12BH8VG";
             PagarMeService.DefaultEncryptionKey = "ek_test_Ec8KhxISQ1tug1b8bCGxC2nXfxqRmk";
+
+            string name = "Jonathan Lima";
+            var tx = PagarMeService.GetDefaultService().Transactions.FindAll(new Transaction { Card = new Card { HolderName = "JONATHAN MARQUES" } }).ToArray();
+            var a = tx[0].Installments;
 
             var creditCard = new PagarMe.CardHash();
 

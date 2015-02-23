@@ -25,7 +25,9 @@
 // THE SOFTWARE.
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using Newtonsoft.Json.Linq;
 
 #if HAS_ASYNC
 using System.Threading.Tasks;
@@ -36,19 +38,21 @@ namespace PagarMe.Base
     public class ModelCollection<TModel> where TModel : Model
     {
         private PagarMeService _service;
+        private string _endpoint;
 
-        internal ModelCollection()
-            : this(null)
+        internal ModelCollection(string endpoint)
+            : this(null, endpoint)
         {
 
         }
 
-        internal ModelCollection(PagarMeService service)
+        internal ModelCollection(PagarMeService service, string endpoint)
         {
             if (service == null)
                 service = PagarMeService.GetDefaultService();
 
             _service = service;
+            _endpoint = endpoint;
         }
 
         public TModel Find(int id, bool load = true)
@@ -87,35 +91,78 @@ namespace PagarMe.Base
         }
         #endif
 
-        /*public TModel Find(Expression<Func<TModel, bool>> match)
+        public TModel Find(TModel searchParams)
         {
-
+            return FindAll(searchParams).FirstOrDefault();
         }
 
-        public async Task<TModel> FindAsync(Expression<Func<TModel, bool>> match)
+        public async Task<TModel> FindAsync(TModel searchParams)
         {
-
+            return (await FindAllAsync(searchParams)).FirstOrDefault();
         }
             
-        public IEnumerable<TModel> FindAll(Expression<Func<TModel, bool>> match)
+        public IEnumerable<TModel> FindAll(TModel searchParams)
         {
-
+            return FinishFindQuery(BuildFindQuery(searchParams).Execute());
         }
 
-        public async Task<IEnumerable<TModel>> FindAllAsync(Expression<Func<TModel, bool>> match)
+        public async Task<IEnumerable<TModel>> FindAllAsync(TModel searchParams)
         {
-
+            return FinishFindQuery(await BuildFindQuery(searchParams).ExecuteAsync());
         }
 
-        public int Count(Expression<Func<TModel, bool>> match)
+        public PagarMeRequest BuildFindQuery(TModel searchParameters)
         {
+            var request = new PagarMeRequest(_service, "GET", _endpoint);
+            var keys = searchParameters.GetKeys(SerializationType.Plain);
 
+            BuildQueryForKeys(request.Query, null, keys);
+
+            return request;
         }
 
-        public async Task<int> CountAsync(Expression<Func<TModel, bool>> match)
+        public void BuildQueryForKeys(List<Tuple<string, string>> query, string prefix, IDictionary<string, object> keys)
         {
+            foreach (var kvp in keys)
+            {
+                var name = "";
 
-        }*/
+                if (prefix == null)
+                {
+                    name = kvp.Key;
+                }
+                else
+                {
+                    name = prefix + "[" + kvp.Key + "]";
+                }
+
+                if (kvp.Value is IDictionary<string, object>)
+                {
+                    BuildQueryForKeys(query, name, (IDictionary<string, object>)kvp.Value);
+                }
+                else if (kvp.Value is String)
+                {
+                    query.Add(new Tuple<string, string>(name, kvp.Value.ToString()));
+                }
+                else
+                {
+                    query.Add(new Tuple<string, string>(name, JValue.FromObject(kvp.Value).ToString(Newtonsoft.Json.Formatting.None)));
+                }
+            }
+        }
+
+        public IEnumerable<TModel> FinishFindQuery(PagarMeResponse response)
+        {
+            return JArray.Parse(response.Body).Select((x) =>
+                {
+                    var model = (TModel)Activator.CreateInstance(typeof(TModel), new object[] { _service });
+
+                    model.LoadFrom((JObject)x);
+
+                    return model;
+                });
+ 
+        }
     }
 }
 

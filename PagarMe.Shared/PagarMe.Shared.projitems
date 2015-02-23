@@ -39,6 +39,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Base\NestedModelSerializationRule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Base\EnumMagic.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Base\EnumValueAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Base\SerializationType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Serialization\" />
