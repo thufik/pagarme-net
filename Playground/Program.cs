@@ -35,36 +35,24 @@ namespace Playground
     {
         public static void Main(string[] args)
         {
-            PagarMeService.DefaultApiKey = "ak_live_JPHX33BR4omHj3ewCEghXsh12BH8VG";
+            PagarMeService.DefaultApiKey = "ak_test_KGXIjQ4GicOa2BLGZrDRTR5qNQxDWo";
             PagarMeService.DefaultEncryptionKey = "ek_test_Ec8KhxISQ1tug1b8bCGxC2nXfxqRmk";
-
-            string name = "Jonathan Lima";
-            var tx = PagarMeService.GetDefaultService().Transactions.FindAll(new Transaction { Card = new Card { HolderName = "JONATHAN MARQUES" } }).ToArray();
-            var a = tx[0].Installments;
 
             var creditCard = new PagarMe.CardHash();
 
             creditCard.CardCvv = "123";
             creditCard.CardExpirationDate = "1018";
             creditCard.CardHolderName = "Jonathan";
-            creditCard.CardNumber = "4242424242424242";
+            creditCard.CardNumber = "5268630325858009";
 
-            var cardHash = creditCard.Generate();
-
-            var plan = new Plan();
-
-            plan.Name = "Test";
-            plan.Amount = 1099;
-            plan.Days = 30;
-            plan.TrialDays = 0;
-
-            plan.Save();
+            var cardHash = creditCard.Generate();;
 
             var customer = new Customer();
 
             customer.Name = "Jonathan Lima";
             customer.Email = "jonathan@pagar.me";
             customer.Phone = new Phone() { Ddd = "11", Number = "962617113" };
+            customer.DocumentNumber = "05737104141";
             customer.Address = new Address()
             {
                 Street = "Rua Agenor de Lima Franco",
@@ -77,17 +65,17 @@ namespace Playground
                 Neighborhood = "Jardim Peri Peri"
             };
 
-            var subscription = new Subscription();
+            var transaction = new Transaction();
 
-            subscription.CardHash = cardHash;
-            subscription.Plan = plan;
-            subscription.Customer = customer;
+            transaction.CardHash = cardHash;
+            transaction.Customer = customer;
+            transaction.Amount = 1099;
 
-            subscription.Save();
+            transaction.Save();
 
-            subscription.CurrentTransaction.Refund();
+            var score = transaction.AntifraudScore;
 
-            var address = subscription.Address;
+        
         }
     }
 }

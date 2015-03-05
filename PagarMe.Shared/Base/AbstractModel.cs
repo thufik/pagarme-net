@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Globalization;
 using System.Reflection;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -231,7 +232,7 @@ namespace PagarMe.Base
             }
             else if (info.IsPrimitive)
             {
-                return Convert.ChangeType(obj, type);
+                return Convert.ChangeType(obj, type, CultureInfo.InvariantCulture);
             }
             else if (info.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
