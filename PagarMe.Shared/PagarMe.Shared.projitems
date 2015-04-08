@@ -40,6 +40,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Base\EnumMagic.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Base\EnumValueAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Base\SerializationType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BankAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Recipient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TransferInterval.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SplitRule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Serialization\" />

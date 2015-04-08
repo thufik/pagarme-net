@@ -35,47 +35,57 @@ namespace Playground
     {
         public static void Main(string[] args)
         {
-            PagarMeService.DefaultApiKey = "ak_test_KGXIjQ4GicOa2BLGZrDRTR5qNQxDWo";
-            PagarMeService.DefaultEncryptionKey = "ek_test_Ec8KhxISQ1tug1b8bCGxC2nXfxqRmk";
+			PagarMeService.DefaultApiKey = "ak_test_TSgC3nvXtdYnDoGKgNLIOfk3TFfkl9";
+			PagarMeService.DefaultEncryptionKey = "ek_test_UT6AN4fDN3BCUgo6kxUiOq6S20dbKc";
 
-            var creditCard = new PagarMe.CardHash();
 
-            creditCard.CardCvv = "123";
-            creditCard.CardExpirationDate = "1018";
-            creditCard.CardHolderName = "Jonathan";
-            creditCard.CardNumber = "5268630325858009";
+			BankAccount b = new BankAccount ();
 
-            var cardHash = creditCard.Generate();;
+			b.Agencia = "0196";
+			b.AgenciaDv = "0";
+			b.Conta = "05392";
+			b.ContaDv = "0";
+			b.BankCode = "0341";
+			b.DocumentNumber = "05737104141";
+			b.LegalName = "JONATHAN LIMA";
+			b.Save();
 
-            var customer = new Customer();
+			Recipient r1 = PagarMeService.GetDefaultService ().Recipients.Find("re_ci76hxnym00b8dw16y3hdxb21");
+			Recipient r2 = PagarMeService.GetDefaultService ().Recipients.Find("re_ci7nheu0m0006n016o5sglg9t");
+			Recipient r3 = new Recipient();
 
-            customer.Name = "Jonathan Lima";
-            customer.Email = "jonathan@pagar.me";
-            customer.Phone = new Phone() { Ddd = "11", Number = "962617113" };
-            customer.DocumentNumber = "05737104141";
-            customer.Address = new Address()
-            {
-                Street = "Rua Agenor de Lima Franco",
-                StreetNumber = "116",
-                Zipcode = "05537120",
-                City = "São Paulo",
-                State = "São Paulo",
-                Country = "Brasil",
-                Complementary = "APTO 34A",
-                Neighborhood = "Jardim Peri Peri"
-            };
+			r3.BankAccount = b;
+			r3.TransferEnabled = true;
+			r3.TransferInterval = TransferInterval.Weekly;
+			r3.TransferDay = 1;
+			r3.Save();
 
-            var transaction = new Transaction();
+			Transaction t = new Transaction();
 
-            transaction.CardHash = cardHash;
-            transaction.Customer = customer;
-            transaction.Amount = 1099;
+			t.SplitRules = new[] {
+				new SplitRule {
+					Recipient = r1,
+					Percentage = 10,
+					ChargeProcessingFee = true,
+					Liable = true
+				},
+				new SplitRule {
+					Recipient = r2,
+					Percentage = 40,
+					ChargeProcessingFee = false,
+					Liable = false
+				},
+				new SplitRule {
+					Recipient = r3,
+					Percentage = 50,
+					ChargeProcessingFee = false,
+					Liable = false
+				}
+			};
 
-            transaction.Save();
-
-            var score = transaction.AntifraudScore;
-
-        
+			t.PaymentMethod = PaymentMethod.Boleto;
+			t.Amount = 10000;
+			t.Save();
         }
     }
 }

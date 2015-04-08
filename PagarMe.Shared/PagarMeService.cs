@@ -39,7 +39,9 @@ namespace PagarMe
         public Base.ModelCollection<Subscription> Subscriptions { get; private set; }
         public Base.ModelCollection<Customer> Customers { get; private set; }
         public Base.ModelCollection<Transaction> Transactions { get; private set; }
-        public Base.ModelCollection<Plan> Plans { get; private set; }
+		public Base.ModelCollection<Plan> Plans { get; private set; }
+		public Base.ModelCollection<Recipient> Recipients { get; private set; }
+		public Base.ModelCollection<BankAccount> BankAccounts { get; private set; }
 
         static PagarMeService()
         {
@@ -67,6 +69,7 @@ namespace PagarMe
         }
 
         public string ApiEndpoint
+
         {
             get { return _apiEndpoint; }
         }
@@ -87,7 +90,9 @@ namespace PagarMe
             Subscriptions = new PagarMe.Base.ModelCollection<Subscription>(this, "/subscriptions");
             Transactions = new PagarMe.Base.ModelCollection<Transaction>(this, "/transactions");
             Plans = new PagarMe.Base.ModelCollection<Plan>(this, "/plans");
-            Customers = new PagarMe.Base.ModelCollection<Customer>(this, "/customers");
+			Customers = new PagarMe.Base.ModelCollection<Customer>(this, "/customers");
+			Recipients = new PagarMe.Base.ModelCollection<Recipient>(this, "/recipients");
+			BankAccounts = new PagarMe.Base.ModelCollection<BankAccount>(this, "/bank_accounts");
         }
     }
 }

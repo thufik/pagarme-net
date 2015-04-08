@@ -230,6 +230,12 @@ namespace PagarMe
             set { SetAttribute("metadata", value); }
         }
 
+		public SplitRule[] SplitRules
+		{
+			get { return GetAttribute<SplitRule[]>("split_rules"); }
+			set { SetAttribute("split_rules", value); }
+		}
+
         public Transaction()
             : this(null)
         {
