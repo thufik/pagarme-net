@@ -32,6 +32,8 @@ namespace PagarMe
     {
         [Base.EnumValue("")]
         None,
+        [Base.EnumValue("processing")]
+        Processing,
         [Base.EnumValue("refused")]
         Refused,
         [Base.EnumValue("authorized")]
