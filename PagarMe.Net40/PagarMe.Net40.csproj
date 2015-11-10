@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8D32C388-E31F-497B-BCF9-9D088CEB65AD}</ProjectGuid>
+    <ProjectGuid>{2EFDFE61-6D2E-41E5-B833-82564D3E8158}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>PagarMe</RootNamespace>
     <AssemblyName>PagarMe</AssemblyName>
