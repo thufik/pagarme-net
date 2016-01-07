@@ -60,18 +60,18 @@ namespace PagarMe
         public PaymentMethod[] PaymentMethods
         {
             get
-			{
-				return GetAttribute<String[]> ("payment_methods")
-					.Select(s => EnumMagic.ConvertFromString(typeof(PaymentMethod), s))
-					.Cast<PaymentMethod>()
-					.ToArray();
-			}
+            {
+                return GetAttribute<String[]> ("payment_methods")
+                    .Select(s => EnumMagic.ConvertFromString(typeof(PaymentMethod), s))
+                    .Cast<PaymentMethod>()
+                    .ToArray();
+            }
 
             set
-			{
-				var strings = value.Select(e => EnumMagic.ConvertToString(e)).ToArray();
-				SetAttribute("payment_methods", strings);
-			}
+            {
+                var strings = value.Select(e => EnumMagic.ConvertToString(e)).ToArray();
+                SetAttribute("payment_methods", strings);
+            }
         }
 
         public string Color
