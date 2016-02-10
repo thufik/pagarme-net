@@ -44,6 +44,26 @@ namespace PagarMe.Base
             }
             set { SetAttribute("id", value); }
         }
+	public DateTime? DateCreated
+	{
+		get
+		{
+			var result = GetAttribute<DateTime?>("date_created");
+			if (result == null)
+				return null;
+			return result;
+		}
+	}
+	public DateTime? DateUpdated
+	{
+		get
+		{
+			var result = GetAttribute<DateTime?>("date_updated");
+			if (result == null)
+				return null;
+			return result;
+		}
+	}
 
         private Model()
             : this(null)
