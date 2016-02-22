@@ -116,9 +116,9 @@ namespace PagarMe
             set { SetAttribute("soft_descriptor", value); }
         }
 
-        public string Tid
+        public int Tid
         {
-            get { return GetAttribute<string>("tid"); }
+            get { return GetAttribute<int>("tid"); }
             set { SetAttribute("tid", value); }
         }
 
