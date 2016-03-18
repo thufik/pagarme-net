@@ -38,6 +38,7 @@
     <Compile Include="PagarMeTestFixture.cs" />
     <Compile Include="SubscriptionTests.cs" />
     <Compile Include="TransactionTests.cs" />
+    <Compile Include="FingerprintTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
