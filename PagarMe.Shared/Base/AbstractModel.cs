@@ -172,12 +172,12 @@ namespace PagarMe.Base
                 }
                 else
                 {
-                    value = ((Model)value).GetKeys(type);
+					value = ((Model)value).ToDictionary(type);
                 }
             }
             else if (value is AbstractModel)
             {
-                value = ((AbstractModel)value).GetKeys(type);
+				value = ((AbstractModel)value).ToDictionary(type);
             }
             #if NET40
             else if (value != null && value.GetType().IsEnum)
@@ -191,7 +191,7 @@ namespace PagarMe.Base
             return new KeyValuePair<string, object>(key, value);
         }
 
-        internal IDictionary<string, object> GetKeys(SerializationType type)
+		public IDictionary<string, object> ToDictionary(SerializationType type = SerializationType.Shallow)
         {
             IEnumerable<KeyValuePair<string, object>> keys;
 
@@ -208,7 +208,7 @@ namespace PagarMe.Base
         internal string ToJson(SerializationType type = SerializationType.Shallow)
         {
 
-            return JsonConvert.SerializeObject(GetKeys(type));
+			return JsonConvert.SerializeObject(ToDictionary(type));
         }
 
         protected object CastAttribute(Type type, object obj)

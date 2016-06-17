@@ -114,7 +114,7 @@ namespace PagarMe.Base
         public PagarMeRequest BuildFindQuery(TModel searchParameters)
         {
             var request = new PagarMeRequest(_service, "GET", _endpoint);
-            var keys = searchParameters.GetKeys(SerializationType.Plain);
+			var keys = searchParameters.ToDictionary(SerializationType.Plain);
 
             BuildQueryForKeys(request.Query, null, keys);
 
