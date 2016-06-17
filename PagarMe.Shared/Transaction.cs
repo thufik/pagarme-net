@@ -134,6 +134,13 @@ namespace PagarMe
             set { SetAttribute("amount", value); }
         }
 
+        public int RefundedAmount
+        {
+            get { return GetAttribute<int>("refunded_amount"); }
+            set { SetAttribute("refunded_amount", value); }
+        }
+
+
         public int? Installments
         {
             get { return GetAttribute<int?>("installments"); }
