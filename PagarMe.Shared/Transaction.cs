@@ -134,6 +134,13 @@ namespace PagarMe
             set { SetAttribute("amount", value); }
         }
 
+        public int RefundedAmount
+        {
+            get { return GetAttribute<int>("refunded_amount"); }
+            set { SetAttribute("refunded_amount", value); }
+        }
+
+
         public int? Installments
         {
             get { return GetAttribute<int?>("installments"); }
@@ -274,9 +281,12 @@ namespace PagarMe
             await ExecuteSelfRequestAsync(request);
         }
 
-        public void Refund()
+        public void Refund(int? amount = null)
         {
             var request = CreateRequest("POST", "/refund");
+
+            if (amount.HasValue)
+                request.Query.Add(new Tuple<string, string>("amount", amount.Value.ToString()));
 
             ExecuteSelfRequest(request);
         }

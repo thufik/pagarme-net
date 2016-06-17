@@ -47,6 +47,20 @@ namespace PagarMe.Tests
         }
 
         [Test]
+        public void PartialRefund()
+        {
+            var transaction = CreateTestTransaction();
+
+            transaction.Save();
+            int amountToBeRefunded = 100;
+			transaction.Refund(amountToBeRefunded);
+
+			Assert.IsTrue(transaction.Status == TransactionStatus.Paid);
+			Assert.IsTrue(transaction.RefundedAmount == amountToBeRefunded);
+        }
+
+
+        [Test]
         public void SendMetadata()
         {
             var transaction = CreateTestTransaction();
