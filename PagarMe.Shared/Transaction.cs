@@ -274,9 +274,12 @@ namespace PagarMe
             await ExecuteSelfRequestAsync(request);
         }
 
-        public void Refund()
+        public void Refund(int? amount = null)
         {
             var request = CreateRequest("POST", "/refund");
+
+            if (amount.HasValue)
+                request.Query.Add(new Tuple<string, string>("amount", amount.Value.ToString()));
 
             ExecuteSelfRequest(request);
         }
