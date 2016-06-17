@@ -68,6 +68,24 @@ namespace PagarMe
             set { SetAttribute("status", value); }
         }
 
+		public int AuthorizationAmount
+		{
+			get { return GetAttribute<int> ("authorized_amount"); }
+			set { SetAttribute ("authorized_amount", value); }
+		}
+
+		public int PaidAmount
+		{
+			get { return GetAttribute<int> ("paid_amount"); }
+			set { SetAttribute ("paid_amount", value); }
+		}
+
+		public int RefundedAmount
+		{
+			get { return GetAttribute<int> ("refunded_amount"); }
+			set { SetAttribute ("refunded_amount", value); }
+		}
+
         public string CardHash
         {
             get { return GetAttribute<string>("card_hash"); }
@@ -133,13 +151,6 @@ namespace PagarMe
             get { return GetAttribute<int>("amount"); }
             set { SetAttribute("amount", value); }
         }
-
-        public int RefundedAmount
-        {
-            get { return GetAttribute<int>("refunded_amount"); }
-            set { SetAttribute("refunded_amount", value); }
-        }
-
 
         public int? Installments
         {
@@ -291,9 +302,12 @@ namespace PagarMe
             ExecuteSelfRequest(request);
         }
 
-        public async void RefundAsync()
+		public async void RefundAsync(int? amount = null)
         {
             var request = CreateRequest("POST", "/refund");
+
+			if (amount.HasValue)
+				request.Query.Add(new Tuple<string, string>("amount", amount.Value.ToString()));
 
             await ExecuteSelfRequestAsync(request);
         }
