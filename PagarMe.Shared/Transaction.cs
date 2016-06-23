@@ -265,7 +265,6 @@ namespace PagarMe
         public Base.ModelCollection<Event> Events {
             get
             {
-                Console.WriteLine ("Debug: " + Endpoint + "/" + Id);
                 if (Id == null) {
                     throw new InvalidOperationException ("Transaction must have an Id in order to fetch events");
                 }
