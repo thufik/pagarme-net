@@ -71,14 +71,33 @@ namespace PagarMe.Tests
 
             Assert.IsTrue(transaction.Metadata["test"].ToString() == "uhuul");
         }
+    }
 
+    [TestFixture]
+    public class TransactionEventTests : PagarMeTestFixture
+    {
         [Test]
-        public void HasEvents ()
+        public void HasEvents()
         {
-            var transaction = CreateTestTransaction ();
-            transaction.Save ();
-            var events = transaction.Events.FindAll (new Event());
+            var transaction = CreateTestTransaction();
+            transaction.Save();
+            var events = transaction.Events.FindAll(new Event());
             Assert.AreEqual(1, events.Count());
         }
+
+        [Test]
+        public void ThrowsExceptionIfIdNull()
+        {
+            try
+            {
+                var transaction = CreateTestTransaction();
+                var events = transaction.Events;
+                Assert.Fail();
+            }
+            catch (InvalidOperationException)
+            {
+            }
+        }
     }
+
 }
