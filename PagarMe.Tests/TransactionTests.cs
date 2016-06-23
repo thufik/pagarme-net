@@ -71,5 +71,14 @@ namespace PagarMe.Tests
 
             Assert.IsTrue(transaction.Metadata["test"].ToString() == "uhuul");
         }
+
+        [Test]
+        public void HasEvents ()
+        {
+            var transaction = CreateTestTransaction ();
+            transaction.Save ();
+            var events = transaction.Events.FindAll (new Event());
+            Assert.AreEqual(1, events.Count());
+        }
     }
 }

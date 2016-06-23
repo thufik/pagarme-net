@@ -26,7 +26,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using Newtonsoft.Json.Linq;
 
 #if HAS_ASYNC
@@ -39,6 +38,7 @@ namespace PagarMe.Base
     {
         private PagarMeService _service;
         private string _endpoint;
+        readonly string _endpointPrefix;
 
         internal ModelCollection(string endpoint)
             : this(null, endpoint)
@@ -46,13 +46,14 @@ namespace PagarMe.Base
 
         }
 
-        internal ModelCollection(PagarMeService service, string endpoint)
+        internal ModelCollection(PagarMeService service, string endpoint, string endpointPrefix = "")
         {
             if (service == null)
                 service = PagarMeService.GetDefaultService();
 
             _service = service;
             _endpoint = endpoint;
+            _endpointPrefix = endpointPrefix;
         }
 
         public TModel Find(int id, bool load = true)
@@ -62,7 +63,7 @@ namespace PagarMe.Base
 
         public TModel Find(string id, bool load = true)
         {
-            var model = (TModel)Activator.CreateInstance(typeof(TModel), new object[] { _service });
+            var model = CreateInstance ();
 
             if (load)
                 model.Refresh(id);
@@ -80,7 +81,7 @@ namespace PagarMe.Base
 
         public async Task<TModel> FindAsync(string id, bool load = true)
         {
-            var model = (TModel)Activator.CreateInstance(typeof(TModel), new object[] { _service });
+            var model = CreateInstance ();
 
             if (load)
                 await model.RefreshAsync(id);
@@ -113,7 +114,7 @@ namespace PagarMe.Base
 
         public PagarMeRequest BuildFindQuery(TModel searchParameters)
         {
-            var request = new PagarMeRequest(_service, "GET", _endpoint);
+            var request = new PagarMeRequest(_service, "GET", _endpointPrefix + _endpoint);
 			var keys = searchParameters.ToDictionary(SerializationType.Plain);
 
             BuildQueryForKeys(request.Query, null, keys);
@@ -140,29 +141,38 @@ namespace PagarMe.Base
                 {
                     BuildQueryForKeys(query, name, (IDictionary<string, object>)kvp.Value);
                 }
-                else if (kvp.Value is String)
+                else if (kvp.Value is string)
                 {
                     query.Add(new Tuple<string, string>(name, kvp.Value.ToString()));
                 }
                 else
                 {
-                    query.Add(new Tuple<string, string>(name, JValue.FromObject(kvp.Value).ToString(Newtonsoft.Json.Formatting.None)));
+                    query.Add(new Tuple<string, string>(name, JToken.FromObject (kvp.Value).ToString(Newtonsoft.Json.Formatting.None)));
                 }
             }
         }
 
         public IEnumerable<TModel> FinishFindQuery(PagarMeResponse response)
         {
-            return JArray.Parse(response.Body).Select((x) =>
-                {
-                    var model = (TModel)Activator.CreateInstance(typeof(TModel), new object[] { _service });
+            return JArray.Parse (response.Body).Select ((x) => {
+                var model = CreateInstance ();
 
-                    model.LoadFrom((JObject)x);
+                model.LoadFrom ((JObject)x);
 
-                    return model;
-                });
+                return model;
+            });
  
         }
+
+        private TModel CreateInstance ()
+        {
+            if (_endpointPrefix == "") {
+                return (TModel)Activator.CreateInstance (typeof (TModel), new object[] { _service });
+            } else {
+                return (TModel)Activator.CreateInstance (typeof (TModel), new object[] { _service, _endpointPrefix });
+            }
+        }
+            
     }
 }
 
