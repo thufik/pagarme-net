@@ -53,10 +53,10 @@ namespace PagarMe.Tests
 
             transaction.Save();
             int amountToBeRefunded = 100;
-			transaction.Refund(amountToBeRefunded);
+            transaction.Refund(amountToBeRefunded);
 
-			Assert.IsTrue(transaction.Status == TransactionStatus.Paid);
-			Assert.IsTrue(transaction.RefundedAmount == amountToBeRefunded);
+            Assert.IsTrue(transaction.Status == TransactionStatus.Paid);
+            Assert.IsTrue(transaction.RefundedAmount == amountToBeRefunded);
         }
 
 
@@ -98,6 +98,23 @@ namespace PagarMe.Tests
             {
             }
         }
-    }
 
+        [Test]
+        public void HasProperties()
+        {
+            var transaction = CreateTestTransaction();
+            transaction.Save();
+
+            var transactionEvent = transaction.Events.FindAll(new Event()).First();
+            Assert.IsTrue(transactionEvent.DateCreated.HasValue);
+
+            Assert.IsNotEmpty(transactionEvent.Model);
+            Assert.IsNotEmpty(transactionEvent.ModelId);
+            Assert.IsNotEmpty(transactionEvent.Id);
+            Assert.IsNotEmpty(transactionEvent.Name);
+            Assert.IsNotEmpty((string) transactionEvent.Payload["current_status"]);
+            Assert.IsNotEmpty((string) transactionEvent.Payload["old_status"]);
+            Assert.IsNotEmpty((string) transactionEvent.Payload["desired_status"]);
+        }
+    }
 }
