@@ -31,6 +31,8 @@ namespace PagarMe.Base
 {
     public abstract class Model : AbstractModel
     {
+        readonly string endpointPrefix;
+
         public string Id
         {
             get
@@ -44,35 +46,34 @@ namespace PagarMe.Base
             }
             set { SetAttribute("id", value); }
         }
-	public DateTime? DateCreated
-	{
-		get
-		{
-			var result = GetAttribute<DateTime?>("date_created");
-			if (result == null)
-				return null;
-			return result;
-		}
-	}
-	public DateTime? DateUpdated
-	{
-		get
-		{
-			var result = GetAttribute<DateTime?>("date_updated");
-			if (result == null)
-				return null;
-			return result;
-		}
-	}
+    	public DateTime? DateCreated
+    	{
+    		get
+    		{
+    			var result = GetAttribute<DateTime?>("date_created");
+    			if (result == null)
+    				return null;
+    			return result;
+    		}
+    	}
+    	public DateTime? DateUpdated
+    	{
+    		get
+    		{
+    			var result = GetAttribute<DateTime?>("date_updated");
+    			if (result == null)
+    				return null;
+    			return result;
+    		}
+    	}
 
-        private Model()
-            : this(null)
+        private Model() : this(null)
         {
         }
 
-        protected Model(PagarMeService service)
-            : base(service)
+        protected Model(PagarMeService service, string endpointPrefix = "") : base(service)
         {
+            this.endpointPrefix = "";
         }
 
         public void ExecuteSelfRequest(PagarMeRequest request)
@@ -171,12 +172,12 @@ namespace PagarMe.Base
 
         protected PagarMeRequest CreateRequest(string method, string endpoint = "")
         {
-            return new PagarMeRequest(Service, method, Endpoint + "/" + Id + endpoint);
+            return new PagarMeRequest(Service, method, endpointPrefix + Endpoint + "/" + Id + endpoint);
         }
 
         protected PagarMeRequest CreateCollectionRequest(string method, string endpoint = "")
         {
-            return new PagarMeRequest(Service, method, Endpoint + endpoint);
+            return new PagarMeRequest(Service, method, endpointPrefix + Endpoint + endpoint);
         }
 
         internal void SetId(string id)

@@ -30,6 +30,8 @@ namespace PagarMe
 {
     public class Transaction : Base.Model
     {
+        private Base.ModelCollection<Event> _events;
+
         protected override string Endpoint { get { return "/transactions"; } }
 
         public Subscription Subscription
@@ -260,10 +262,19 @@ namespace PagarMe
 			set { SetAttribute("split_rules", value); }
 		}
 
-        public Transaction()
-            : this(null)
-        {
+        public Base.ModelCollection<Event> Events {
+            get
+            {
+                if (Id == null) {
+                    throw new InvalidOperationException ("Transaction must have an Id in order to fetch events");
+                }
 
+                return _events ?? (_events = new Base.ModelCollection<Event> (Service, "/events", Endpoint + "/" + Id));
+            }
+        }
+
+        public Transaction() : this(null)
+        {
         }
 
         public Transaction(PagarMeService service)
@@ -327,7 +338,7 @@ namespace PagarMe
                 SetAttribute("subscription", Service.Subscriptions.Find(subscriptionId.ToString(), false));
         }
 
-        protected override PagarMe.Base.NestedModelSerializationRule SerializationRuleForField(string field, Base.SerializationType type)
+        protected override Base.NestedModelSerializationRule SerializationRuleForField(string field, Base.SerializationType type)
         {
             if (field == "customer" && type != Base.SerializationType.Shallow)
                 return PagarMe.Base.NestedModelSerializationRule.Full;
