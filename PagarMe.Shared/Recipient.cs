@@ -62,6 +62,19 @@ namespace PagarMe
 			set { SetAttribute("transfer_day", value); }
 		}
 
+		public bool AutomaticAnticipationEnabled
+		{
+			get { return GetAttribute<bool>("automatic_anticipation_enabled"); }
+			set { SetAttribute("automatic_anticipation_enabled", value); }
+		}
+
+		public double AnticipatableVolumePercentage
+		{
+			get { return GetAttribute<double>("anticipatable_volume_percentage"); }
+			set { SetAttribute("anticipatable_volume_percentage", value); }
+		}
+
+
 		public Recipient()
 			: this(null)
 		{
