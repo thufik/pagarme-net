@@ -33,7 +33,7 @@ namespace PagarMe.Tests
 		}
 
 		[Test]
-		public void CreateWithPlanAndNewCard ()
+		public void CreateWithPlanAndInvalidCardCvv ()
 		{
 			var plan = CreateTestPlan ();
 
