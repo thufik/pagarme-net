@@ -17,7 +17,7 @@ namespace PagarMe.Tests
 
 			bank.Save ();
 
-			Assert.AreNotEqual (bank.Id, 0);
+			Assert.IsNotNull (bank.Id);
 
 			var recipient = new Recipient () {
 				TransferDay = 5,
@@ -38,7 +38,7 @@ namespace PagarMe.Tests
 
 			bank.Save ();
 
-			Assert.AreNotEqual (bank.Id, 0);
+			Assert.IsNotNull (bank.Id);
 
 			var recipient = new Recipient () {
 				AnticipatableVolumePercentage = 88,
