@@ -54,9 +54,8 @@ namespace PagarMe.Tests
 
 			try {
 				subscription.Save ();
-				Assert.Fail ();
 			} catch (PagarMeException ex) {
-				Assert.AreEqual (ex.Error.Errors [0].Message, "Não foi possível realizar uma transação nesse cartão de crédito.");	
+				Assert.IsNotNull (ex.Error.Errors.Where (e => e.Parameter == "action_forbidden").FirstOrDefault ());	
 			}
 		}
 
