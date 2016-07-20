@@ -94,8 +94,8 @@ namespace PagarMe
 
         public string CardCvv
         {
-            get { return GetAttribute<string>("cvv"); }
-            set { SetAttribute("cvv", value); }
+            get { return GetAttribute<string>("card_cvv"); }
+            set { SetAttribute("card_cvv", value); }
         }
 
         public int Charges

@@ -7,55 +7,78 @@ using NUnit.Framework;
 
 namespace PagarMe.Tests
 {
-    [TestFixture]
-    public class SubscriptionTests : PagarMeTestFixture
-    {
-        [Test]
-        public void CreateWithPlan()
-        {
-            var plan = CreateTestPlan();
+	[TestFixture]
+	public class SubscriptionTests : PagarMeTestFixture
+	{
+		[Test]
+		public void CreateWithPlan ()
+		{
+			var plan = CreateTestPlan ();
 
-            plan.Save();
+			plan.Save ();
 
-            Assert.AreNotEqual(plan.Id, 0);
+			Assert.AreNotEqual (plan.Id, 0);
 
-            var subscription = new Subscription
-            {
-                CardHash = GetCardHash(),
-                Customer = new Customer
-                {
-                    Email = "josedasilva@pagar.me"
-                },
-                Plan = plan
-            };
+			var subscription = new Subscription {
+				CardHash = GetCardHash (),
+				Customer = new Customer {
+					Email = "josedasilva@pagar.me"
+				},
+				Plan = plan
+			};
 
-            subscription.Save();
+			subscription.Save ();
 
-            Assert.AreEqual(subscription.Status, SubscriptionStatus.Paid);
-        }
+			Assert.AreEqual (subscription.Status, SubscriptionStatus.Paid);
+		}
 
-        [Test]
-        public void CancelSubscription()
-        {
-            var plan = CreateTestPlan();
-            plan.Save();
+		[Test]
+		public void CreateWithPlanAndInvalidCardCvv ()
+		{
+			var plan = CreateTestPlan ();
 
-            Assert.AreNotEqual(plan.Id, 0);
+			plan.Save ();
 
-            var subscription = new Subscription
-            {
-                CardHash = GetCardHash(),
-                Customer = new Customer
-                {
-                    Email = "josedasilva@pagar.me"
-                },
-                Plan = plan
-            };
+			Assert.AreNotEqual (plan.Id, 0);
 
-            subscription.Save();
-            subscription.Cancel();
+			var subscription = new Subscription {
+				CardCvv = "651",
+				CardExpirationDate = "0921",
+				CardHolderName = "Jose da Silva",
+				CardNumber = "4242424242424242",
+				Customer = new Customer {
+					Email = "josedasilva@pagar.me"
+				},
+				Plan = plan
+			};
 
-            Assert.AreEqual(subscription.Status, SubscriptionStatus.Canceled);
-        }
-    }
+			try {
+				subscription.Save ();
+			} catch (PagarMeException ex) {
+				Assert.IsNotNull (ex.Error.Errors.Where (e => e.Type == "action_forbidden").FirstOrDefault ());	
+			}
+		}
+
+		[Test]
+		public void CancelSubscription ()
+		{
+			var plan = CreateTestPlan ();
+			plan.Save ();
+
+			Assert.AreNotEqual (plan.Id, 0);
+
+			var subscription = new Subscription {
+				CardHash = GetCardHash (),
+				Customer = new Customer {
+					Email = "josedasilva@pagar.me"
+				},
+				Plan = plan
+			};
+
+			subscription.Save ();
+			subscription.Cancel ();
+
+			Assert.AreEqual (subscription.Status, SubscriptionStatus.Canceled);
+		}
+	}
 }
