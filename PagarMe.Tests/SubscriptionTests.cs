@@ -55,7 +55,7 @@ namespace PagarMe.Tests
 			try {
 				subscription.Save ();
 			} catch (PagarMeException ex) {
-				Assert.IsNotNull (ex.Error.Errors.Where (e => e.Parameter == "action_forbidden").FirstOrDefault ());	
+				Assert.IsNotNull (ex.Error.Errors.Where (e => e.Type == "action_forbidden").FirstOrDefault ());	
 			}
 		}
 
