@@ -28,7 +28,7 @@ namespace PagarMe.Tests
 
 			recipient.Save ();
 
-			Assert.AreNotEqual (recipient.Id, 0);
+			Assert.IsNotNull (recipient.Id);
 		}
 
 		[Test]
@@ -51,7 +51,9 @@ namespace PagarMe.Tests
 
 			recipient.Save ();
 
-			Assert.AreNotEqual (recipient.Id, 0);
+			Assert.IsNotNull (recipient.Id);
+			Assert.AreEqual (recipient.AnticipatableVolumePercentage, 88);
+			Assert.AreEqual (recipient.AutomaticAnticipationEnabled, true);
 		}
 	}
 }
