@@ -58,6 +58,8 @@ namespace Playground
 				r3.TransferEnabled = true;
 				r3.TransferInterval = TransferInterval.Weekly;
 				r3.TransferDay = 1;
+				r3.AnticipatableVolumePercentage = 80;
+				r3.AutomaticAnticipationEnabled = true;
 				r3.Save ();
 
 				Subscription s = new Subscription () {
