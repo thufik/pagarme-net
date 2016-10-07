@@ -20,6 +20,16 @@ namespace PagarMe.Tests
             Assert.IsTrue(transaction.Status == TransactionStatus.Paid);
         }
 
+		[Test]
+		public void ChargeWithAsync()
+		{
+			var transaction = CreateTestTransaction();
+			transaction.Async = true;
+			transaction.Save();
+
+			Assert.IsTrue(transaction.Status == TransactionStatus.Processing);
+		}
+
         [Test]
         public void Authorize()
         {

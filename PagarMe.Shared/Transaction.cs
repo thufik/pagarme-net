@@ -196,6 +196,11 @@ namespace PagarMe
             set { SetAttribute("card_brand", value); }
         }
 
+		public string CardEmvResponse
+		{
+			get { return GetAttribute<string>("card_emv_response");}
+		}
+
         public string PostbackUrl
         {
             get { return GetAttribute<string>("postback_url"); }
@@ -249,6 +254,12 @@ namespace PagarMe
             get { return GetAttribute<bool>("capture"); }
             set { SetAttribute("capture", value); }
         }
+
+		public bool? Async
+		{
+			get { return GetAttribute<bool>("async"); }
+			set { SetAttribute("async", value); }
+		}
 
         public Base.AbstractModel Metadata
         {
