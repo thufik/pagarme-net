@@ -250,6 +250,12 @@ namespace PagarMe
             set { SetAttribute("capture", value); }
         }
 
+		public bool? Async
+		{
+			get { return GetAttribute<bool>("async"); }
+			set { SetAttribute("async", value); }
+		}
+
         public Base.AbstractModel Metadata
         {
             get { return GetAttribute<Base.AbstractModel>("metadata"); }
