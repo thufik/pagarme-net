@@ -196,11 +196,6 @@ namespace PagarMe
             set { SetAttribute("card_brand", value); }
         }
 
-		public string CardEmvResponse
-		{
-			get { return GetAttribute<string>("card_emv_response");}
-		}
-
         public string PostbackUrl
         {
             get { return GetAttribute<string>("postback_url"); }
