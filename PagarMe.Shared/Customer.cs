@@ -55,9 +55,9 @@ namespace PagarMe
             set { SetAttribute("email", value); }
         }
 
-        public DateTime BornAt
+        public DateTime? BornAt
         {
-            get { return GetAttribute<DateTime>("born_at"); }
+            get { return GetAttribute<DateTime?>("born_at"); }
             set { SetAttribute("born_at", value); }
         }
 
