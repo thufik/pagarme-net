@@ -30,6 +30,23 @@ namespace PagarMe.Tests
 			Assert.IsTrue(transaction.Status == TransactionStatus.Processing);
 		}
 
+		[Test]
+		public void ChargeWithCustomerBornAtNull()
+		{
+			var transaction = CreateTestTransaction();
+			transaction.Customer = new Customer()
+			{
+				Name = "Aardvark Silva",
+				Email = "aardvark.silva@pagar.me",
+				BornAt = null,
+				DocumentNumber = "00000000000"
+			};
+
+			transaction.Save();
+
+			Assert.IsNull(transaction.Customer.BornAt);
+		}
+
         [Test]
         public void Authorize()
         {
