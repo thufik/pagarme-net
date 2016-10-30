@@ -47,6 +47,32 @@ namespace PagarMe.Tests
 			Assert.IsNull(transaction.Customer.BornAt);
 		}
 
+		[Test]
+		public void ChargeWithCaptureMethodEMV()
+		{
+			Type t = typeof(Transaction);
+			dynamic dTransaction = Activator.CreateInstance(t, null);
+			dTransaction.Amount = 10000;
+			CardHash card = new CardHash()
+			{
+				CardNumber = "4242424242424242",
+				CardHolderName = "Aardvark Silva",
+				CardExpirationDate = "0117",
+				CardCvv = "176"
+
+			};
+
+			dTransaction.CardHash = card.Generate();
+			dTransaction.capture_method = "emv";
+			dTransaction.card_track_2 = "thequickbrownfox";
+			dTransaction.card_emv_data = "jumpsoverthelazydog";
+
+			dTransaction.Save();
+
+			Assert.IsNotNull(dTransaction.CardEmvResponse);
+
+		}
+
         [Test]
         public void Authorize()
         {
