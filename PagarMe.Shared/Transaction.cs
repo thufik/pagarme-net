@@ -319,17 +319,16 @@ namespace PagarMe
         {
             var request = CreateRequest("POST", "/refund");
 
+            if (bank.AgenciaDv != null)
+                request.Query.Add(new Tuple<string, string>("bank_account[agencia_dv]", bank.AgenciaDv));
+            request.Query.Add(new Tuple<string, string>("bank_account[bank_code]", bank.BankCode));
+            request.Query.Add(new Tuple<string, string>("bank_account[agencia]", bank.Agencia));   
+            request.Query.Add(new Tuple<string, string>("bank_account[conta]", bank.Conta));
+            request.Query.Add(new Tuple<string, string>("bank_account[conta_dv]", bank.ContaDv));
+            request.Query.Add(new Tuple<string, string>("bank_account[document_number]", bank.DocumentNumber));
+            request.Query.Add(new Tuple<string, string>("bank_account[legal_name]", bank.LegalName));
 
-            request.Query.Add(new Tuple<string, string>("bank_code", bank.BankCode));
-            request.Query.Add(new Tuple<string, string>("agencia", bank.BankCode));
-            request.Query.Add(new Tuple<string, string>("agencia_dv", bank.BankCode));
-            request.Query.Add(new Tuple<string, string>("conta", bank.BankCode));
-            request.Query.Add(new Tuple<string, string>("conta_dv", bank.BankCode));
-            request.Query.Add(new Tuple<string, string>("document_number", bank.BankCode));
-            request.Query.Add(new Tuple<string, string>("legal_name", bank.BankCode));
-
-            ExecuteSelfRequest(request);
-
+             ExecuteSelfRequest(request);
         }
 
         public void Refund(int? amount = null)
