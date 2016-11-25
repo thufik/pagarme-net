@@ -10,9 +10,21 @@ namespace PagarMe.Tests
 	{
 		static PagarMeTestFixture ()
 		{
-			PagarMeService.DefaultApiKey = "ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY";
-			PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
+			PagarMeService.DefaultApiKey = "ak_test_AAAfFBJDvGNMA6YMEoxRyIrK0PlhLI";
+			PagarMeService.DefaultEncryptionKey = "ek_test_D8fnTNOqaPBQx46QBiDprUzeophI7q";
 		}
+
+
+        public static Transfer CreateTestTransfer()
+        {
+            return new Transfer
+            {
+                Amount = 1000,
+                BankAccountId = "17311434",
+                RecipientId = "re_civy2bozv086vjk6e2xsmhd43"
+            };
+        }
+
 
 		public static Plan CreateTestPlan ()
 		{
@@ -63,7 +75,7 @@ namespace PagarMe.Tests
 
 			creditcard.CardHolderName = "Jose da Silva";
 			creditcard.CardNumber = "5433229077370451";
-			creditcard.CardExpirationDate = "1016";
+			creditcard.CardExpirationDate = "101";
 			creditcard.CardCvv = "018";
 
 			return creditcard.Generate ();

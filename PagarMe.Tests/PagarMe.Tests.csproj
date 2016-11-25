@@ -61,6 +61,7 @@
     <Compile Include="TransactionTests.cs" />
     <Compile Include="FingerprintTests.cs" />
     <Compile Include="RecipientTests.cs" />
+    <Compile Include="TransferTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
