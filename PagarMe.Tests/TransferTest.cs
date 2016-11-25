@@ -11,7 +11,7 @@ namespace PagarMe.Tests
     class TransferTest : PagarMeTestFixture
     {
         [Test]
-        public void CreateTransfer()
+        public void CreateTransfer(bool hasBank)
         {
             Transfer transfer = CreateTestTransfer();
             transfer.Save();
