@@ -35,9 +35,18 @@ namespace Playground
     {
         public static void Main(string[] args)
         {
-            PagarMeService.DefaultApiKey = "ak_test_TSgC3nvXtdYnDoGKgNLIOfk3TFfkl9";
+            PagarMeService.DefaultApiKey = "ak_test_AAAfFBJDvGNMA6YMEoxRyIrK0PlhLI";
             PagarMeService.DefaultEncryptionKey = "ek_test_UT6AN4fDN3BCUgo6kxUiOq6S20dbKc";
 
+
+            Payable payable = PagarMeService.GetDefaultService().Payables.Find(288836);
+
+            payable.Save();
+
+
+            //Console.WriteLine(payable.PayableStatus);
+
+/*
             try
             {
                 BankAccount b = new BankAccount();
@@ -107,6 +116,10 @@ namespace Playground
                 foreach (var erro in ex.Error.Errors)
                     Console.WriteLine(String.Format("Error: {0}", erro.Message));
             }
+        
+        */
         }
+        
     }
+    
 }

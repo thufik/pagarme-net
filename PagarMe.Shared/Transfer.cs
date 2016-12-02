@@ -15,6 +15,7 @@ namespace PagarMe
 
         public Transfer(PagarMeService service) : base(service) { }
 
+
         public int Amount
         {
             get { return GetAttribute <int>("amount");}
@@ -28,7 +29,8 @@ namespace PagarMe
         
         public TransferStatus Status
         {
-            get { return GetAttribute <TransferStatus>("transfer_status"); }
+            get { return GetAttribute <TransferStatus>("status");}
+            set {  }
         }
 
         public int Fee

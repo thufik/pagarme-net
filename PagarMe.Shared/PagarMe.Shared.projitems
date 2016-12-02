@@ -19,6 +19,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)PagarMeError.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PagarMeErrorDetail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JsonHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Payable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PayableStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Transaction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TransactionStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Card.cs" />
