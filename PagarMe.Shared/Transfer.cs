@@ -30,7 +30,6 @@ namespace PagarMe
         public TransferStatus Status
         {
             get { return GetAttribute <TransferStatus>("status");}
-            set {  }
         }
 
         public int Fee
@@ -40,8 +39,12 @@ namespace PagarMe
 
         public string BankAccountId
         {
-            get { return GetAttribute<string>("bank_account_id"); }
             set { SetAttribute("bank_account_id", value); }
+        }
+
+        public BankAccount Bank
+        {
+            get { return GetAttribute<BankAccount>("bank_account"); }
         }
 
         public string RecipientId
@@ -50,7 +53,15 @@ namespace PagarMe
             set { SetAttribute("recipient_id", value); }
         }
 
+        public string FundingEstimatedDate
+        {
+            get { return GetAttribute<string>("funding_estimated_date"); }
+        }
 
+        public string FundingDate
+        {
+            get { return GetAttribute<string>("funding_date"); }
+        }
 
     }
 }

@@ -38,7 +38,7 @@ namespace PagarMe
             set { SetAttribute("recipient_id", value); }
         }
 
-
+        
 
 /*
         public Transaction Transaction(int id)

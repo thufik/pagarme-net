@@ -39,10 +39,10 @@ namespace Playground
             PagarMeService.DefaultEncryptionKey = "ek_test_UT6AN4fDN3BCUgo6kxUiOq6S20dbKc";
 
 
-            Payable payable = PagarMeService.GetDefaultService().Payables.Find(288836);
+            Transfer[] transfer = PagarMeService.GetDefaultService().Transfers.FindAll(new Transfer()).ToArray();
 
-            payable.Save();
-
+            Console.Write(transfer.Count());
+            Console.Read();
 
             //Console.WriteLine(payable.PayableStatus);
 

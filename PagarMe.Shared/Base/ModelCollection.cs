@@ -105,23 +105,11 @@ namespace PagarMe.Base
         }
         
 
-        /*
-        public IEnumerable<TModel> FinAllThrough(TModel model)
-        {
-
-        }
-        */
         public async Task<IEnumerable<TModel>> FindAllAsync(TModel searchParams)
         {
             return FinishFindQuery(await BuildFindQuery(searchParams).ExecuteAsync());
         }
 
-/*
-        public PagarMeRequest BuildFindQuery(TModel model)
-        {
-            var request = new PagarMeRequest(_service, "GET", _endpointPrefix + );
-        }
-        */
         public PagarMeRequest BuildFindQuery(TModel searchParameters)
         {
             var request = new PagarMeRequest(_service, "GET", _endpointPrefix + _endpoint);
