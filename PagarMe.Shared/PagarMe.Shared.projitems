@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -19,6 +19,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)PagarMeError.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PagarMeErrorDetail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JsonHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Payable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PayableStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Transaction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TransactionStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Card.cs" />
@@ -42,6 +44,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Base\SerializationType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BankAccount.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Recipient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TransferStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TransferType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Transfer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TransferInterval.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SplitRule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils.cs" />
