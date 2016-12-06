@@ -139,6 +139,21 @@ namespace PagarMe.Tests
 
             Assert.IsTrue(transaction.Metadata["test"].ToString() == "uhuul");
         }
+
+        [Test] 
+
+        public void FindPayablesTest()
+        {
+            Transaction transaction = CreateTestBoletoTransaction();
+            transaction.Save();
+            transaction.Status = TransactionStatus.Paid;
+            transaction.Save();
+
+           Payable payable = transaction.Payables.FindAll(new Payable()).First();
+           Assert.IsTrue(payable.Amount.Equals(transaction.Amount));
+           Assert.IsTrue(payable.Status.Equals(PayableStatus.Paid));
+        }
+
     }
 
     [TestFixture]

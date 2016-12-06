@@ -12,25 +12,33 @@ namespace PagarMe.Tests
     class PayableTest
     {
         [Test]
-        public void GetPayable()
+        public void FindPayableTest()
         {
-            Payable payable = PagarMeTestFixture.returnPayable(288836);
-            Assert.IsNotNull(payable);
+            Transaction transaction = PagarMeTestFixture.CreateTestBoletoTransaction();
+            transaction.Save();
+            transaction.Status = TransactionStatus.Paid;
+            transaction.Save();
+
+            Payable payable = transaction.Payables.FindAll(new Payable()).First();
+            Payable payableReturned = PagarMeService.GetDefaultService().Payables.Find(payable.Id);
+
+            Assert.IsTrue(payable.Id.Equals(payableReturned.Id));
+            Assert.IsTrue(payable.Status.Equals(payableReturned.Status));
+            Assert.IsTrue(payable.TransactionId.Equals(payableReturned.TransactionId));
         }
         [Test]
-        public void GetAllPayables()
+        public void FindAllPayablesTest()
         {
-            Transaction trans = PagarMeTestFixture.CreateTestTransaction();
-            trans.Save();
-            trans.Status = TransactionStatus.Paid;
-            trans.Save();
+            Transaction transaction = PagarMeTestFixture.CreateTestCardTransactionWithInstallments();
+            transaction.Save();
+            
 
-            Payable pay = new Payable()
+            Payable[] payables = transaction.Payables.FindAll(new Payable()).ToArray();
+            
+            foreach(var pay in payables)
             {
-                //yableStatus = PayableStatus.Paid
-            };
-            Payable[] payables = PagarMeService.GetDefaultService().Payables.FindAll(pay).ToArray();//PagarMeTestFixture.returnAllPayables();
-            Assert.IsNotNull(payables);
+                Assert.IsTrue(pay.TransactionId.Equals(int.Parse(transaction.Id)));
+            }
         }
 
 

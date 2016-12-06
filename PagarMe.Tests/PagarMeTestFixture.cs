@@ -26,7 +26,7 @@ namespace PagarMe.Tests
                 Agencia = "0609",
                 Conta = "03032",
                 ContaDv = "5",
-                DocumentNumber = "44417398852",
+                DocumentNumber = "44417398850",
                 LegalName = "Fellipe"
             };
 
@@ -77,7 +77,6 @@ namespace PagarMe.Tests
 
         }
 
-
 		public static Plan CreateTestPlan ()
 		{
 			return new Plan () {
@@ -108,7 +107,7 @@ namespace PagarMe.Tests
 			return new Transaction {
 				Amount = 1099,
 				PaymentMethod = PaymentMethod.CreditCard,
-				CardHash = GetCardHash ()
+				CardHash = GetCardHash()
 			};
 		}
 
@@ -118,6 +117,17 @@ namespace PagarMe.Tests
             {
                 Amount = 100000,
                 PaymentMethod = PaymentMethod.Boleto
+            };
+        }
+
+        public static Transaction CreateTestCardTransactionWithInstallments()
+        {
+            return new Transaction
+            {
+                Amount = 1099,
+                PaymentMethod = PaymentMethod.CreditCard,
+                Installments = 5,
+                CardHash = GetCardHash()
             };
         }
 
@@ -162,7 +172,7 @@ namespace PagarMe.Tests
 
 			creditcard.CardHolderName = "Jose da Silva";
 			creditcard.CardNumber = "5433229077370451";
-			creditcard.CardExpirationDate = "101";
+			creditcard.CardExpirationDate = "1021";
 			creditcard.CardCvv = "018";
 
 			return creditcard.Generate ();

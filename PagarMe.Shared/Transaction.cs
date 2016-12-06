@@ -31,6 +31,8 @@ namespace PagarMe
     public class Transaction : Base.Model
     {
         private Base.ModelCollection<Event> _events;
+        private Base.ModelCollection<Payable> _payables;
+
 
         protected override string Endpoint { get { return "/transactions"; } }
 
@@ -284,6 +286,20 @@ namespace PagarMe
                 return _events ?? (_events = new Base.ModelCollection<Event> (Service, "/events", Endpoint + "/" + Id));
             }
         }
+
+        public Base.ModelCollection<Payable> Payables
+        {
+            get
+            {
+                if (Id == null)
+                {
+                    throw new InvalidOperationException("Transaction must have an Id in order to fetch events");
+                }
+
+                return _payables ?? (_payables = new Base.ModelCollection<Payable>(Service, "/payables", Endpoint + "/" + Id));
+            }
+        }
+
 
         public Transaction() : this(null)
         {

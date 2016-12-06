@@ -14,6 +14,8 @@ namespace PagarMe
 
         public Payable(PagarMeService service) : base(service) {}
 
+        public Payable(PagarMeService service, string x):base(service,x) { }
+
         public PayableStatus Status
         {
             get { return GetAttribute<PayableStatus>("status"); }
@@ -38,7 +40,12 @@ namespace PagarMe
             set { SetAttribute("recipient_id", value); }
         }
 
-        
+        public int TransactionId
+        {
+            get { return GetAttribute<int>("transaction_id"); }
+            set { SetAttribute("transaction_id", value); }
+        }
+
 
 /*
         public Transaction Transaction(int id)
