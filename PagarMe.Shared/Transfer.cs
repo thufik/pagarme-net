@@ -15,7 +15,6 @@ namespace PagarMe
 
         public Transfer(PagarMeService service) : base(service) { }
 
-
         public int Amount
         {
             get { return GetAttribute <int>("amount");}

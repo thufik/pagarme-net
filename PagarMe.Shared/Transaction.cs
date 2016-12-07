@@ -32,8 +32,6 @@ namespace PagarMe
     {
         private Base.ModelCollection<Event> _events;
         private Base.ModelCollection<Payable> _payables;
-
-
         protected override string Endpoint { get { return "/transactions"; } }
 
         public Subscription Subscription
@@ -72,23 +70,23 @@ namespace PagarMe
             set { SetAttribute("status", value); }
         }
 
-		public int AuthorizationAmount
-		{
-			get { return GetAttribute<int> ("authorized_amount"); }
-			set { SetAttribute ("authorized_amount", value); }
-		}
+        public int AuthorizationAmount
+        {
+            get { return GetAttribute<int>("authorized_amount"); }
+            set { SetAttribute("authorized_amount", value); }
+        }
 
-		public int PaidAmount
-		{
-			get { return GetAttribute<int> ("paid_amount"); }
-			set { SetAttribute ("paid_amount", value); }
-		}
+        public int PaidAmount
+        {
+            get { return GetAttribute<int>("paid_amount"); }
+            set { SetAttribute("paid_amount", value); }
+        }
 
-		public int RefundedAmount
-		{
-			get { return GetAttribute<int> ("refunded_amount"); }
-			set { SetAttribute ("refunded_amount", value); }
-		}
+        public int RefundedAmount
+        {
+            get { return GetAttribute<int>("refunded_amount"); }
+            set { SetAttribute("refunded_amount", value); }
+        }
 
         public string CardHash
         {
@@ -198,11 +196,11 @@ namespace PagarMe
             set { SetAttribute("card_brand", value); }
         }
 
-		public string CardEmvResponse
-		{
-			get { return GetAttribute<string>("card_emv_response"); }
-			set { SetAttribute("card_emv_response", value); }
-		}
+        public string CardEmvResponse
+        {
+            get { return GetAttribute<string>("card_emv_response"); }
+            set { SetAttribute("card_emv_response", value); }
+        }
 
         public string PostbackUrl
         {
@@ -258,11 +256,11 @@ namespace PagarMe
             set { SetAttribute("capture", value); }
         }
 
-		public bool? Async
-		{
-			get { return GetAttribute<bool>("async"); }
-			set { SetAttribute("async", value); }
-		}
+        public bool? Async
+        {
+            get { return GetAttribute<bool>("async"); }
+            set { SetAttribute("async", value); }
+        }
 
         public Base.AbstractModel Metadata
         {
@@ -270,20 +268,22 @@ namespace PagarMe
             set { SetAttribute("metadata", value); }
         }
 
-		public SplitRule[] SplitRules
-		{
-			get { return GetAttribute<SplitRule[]>("split_rules"); }
-			set { SetAttribute("split_rules", value); }
-		}
+        public SplitRule[] SplitRules
+        {
+            get { return GetAttribute<SplitRule[]>("split_rules"); }
+            set { SetAttribute("split_rules", value); }
+        }
 
-        public Base.ModelCollection<Event> Events {
+        public Base.ModelCollection<Event> Events
+        {
             get
             {
-                if (Id == null) {
-                    throw new InvalidOperationException ("Transaction must have an Id in order to fetch events");
+                if (Id == null)
+                {
+                    throw new InvalidOperationException("Transaction must have an Id in order to fetch events");
                 }
 
-                return _events ?? (_events = new Base.ModelCollection<Event> (Service, "/events", Endpoint + "/" + Id));
+                return _events ?? (_events = new Base.ModelCollection<Event>(Service, "/events", Endpoint + "/" + Id));
             }
         }
 
@@ -300,10 +300,7 @@ namespace PagarMe
             }
         }
 
-
-        public Transaction() : this(null)
-        {
-        }
+        public Transaction() : this(null) {}
 
         public Transaction(PagarMeService service)
             : base(service)
@@ -338,13 +335,13 @@ namespace PagarMe
             if (bank.AgenciaDv != null)
                 request.Query.Add(new Tuple<string, string>("bank_account[agencia_dv]", bank.AgenciaDv));
             request.Query.Add(new Tuple<string, string>("bank_account[bank_code]", bank.BankCode));
-            request.Query.Add(new Tuple<string, string>("bank_account[agencia]", bank.Agencia));   
+            request.Query.Add(new Tuple<string, string>("bank_account[agencia]", bank.Agencia));
             request.Query.Add(new Tuple<string, string>("bank_account[conta]", bank.Conta));
             request.Query.Add(new Tuple<string, string>("bank_account[conta_dv]", bank.ContaDv));
             request.Query.Add(new Tuple<string, string>("bank_account[document_number]", bank.DocumentNumber));
             request.Query.Add(new Tuple<string, string>("bank_account[legal_name]", bank.LegalName));
 
-             ExecuteSelfRequest(request);
+            ExecuteSelfRequest(request);
         }
 
         public void Refund(int? amount = null)
@@ -357,12 +354,12 @@ namespace PagarMe
             ExecuteSelfRequest(request);
         }
 
-		public async void RefundAsync(int? amount = null)
+        public async void RefundAsync(int? amount = null)
         {
             var request = CreateRequest("POST", "/refund");
 
-			if (amount.HasValue)
-				request.Query.Add(new Tuple<string, string>("amount", amount.Value.ToString()));
+            if (amount.HasValue)
+                request.Query.Add(new Tuple<string, string>("amount", amount.Value.ToString()));
 
             await ExecuteSelfRequestAsync(request);
         }
@@ -370,7 +367,6 @@ namespace PagarMe
         protected override void CoerceTypes()
         {
             base.CoerceTypes();
-
             CoerceAttribute("card", typeof(Card));
             CoerceAttribute("customer", typeof(Customer));
             CoerceAttribute("address", typeof(Address));

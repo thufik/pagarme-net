@@ -6,7 +6,6 @@ namespace PagarMe
 {
     public enum TransferStatus
     {
-
         [Base.EnumValue("pending_transfer")] PedingTransfer,
         [Base.EnumValue("transferred")] Transferred,
         [Base.EnumValue("failed")] Failed,
