@@ -99,6 +99,18 @@ namespace PagarMe.Tests
             Assert.IsTrue(transaction.Status == TransactionStatus.Refunded);
         }
 
+		[Test]
+		public void RefundWithBoleto()
+		{
+			var transaction = CreateTestBoletoTransaction();
+			transaction.Save();
+			transaction.Status = TransactionStatus.Paid;
+			transaction.Save();
+			var bankAccount = CreateTestBankAccount();
+			transaction.Refund(bankAccount);
+			Assert.IsTrue(transaction.Status == TransactionStatus.PendingRefund);
+		}
+
         [Test]
         public void BoletoRefund()
         {

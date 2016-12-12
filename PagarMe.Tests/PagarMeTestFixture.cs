@@ -8,12 +8,17 @@ namespace PagarMe.Tests
 {
 	public class PagarMeTestFixture
 	{
+<<<<<<< HEAD
         static PagarMeTestFixture ()
+=======
+		static PagarMeTestFixture()
+>>>>>>> remotes/pagarme-remote/master
 		{
 			PagarMeService.DefaultApiKey = "ak_test_AAAfFBJDvGNMA6YMEoxRyIrK0PlhLI";
 			PagarMeService.DefaultEncryptionKey = "ek_test_D8fnTNOqaPBQx46QBiDprUzeophI7q";
 		}
 
+<<<<<<< HEAD
         public static Recipient CreateRecipientWithAnotherBankAccount()
         {
             BankAccount bank = new BankAccount
@@ -74,8 +79,12 @@ namespace PagarMe.Tests
         }
 
 		public static Plan CreateTestPlan ()
+=======
+		public static Plan CreateTestPlan()
+>>>>>>> remotes/pagarme-remote/master
 		{
-			return new Plan () {
+			return new Plan()
+			{
 				Name = "Test Plan",
 				Days = 30,
 				TrialDays = 0,
@@ -85,9 +94,10 @@ namespace PagarMe.Tests
 			};
 		}
 
-		public static BankAccount CreateTestBankAccount ()
+		public static BankAccount CreateTestBankAccount()
 		{
-			return new BankAccount () {
+			return new BankAccount()
+			{
 				BankCode = "184",
 				Agencia = "0808",
 				AgenciaDv = "8",
@@ -98,15 +108,17 @@ namespace PagarMe.Tests
 			};
 		}
 
-		public static Transaction CreateTestTransaction ()
+		public static Transaction CreateTestTransaction()
 		{
-			return new Transaction {
+			return new Transaction
+			{
 				Amount = 1099,
 				PaymentMethod = PaymentMethod.CreditCard,
 				CardHash = GetCardHash()
 			};
 		}
 
+<<<<<<< HEAD
         public static Transaction CreateTestBoletoTransaction()
         {
             return new Transaction
@@ -162,15 +174,27 @@ namespace PagarMe.Tests
         }
 
 		public static string GetCardHash ()
+=======
+		public static Transaction CreateTestBoletoTransaction()
+>>>>>>> remotes/pagarme-remote/master
 		{
-			var creditcard = new CardHash ();
+			return new Transaction
+			{
+				Amount = 1000,
+				PaymentMethod = PaymentMethod.Boleto
+			};
+		}
+
+		public static string GetCardHash()
+		{
+			var creditcard = new CardHash();
 
 			creditcard.CardHolderName = "Jose da Silva";
 			creditcard.CardNumber = "5433229077370451";
 			creditcard.CardExpirationDate = "1038";
 			creditcard.CardCvv = "018";
 
-			return creditcard.Generate ();
+			return creditcard.Generate();
 		}
 
         public static Payable returnPayable(int id)

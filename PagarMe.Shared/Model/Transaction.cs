@@ -354,7 +354,7 @@ namespace PagarMe
             ExecuteSelfRequest(request);
         }
 
-        public async void RefundAsync(int? amount = null)
+		public async void RefundAsync(int? amount = null)
         {
             var request = CreateRequest("POST", "/refund");
 
