@@ -8,17 +8,13 @@ namespace PagarMe.Tests
 {
 	public class PagarMeTestFixture
 	{
-<<<<<<< HEAD
+
         static PagarMeTestFixture ()
-=======
-		static PagarMeTestFixture()
->>>>>>> remotes/pagarme-remote/master
 		{
-			PagarMeService.DefaultApiKey = "ak_test_AAAfFBJDvGNMA6YMEoxRyIrK0PlhLI";
-			PagarMeService.DefaultEncryptionKey = "ek_test_D8fnTNOqaPBQx46QBiDprUzeophI7q";
+			PagarMeService.DefaultApiKey = "ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY";
+			PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
 		}
 
-<<<<<<< HEAD
         public static Recipient CreateRecipientWithAnotherBankAccount()
         {
             BankAccount bank = new BankAccount
@@ -78,10 +74,7 @@ namespace PagarMe.Tests
 
         }
 
-		public static Plan CreateTestPlan ()
-=======
 		public static Plan CreateTestPlan()
->>>>>>> remotes/pagarme-remote/master
 		{
 			return new Plan()
 			{
@@ -118,7 +111,6 @@ namespace PagarMe.Tests
 			};
 		}
 
-<<<<<<< HEAD
         public static Transaction CreateTestBoletoTransaction()
         {
             return new Transaction
@@ -172,18 +164,6 @@ namespace PagarMe.Tests
 
             return splits.ToArray();
         }
-
-		public static string GetCardHash ()
-=======
-		public static Transaction CreateTestBoletoTransaction()
->>>>>>> remotes/pagarme-remote/master
-		{
-			return new Transaction
-			{
-				Amount = 1000,
-				PaymentMethod = PaymentMethod.Boleto
-			};
-		}
 
 		public static string GetCardHash()
 		{
