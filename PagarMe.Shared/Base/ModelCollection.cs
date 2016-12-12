@@ -170,7 +170,6 @@ namespace PagarMe.Base
                 return (TModel)Activator.CreateInstance (typeof (TModel), new object[] { _service, _endpointPrefix });
             }
         }
-            
     }
 }
 

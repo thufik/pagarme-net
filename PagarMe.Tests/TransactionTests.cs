@@ -127,7 +127,6 @@ namespace PagarMe.Tests
             Assert.IsTrue(transaction.RefundedAmount == amountToBeRefunded);
         }
 
-
         [Test]
         public void SendMetadata()
         {
@@ -140,8 +139,7 @@ namespace PagarMe.Tests
             Assert.IsTrue(transaction.Metadata["test"].ToString() == "uhuul");
         }
 
-        [Test] 
-
+        [Test]
         public void FindPayablesTest()
         {
             Transaction transaction = CreateTestBoletoTransaction();
@@ -153,7 +151,6 @@ namespace PagarMe.Tests
            Assert.IsTrue(payable.Amount.Equals(transaction.Amount));
            Assert.IsTrue(payable.Status.Equals(PayableStatus.Paid));
         }
-
     }
 
     [TestFixture]
@@ -190,7 +187,6 @@ namespace PagarMe.Tests
 
             var transactionEvent = transaction.Events.FindAll(new Event()).First();
             Assert.IsTrue(transactionEvent.DateCreated.HasValue);
-
             Assert.IsNotEmpty(transactionEvent.Model);
             Assert.IsNotEmpty(transactionEvent.ModelId);
             Assert.IsNotEmpty(transactionEvent.Id);

@@ -26,6 +26,7 @@ namespace PagarMe.Tests
             Assert.IsTrue(payable.Status.Equals(payableReturned.Status));
             Assert.IsTrue(payable.TransactionId.Equals(payableReturned.TransactionId));
         }
+
         [Test]
         public void FindAllPayablesTest()
         {

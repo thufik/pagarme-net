@@ -40,13 +40,9 @@ namespace Playground
 
 
             Transfer[] transfer = PagarMeService.GetDefaultService().Transfers.FindAll(new Transfer()).ToArray();
-
             Console.Write(transfer.Count());
             Console.Read();
 
-            //Console.WriteLine(payable.PayableStatus);
-
-/*
             try
             {
                 BankAccount b = new BankAccount();
@@ -116,10 +112,6 @@ namespace Playground
                 foreach (var erro in ex.Error.Errors)
                     Console.WriteLine(String.Format("Error: {0}", erro.Message));
             }
-        
-        */
-        }
-        
+        }        
     }
-    
 }

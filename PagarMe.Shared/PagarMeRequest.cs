@@ -45,9 +45,7 @@ namespace PagarMe
             return query.Select((t) => Uri.EscapeUriString(t.Item1) + "=" + Uri.EscapeUriString(t.Item2)).Aggregate((c, n) => c + "&" + n);
         }
 
-
         private PagarMeService _service;
-
         public string Method { get; private set; }
         public string Path { get; private set; }
 
@@ -57,10 +55,7 @@ namespace PagarMe
         public string Body { get; set; }
 
         internal PagarMeRequest(string method, string path)
-            : this(null, method, path)
-        {
-
-        }
+            : this(null, method, path) {}
 
         internal PagarMeRequest(PagarMeService service, string method, string path)
         {

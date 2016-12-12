@@ -8,15 +8,11 @@ namespace PagarMe.Tests
 {
 	public class PagarMeTestFixture
 	{
-
-        //private static BankAccount bank = null;
-
         static PagarMeTestFixture ()
 		{
 			PagarMeService.DefaultApiKey = "ak_test_AAAfFBJDvGNMA6YMEoxRyIrK0PlhLI";
 			PagarMeService.DefaultEncryptionKey = "ek_test_D8fnTNOqaPBQx46QBiDprUzeophI7q";
 		}
-
 
         public static Recipient CreateRecipientWithAnotherBankAccount()
         {
@@ -163,7 +159,6 @@ namespace PagarMe.Tests
             splits.Add(split2);
 
             return splits.ToArray();
-
         }
 
 		public static string GetCardHash ()
@@ -172,7 +167,7 @@ namespace PagarMe.Tests
 
 			creditcard.CardHolderName = "Jose da Silva";
 			creditcard.CardNumber = "5433229077370451";
-			creditcard.CardExpirationDate = "1021";
+			creditcard.CardExpirationDate = "1038";
 			creditcard.CardCvv = "018";
 
 			return creditcard.Generate ();
@@ -182,17 +177,5 @@ namespace PagarMe.Tests
         {
             return PagarMeService.GetDefaultService().Payables.Find(id);
         }
-/*
-        public static Payable[] returnAllPayables()
-        {
-            Payable payable = new Payable()
-            {
-                PayableStatus = PayableStatus.Paid
-            };
-
-            return  PagarMeService.GetDefaultService().Payables.FindAll(payable).ToArray();
-        }
-*/
-
 	}
 }

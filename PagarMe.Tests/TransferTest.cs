@@ -38,7 +38,7 @@ namespace PagarMe.Tests
 
             Transfer transfer = PagarMeTestFixture.CreateTestTransfer(bank.Id, recipient.Id);
             transfer.Save();
-            Assert.IsTrue(transfer.Status == TransferStatus.PedingTransfer);
+            Assert.IsTrue(transfer.Status == TransferStatus.PendingTransfer);
 
         }
 
