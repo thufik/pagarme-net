@@ -14,7 +14,7 @@ namespace PagarMe
 
         public Payable(PagarMeService service) : base(service) {}
 
-        public Payable(PagarMeService service, string x):base(service,x) { }
+        public Payable(PagarMeService service, string endpointPrefix = "") :base(service, endpointPrefix) { }
 
         public PayableStatus Status
         {
