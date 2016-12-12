@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using PagarMe.Base;
-using PagarMe.Enum;
+using PagarMe.Enumeration;
 
 namespace PagarMe
 {

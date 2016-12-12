@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PagarMe.Enum
+namespace PagarMe.Enumeration
 {
     public enum PayableType
     {
