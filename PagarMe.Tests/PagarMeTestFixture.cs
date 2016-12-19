@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagarMe.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,11 @@ namespace PagarMe.Tests
 
         static PagarMeTestFixture ()
 		{
-			PagarMeService.DefaultApiKey = "ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY";
-			PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
-		}
+            //PagarMeService.DefaultApiKey = "ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY";
+            //PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
+            PagarMeService.DefaultApiKey = "ak_test_AAAfFBJDvGNMA6YMEoxRyIrK0PlhLI";
+            PagarMeService.DefaultEncryptionKey = "ek_test_D8fnTNOqaPBQx46QBiDprUzeophI7q";
+        }
 
         public static Recipient CreateRecipientWithAnotherBankAccount()
         {
@@ -24,7 +27,7 @@ namespace PagarMe.Tests
                 Conta = "03032",
                 ContaDv = "5",
                 DocumentNumber = "44417398850",
-                LegalName = "Fellipe"
+                LegalName = "Fellipe xD"
             };
 
             bank.Save();
@@ -97,9 +100,19 @@ namespace PagarMe.Tests
 				Conta = "08808",
 				ContaDv = "8",
 				DocumentNumber = "43591017833",
-				LegalName = "TesteTestadoTestando"
+				LegalName = "Teste " + DateTime.Now.ToShortTimeString()
 			};
 		}
+
+        public static BulkAnticipation CreateBulkAnticipation()
+        {
+            return new BulkAnticipation()
+            {
+                Timeframe = TimeFrame.Start,
+                PaymentDate = DateTime.Now.AddDays(5),
+                RequestedAmount = 100000
+            };
+        }
 
 		public static Transaction CreateTestTransaction()
 		{
@@ -140,6 +153,18 @@ namespace PagarMe.Tests
                 SplitRules = CreateSplitRule(recipient)
             };
         }
+
+        public static Transaction CreateCreditCardSplitRuleTransaction(Recipient recipient)
+        {
+            return new Transaction
+            {
+                Amount = 1000000,
+                PaymentMethod = PaymentMethod.CreditCard,
+                CardHash = GetCardHash(),
+                SplitRules = CreateSplitRule(recipient)
+            };
+        }
+
 
         public static SplitRule[] CreateSplitRule(Recipient recipient)
         {

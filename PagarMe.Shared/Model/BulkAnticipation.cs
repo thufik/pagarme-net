@@ -16,7 +16,6 @@ namespace PagarMe.Model
         public BulkAnticipationStatus Status
         {
             get { return GetAttribute<BulkAnticipationStatus>("status"); }
-            set { SetAttribute("status", value); }
         }
 
         public TimeFrame Timeframe
@@ -25,28 +24,36 @@ namespace PagarMe.Model
             set { SetAttribute("timeframe", value); }
         }
 
-        public string PaymentDate
+        public DateTime PaymentDate
         {
-            get { return GetAttribute<string>("payment_date"); }
+            get { return GetAttribute<DateTime>("payment_date"); }
             set { SetAttribute("payment_date", value); }
         }
 
         public int Amount
         {
             get { return GetAttribute<int>("amount"); }
-            set { SetAttribute("amount", value); }
+        }
+
+        public int RequestedAmount
+        {
+            set { SetAttribute("requested_amount", value); }
+            internal get { return GetAttribute<int>("requested_amount"); }
         }
 
         public int Fee
         {
             get { return GetAttribute<int>("fee"); }
-            set { SetAttribute("fee", value); }
         }
 
         public int AnticipationFee
         {
             get { return GetAttribute<int>("anticipation_fee"); }
-            set { SetAttribute("anticipation_fee", value); }
+        }
+
+        public bool Build
+        {
+            set { SetAttribute("build", value); }
         }
     }
 }

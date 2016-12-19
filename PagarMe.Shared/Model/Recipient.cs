@@ -25,6 +25,8 @@
 // THE SOFTWARE.
 using System;
 using Newtonsoft.Json;
+using PagarMe.Model;
+using PagarMe.Base;
 
 namespace PagarMe
 {
@@ -74,6 +76,36 @@ namespace PagarMe
 			set { SetAttribute("anticipatable_volume_percentage", value); }
 		}
 
+        private BulkAnticipationLimit AnticipationLimits(TimeFrame timeframe, DateTime paymentDate)
+        {
+            BulkAnticipationLimit bulk = new BulkAnticipationLimit();
+            bulk.TimeFrame = TimeFrame.Start;
+            bulk.PaymentDate = Utils.ConvertToUnixTimeStamp(paymentDate).ToString();
+
+            return  new ModelCollection<BulkAnticipationLimit>(Service, "/bulk_anticipations/limits", Endpoint + "/" + Id).FindAllObject(bulk);
+        }
+
+        public Limit MaxAnticipationValue(TimeFrame timeframe, DateTime paymentDate)
+        {
+            var limit = AnticipationLimits(timeframe, paymentDate);
+            return limit.Maximum;
+        }
+
+        public Limit MinAnticipationValue(TimeFrame timeframe, DateTime paymentDate)
+        {
+            var limit = AnticipationLimits(timeframe, paymentDate);
+            return limit.Minimum;
+        }
+
+        public void CreateAnticipation(BulkAnticipation anticipation)
+        {
+            var request = CreateRequest("POST", "/bulk_anticipations");
+            request.Query.Add(new Tuple<string, string>("payment_date", Utils.ConvertToUnixTimeStamp(anticipation.PaymentDate).ToString()));
+            request.Query.Add(new Tuple<string, string>("timeframe", anticipation.Timeframe.ToString().ToLower()));
+            request.Query.Add(new Tuple<string, string>("requested_amount", anticipation.RequestedAmount.ToString()));
+
+            ExecuteSelfRequest(request);
+        }
 
 		public Recipient()
 			: this(null)

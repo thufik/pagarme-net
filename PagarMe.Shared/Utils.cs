@@ -56,6 +56,13 @@ namespace PagarMe
 			}
 			return false;
 		}
+
+        public static Int64 ConvertToUnixTimeStamp(DateTime date)
+        {
+            Int64 unixTimestamp = (Int64)(date.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds;
+
+            return unixTimestamp;
+        }
 	}
 }
 

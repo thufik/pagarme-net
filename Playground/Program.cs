@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PagarMe;
 using Newtonsoft.Json;
+using PagarMe.Model;
 
 namespace Playground
 {
@@ -35,10 +36,21 @@ namespace Playground
     {
         public static void Main(string[] args)
         {
-            PagarMeService.DefaultApiKey = "ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY";
+            PagarMeService.DefaultApiKey = "ak_test_AAAfFBJDvGNMA6YMEoxRyIrK0PlhLI";
             PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
 
+            Recipient recipient = PagarMeService.GetDefaultService().Recipients.Find("re_ciwdsa53501b0ik6dh933yjct");
 
+            DateTime date = DateTime.Now;
+            date = date.AddDays(5);
+
+            Limit limit = recipient.MaxAnticipationValue(TimeFrame.Start,date);
+            Console.Write(limit.Amount);
+            Console.Read();
+        
+            
+
+/*
             Transfer[] transfer = PagarMeService.GetDefaultService().Transfers.FindAll(new Transfer()).ToArray();
             Console.Write(transfer.Count());
             Console.Read();
@@ -112,6 +124,7 @@ namespace Playground
                 foreach (var erro in ex.Error.Errors)
                     Console.WriteLine(String.Format("Error: {0}", erro.Message));
             }
+            */
         }        
     }
 }

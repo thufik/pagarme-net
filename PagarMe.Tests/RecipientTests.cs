@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using PagarMe.Model;
 
 namespace PagarMe.Tests
 {
@@ -31,8 +32,54 @@ namespace PagarMe.Tests
 			Assert.IsNotNull (recipient.Id);
 		}
 
-		[Test]
-		public void CreateWithNewFields ()
+
+
+        [Test]
+        public void ReturnAnticipationMaxValue()
+        {
+            Recipient recipient = CreateRecipient();
+            recipient.Save();
+
+            DateTime date = DateTime.Now;
+            date = date.AddDays(5);
+
+            var limit = recipient.MaxAnticipationValue(TimeFrame.Start, date);
+            Assert.IsNotNull(limit);
+        }
+
+        [Test]
+        public void ReturnAnticipationMinValue()
+        {
+            Recipient recipient = CreateRecipient();
+            recipient.Save();
+
+            DateTime date = DateTime.Now;
+            date = date.AddDays(5);
+
+            var limit = recipient.MinAnticipationValue(TimeFrame.Start, date);
+            Assert.IsNotNull(limit);
+        }
+        
+        [Test]
+        public void CreateAnticipation()
+        {
+
+            BulkAnticipation anticipation = CreateBulkAnticipation();
+
+            Recipient recipient = CreateRecipient();
+            recipient.Save();
+
+            Transaction transaction = CreateCreditCardSplitRuleTransaction(recipient);
+            transaction.Save();
+
+            recipient.CreateAnticipation(anticipation);
+
+            Assert.IsTrue(anticipation.Status == Enumeration.BulkAnticipationStatus.Pending);
+
+        }
+
+        [Test]
+		public void CreateWithNewFields()
 		{
 			var bank = CreateTestBankAccount ();
 
