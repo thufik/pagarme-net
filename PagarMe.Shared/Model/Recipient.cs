@@ -32,7 +32,8 @@ namespace PagarMe
 {
 	public class Recipient : Base.Model
 	{
-		protected override string Endpoint { get { return "/recipients"; } }
+        private Base.ModelCollection<BulkAnticipation> _anticipations;
+        protected override string Endpoint { get { return "/recipients"; } }
 
 		public BankAccount BankAccount
 		{
@@ -100,14 +101,55 @@ namespace PagarMe
         public void CreateAnticipation(BulkAnticipation anticipation)
         {
             var request = CreateRequest("POST", "/bulk_anticipations");
+
             request.Query.Add(new Tuple<string, string>("payment_date", Utils.ConvertToUnixTimeStamp(anticipation.PaymentDate).ToString()));
             request.Query.Add(new Tuple<string, string>("timeframe", anticipation.Timeframe.ToString().ToLower()));
             request.Query.Add(new Tuple<string, string>("requested_amount", anticipation.RequestedAmount.ToString()));
+            if (anticipation.Build == true)
+                request.Query.Add(new Tuple<string, string>("build", anticipation.Build.ToString().ToLower()));
+            var response = request.Execute();
 
-            ExecuteSelfRequest(request);
+            anticipation.LoadFrom(response.Body);
         }
 
-		public Recipient()
+        public void ConfirmAnticipation(BulkAnticipation anticipation)
+        {
+            var request = CreateRequest("POST", "/bulk_anticipations/" + anticipation.Id + "/" + "confirm");
+            var response = request.Execute();
+
+            anticipation.LoadFrom(response.Body);
+        }
+
+        public void CancelAnticipation(BulkAnticipation anticipation)
+        {
+            var request = CreateRequest("POST", "/bulk_anticipations/" + anticipation.Id + "/" + "cancel");
+            var response = request.Execute();
+
+            anticipation.LoadFrom(response.Body);
+        }
+
+        public void DeleteAnticipation(BulkAnticipation anticipation)
+        {
+            var request = CreateRequest("DELETE", "/bulk_anticipations/" + anticipation.Id);
+            var response = request.Execute();
+
+            anticipation.LoadFrom(response.Body);
+        }
+
+        public Base.ModelCollection<BulkAnticipation> Anticipations
+        {
+            get
+            {
+                if (Id == null)
+                {
+                    throw new InvalidOperationException("Transaction must have an Id in order to fetch events");
+                }
+
+                return _anticipations ?? (_anticipations = new Base.ModelCollection<BulkAnticipation>(Service, "/bulk_anticipations", Endpoint + "/" + Id));
+            }
+        }
+
+        public Recipient()
 			: this(null)
 		{
 

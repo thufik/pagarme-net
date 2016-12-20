@@ -76,6 +76,7 @@ namespace PagarMe
         {
             HttpWebResponse response;
             var request = GetRequest();
+            //request.Method = Method;
             bool isError = false;
 
             if (Body != null && (Method == "POST" || Method == "PUT"))
@@ -185,7 +186,6 @@ namespace PagarMe
 
             request.ContentType = "application/json";
             request.Method = Method;
-
             return request;
         }
 

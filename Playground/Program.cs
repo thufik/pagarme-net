@@ -38,16 +38,18 @@ namespace Playground
         {
             PagarMeService.DefaultApiKey = "ak_test_AAAfFBJDvGNMA6YMEoxRyIrK0PlhLI";
             PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
+            /*
+                        Recipient recipient = PagarMeService.GetDefaultService().Recipients.Find("re_ciwdsa53501b0ik6dh933yjct");
 
-            Recipient recipient = PagarMeService.GetDefaultService().Recipients.Find("re_ciwdsa53501b0ik6dh933yjct");
+                        DateTime date = DateTime.Now;
+                        date = date.AddDays(5);
 
-            DateTime date = DateTime.Now;
-            date = date.AddDays(5);
+                        Limit limit = recipient.MaxAnticipationValue(TimeFrame.Start,date);
+                        Console.Write(limit.Amount);
+                        Console.Read();
+              */
 
-            Limit limit = recipient.MaxAnticipationValue(TimeFrame.Start,date);
-            Console.Write(limit.Amount);
-            Console.Read();
-        
+      
             
 
 /*

@@ -13,6 +13,8 @@ namespace PagarMe.Model
 
         public BulkAnticipation(PagarMeService service) : base(service) { }
 
+        public BulkAnticipation(PagarMeService service, string endpointPrefix = "") :base(service, endpointPrefix) { }
+
         public BulkAnticipationStatus Status
         {
             get { return GetAttribute<BulkAnticipationStatus>("status"); }
@@ -54,6 +56,7 @@ namespace PagarMe.Model
         public bool Build
         {
             set { SetAttribute("build", value); }
+            get { return GetAttribute<bool>("build"); }
         }
     }
 }

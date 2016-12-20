@@ -58,8 +58,8 @@ namespace PagarMe.Tests
             bank.Save();
             return new Recipient()
             {
-                TransferInterval = TransferInterval.Monthly,
-                TransferDay = 5,
+                TransferInterval = TransferInterval.Daily,
+                AnticipatableVolumePercentage = 100,
                 TransferEnabled = true,
                 BankAccount = bank
             };
@@ -110,9 +110,22 @@ namespace PagarMe.Tests
             {
                 Timeframe = TimeFrame.Start,
                 PaymentDate = DateTime.Now.AddDays(5),
-                RequestedAmount = 100000
+                RequestedAmount = 900000,
+                Build = false
             };
         }
+        
+        public static BulkAnticipation CreateBulkAnticipationWithBuildTrue()
+        {
+            return new BulkAnticipation()
+            {
+                Timeframe = TimeFrame.Start,
+                PaymentDate = DateTime.Now.AddDays(5),
+                Build = true,
+                RequestedAmount = 900000
+            };
+        }
+
 
 		public static Transaction CreateTestTransaction()
 		{
