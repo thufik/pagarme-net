@@ -12,10 +12,9 @@ namespace PagarMe.Tests
 
         static PagarMeTestFixture ()
 		{
-            //PagarMeService.DefaultApiKey = "ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY";
-            //PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
-            PagarMeService.DefaultApiKey = "ak_test_AAAfFBJDvGNMA6YMEoxRyIrK0PlhLI";
-            PagarMeService.DefaultEncryptionKey = "ek_test_D8fnTNOqaPBQx46QBiDprUzeophI7q";
+            PagarMeService.DefaultApiKey = "ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY";
+            PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
+
         }
 
         public static Recipient CreateRecipientWithAnotherBankAccount()

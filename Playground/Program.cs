@@ -36,23 +36,9 @@ namespace Playground
     {
         public static void Main(string[] args)
         {
-            PagarMeService.DefaultApiKey = "ak_test_AAAfFBJDvGNMA6YMEoxRyIrK0PlhLI";
+            PagarMeService.DefaultApiKey = "ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY";
             PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
-            /*
-                        Recipient recipient = PagarMeService.GetDefaultService().Recipients.Find("re_ciwdsa53501b0ik6dh933yjct");
 
-                        DateTime date = DateTime.Now;
-                        date = date.AddDays(5);
-
-                        Limit limit = recipient.MaxAnticipationValue(TimeFrame.Start,date);
-                        Console.Write(limit.Amount);
-                        Console.Read();
-              */
-
-      
-            
-
-/*
             Transfer[] transfer = PagarMeService.GetDefaultService().Transfers.FindAll(new Transfer()).ToArray();
             Console.Write(transfer.Count());
             Console.Read();
@@ -97,25 +83,25 @@ namespace Playground
                 Transaction t = new Transaction();
 
                 t.SplitRules = new[] {
-                    new SplitRule {
-                        Recipient = r1,
-                        Percentage = 10,
-                        ChargeProcessingFee = true,
-                        Liable = true
-                    },
-                    new SplitRule {
-                        Recipient = r2,
-                        Percentage = 40,
-                        ChargeProcessingFee = false,
-                        Liable = false
-                    },
-                    new SplitRule {
-                        Recipient = r3,
-                        Percentage = 50,
-                        ChargeProcessingFee = false,
-                        Liable = false
-                    }
-                };
+                                new SplitRule {
+                                    Recipient = r1,
+                                    Percentage = 10,
+                                    ChargeProcessingFee = true,
+                                    Liable = true
+                                },
+                                new SplitRule {
+                                    Recipient = r2,
+                                    Percentage = 40,
+                                    ChargeProcessingFee = false,
+                                    Liable = false
+                                },
+                                new SplitRule {
+                                    Recipient = r3,
+                                    Percentage = 50,
+                                    ChargeProcessingFee = false,
+                                    Liable = false
+                                }
+                            };
 
                 t.PaymentMethod = PaymentMethod.Boleto;
                 t.Amount = 10000;
@@ -126,7 +112,7 @@ namespace Playground
                 foreach (var erro in ex.Error.Errors)
                     Console.WriteLine(String.Format("Error: {0}", erro.Message));
             }
-            */
-        }        
+
+        }
     }
 }
