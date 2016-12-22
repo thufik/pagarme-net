@@ -33,6 +33,52 @@ namespace PagarMe.Tests
 		}
 
         [Test]
+        public void ReturnBalance()
+        {
+            Recipient recipient = CreateRecipient();
+            recipient.Save();
+            Balance balance = recipient.Balance;
+
+            Assert.IsTrue(balance.Available.amount == 0);
+            Assert.IsTrue(balance.Transferred.amount == 0);
+            Assert.IsTrue(balance.WaitingFunds.amount == 0);
+        }
+
+        [Test]
+        public void returnBalaceOperationsPayable()
+        {
+            Recipient recipient = CreateRecipient();
+            recipient.Save();
+
+            Transaction transaction = CreateBoletoSplitRuleTransaction(recipient);
+            transaction.Save();
+            transaction.Status = TransactionStatus.Paid;
+            transaction.Save();
+
+            Operation[] operation = recipient.Balance.Operations.FindAll(new Operation()).ToArray();
+
+            Assert.IsNotNull(operation.First().MovementPayable);
+        }
+
+        [Test]
+        public void returnBalaceOperationsAnticipation()
+        {
+            BulkAnticipation anticipation = CreateBulkAnticipation();
+
+            Recipient recipient = CreateRecipient();
+            recipient.Save();
+
+            Transaction transaction = CreateCreditCardSplitRuleTransaction(recipient);
+            transaction.Save();
+
+            recipient.CreateAnticipation(anticipation);
+
+            Operation[] operation = recipient.Balance.Operations.FindAll(new Operation()).ToArray();
+
+            Assert.IsNotNull(operation.First().MovementBulkAnticipation);
+        }
+
+        [Test]
         public void ReturnAnticipationMaxValue()
         {
             Recipient recipient = CreateRecipient();

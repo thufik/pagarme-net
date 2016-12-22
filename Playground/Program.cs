@@ -30,18 +30,27 @@ using PagarMe;
 using Newtonsoft.Json;
 using PagarMe.Model;
 
+
 namespace Playground
 {
     class MainClass
     {
         public static void Main(string[] args)
         {
-            PagarMeService.DefaultApiKey = "ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY";
+            PagarMeService.DefaultApiKey = "ak_test_AAAfFBJDvGNMA6YMEoxRyIrK0PlhLI";
             PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
 
             Transfer[] transfer = PagarMeService.GetDefaultService().Transfers.FindAll(new Transfer()).ToArray();
             Console.Write(transfer.Count());
             Console.Read();
+
+            Recipient recipient = PagarMeService.GetDefaultService().Recipients.Find("re_ciwxxlge502jfwp6exm59a1ir");
+
+            var x = recipient.Balance.Operations;
+
+            var y = x.FindAll(new Operation()).First().MovementTransfer;
+
+            Console.Write(y.Amount);
 
             try
             {

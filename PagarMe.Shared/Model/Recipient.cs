@@ -77,6 +77,11 @@ namespace PagarMe
 			set { SetAttribute("anticipatable_volume_percentage", value); }
 		}
 
+        public Balance Balance
+        {
+            get { return new ModelCollection<Balance>(Service, "/balance", Endpoint + "/" + Id).FindAllObject(new Balance()); }
+        }
+
         private BulkAnticipationLimit AnticipationLimits(TimeFrame timeframe, DateTime paymentDate)
         {
             BulkAnticipationLimit bulk = new BulkAnticipationLimit();

@@ -13,7 +13,7 @@ namespace PagarMe.Model
         public BulkAnticipationLimit(PagarMeService service) : base(service) { }
 
         public BulkAnticipationLimit(PagarMeService service, string endpointPrefix) : base(service, endpointPrefix) { }
-
+        
         public Limit Maximum
         {
             get { return GetAttribute<Limit>("maximum"); }
