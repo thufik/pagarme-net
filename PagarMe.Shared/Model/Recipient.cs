@@ -30,52 +30,52 @@ using PagarMe.Base;
 
 namespace PagarMe
 {
-	public class Recipient : Base.Model
-	{
+    public class Recipient : Base.Model
+    {
         private Base.ModelCollection<BulkAnticipation> _anticipations;
         protected override string Endpoint { get { return "/recipients"; } }
 
-		public BankAccount BankAccount
-		{
-			get { return GetAttribute<BankAccount>("bank_account"); }
-			set { SetAttribute("bank_account", value); }
-		}
+        public BankAccount BankAccount
+        {
+            get { return GetAttribute<BankAccount>("bank_account"); }
+            set { SetAttribute("bank_account", value); }
+        }
 
-		public bool TransferEnabled
-		{
-			get { return GetAttribute<bool>("transfer_enabled"); }
-			set { SetAttribute("transfer_enabled", value); }
-		}
+        public bool TransferEnabled
+        {
+            get { return GetAttribute<bool>("transfer_enabled"); }
+            set { SetAttribute("transfer_enabled", value); }
+        }
 
-		public DateTime LastTransfer
-		{
-			get { return GetAttribute<DateTime>("last_transfer"); }
-			set { SetAttribute("last_transfer", value); }
-		}
+        public DateTime LastTransfer
+        {
+            get { return GetAttribute<DateTime>("last_transfer"); }
+            set { SetAttribute("last_transfer", value); }
+        }
 
-		public TransferInterval TransferInterval
-		{
-			get { return GetAttribute<TransferInterval>("transfer_interval"); }
-			set { SetAttribute("transfer_interval", value); }
-		}
+        public TransferInterval TransferInterval
+        {
+            get { return GetAttribute<TransferInterval>("transfer_interval"); }
+            set { SetAttribute("transfer_interval", value); }
+        }
 
-		public int TransferDay
-		{
-			get { return GetAttribute<int>("transfer_day"); }
-			set { SetAttribute("transfer_day", value); }
-		}
+        public int TransferDay
+        {
+            get { return GetAttribute<int>("transfer_day"); }
+            set { SetAttribute("transfer_day", value); }
+        }
 
-		public bool AutomaticAnticipationEnabled
-		{
-			get { return GetAttribute<bool>("automatic_anticipation_enabled"); }
-			set { SetAttribute("automatic_anticipation_enabled", value); }
-		}
+        public bool AutomaticAnticipationEnabled
+        {
+            get { return GetAttribute<bool>("automatic_anticipation_enabled"); }
+            set { SetAttribute("automatic_anticipation_enabled", value); }
+        }
 
-		public double AnticipatableVolumePercentage
-		{
-			get { return GetAttribute<double>("anticipatable_volume_percentage"); }
-			set { SetAttribute("anticipatable_volume_percentage", value); }
-		}
+        public double AnticipatableVolumePercentage
+        {
+            get { return GetAttribute<double>("anticipatable_volume_percentage"); }
+            set { SetAttribute("anticipatable_volume_percentage", value); }
+        }
 
         public Balance Balance
         {
@@ -85,10 +85,10 @@ namespace PagarMe
         private BulkAnticipationLimit AnticipationLimits(TimeFrame timeframe, DateTime paymentDate)
         {
             BulkAnticipationLimit bulk = new BulkAnticipationLimit();
-            bulk.TimeFrame = TimeFrame.Start;
+            bulk.TimeFrame = timeframe;
             bulk.PaymentDate = Utils.ConvertToUnixTimeStamp(paymentDate).ToString();
 
-            return  new ModelCollection<BulkAnticipationLimit>(Service, "/bulk_anticipations/limits", Endpoint + "/" + Id).FindAllObject(bulk);
+            return new ModelCollection<BulkAnticipationLimit>(Service, "/bulk_anticipations/limits", Endpoint + "/" + Id).FindAllObject(bulk);
         }
 
         public Limit MaxAnticipationValue(TimeFrame timeframe, DateTime paymentDate)
@@ -155,14 +155,14 @@ namespace PagarMe
         }
 
         public Recipient()
-			: this(null)
-		{
+            : this(null)
+        {
 
-		}
+        }
 
-		public Recipient(PagarMeService service)
-			: base(service)
-		{
-		}
-	}
+        public Recipient(PagarMeService service)
+            : base(service)
+        {
+        }
+    }
 }

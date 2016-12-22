@@ -91,26 +91,27 @@ namespace Playground
 
                 Transaction t = new Transaction();
 
-                t.SplitRules = new[] {
-                                new SplitRule {
-                                    Recipient = r1,
-                                    Percentage = 10,
-                                    ChargeProcessingFee = true,
-                                    Liable = true
-                                },
-                                new SplitRule {
-                                    Recipient = r2,
-                                    Percentage = 40,
-                                    ChargeProcessingFee = false,
-                                    Liable = false
-                                },
-                                new SplitRule {
-                                    Recipient = r3,
-                                    Percentage = 50,
-                                    ChargeProcessingFee = false,
-                                    Liable = false
-                                }
-                            };
+                t.SplitRules = new[]
+                {
+                    new SplitRule {
+                        Recipient = r1,
+                        Percentage = 10,
+                        ChargeProcessingFee = true,
+                        Liable = true
+                    },
+                    new SplitRule {
+                        Recipient = r2,
+                        Percentage = 40,
+                        ChargeProcessingFee = false,
+                        Liable = false
+                    },
+                    new SplitRule {
+                        Recipient = r3,
+                        Percentage = 50,
+                        ChargeProcessingFee = false,
+                        Liable = false
+                    }
+                };
 
                 t.PaymentMethod = PaymentMethod.Boleto;
                 t.Amount = 10000;
