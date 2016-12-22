@@ -42,7 +42,7 @@ namespace PagarMe.Tests
             date = date.AddDays(5);
 
             var limit = recipient.MaxAnticipationValue(TimeFrame.Start, date);
-            Assert.IsNotNull(limit);
+            Assert.IsTrue(limit.Amount == 0);
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace PagarMe.Tests
             date = date.AddDays(5);
 
             var limit = recipient.MinAnticipationValue(TimeFrame.Start, date);
-            Assert.IsNotNull(limit);
+            Assert.IsTrue(limit.Amount == 0);
         }
         
         [Test]
