@@ -212,6 +212,36 @@ namespace PagarMe.Base
 			return JsonConvert.SerializeObject(ToDictionary(type));
         }
 
+        internal void BuildQueryForKeys(List<Tuple<string, string>> query, string prefix, IDictionary<string, object> keys)
+        {
+            foreach (var kvp in keys)
+            {
+                var name = "";
+
+                if (prefix == null)
+                {
+                    name = kvp.Key;
+                }
+                else
+                {
+                    name = prefix + "[" + kvp.Key + "]";
+                }
+
+                if (kvp.Value is IDictionary<string, object>)
+                {
+                    BuildQueryForKeys(query, name, (IDictionary<string, object>)kvp.Value);
+                }
+                else if (kvp.Value is string)
+                {
+                    query.Add(new Tuple<string, string>(name, kvp.Value.ToString()));
+                }
+                else
+                {
+                    query.Add(new Tuple<string, string>(name, JToken.FromObject(kvp.Value).ToString(Newtonsoft.Json.Formatting.None)));
+                }
+            }
+        }
+
         protected object CastAttribute(Type type, object obj)
         {
             #if NET40
