@@ -31,5 +31,7 @@ namespace PagarMe.Model
             get { return GetAttribute<int>("anticipation_fee"); }
             set { SetAttribute("anticipation_fee", value); }
         }
+
+        
     }
 }
