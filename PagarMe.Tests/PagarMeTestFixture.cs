@@ -11,7 +11,7 @@ namespace PagarMe.Tests
 	{
 
         static PagarMeTestFixture ()
-		{
+        {
             PagarMeService.DefaultApiKey = "ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY";
             PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
 
