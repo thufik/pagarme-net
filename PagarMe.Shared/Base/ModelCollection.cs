@@ -118,8 +118,7 @@ namespace PagarMe.Base
         {
             var request = new PagarMeRequest(_service, "GET", _endpointPrefix + _endpoint);
 			var keys = searchParameters.ToDictionary(SerializationType.Plain);
-
-            searchParameters.BuildQueryForKeys(request.Query, null, keys);
+            request.Query = searchParameters.BuildQueryForKeys(null, keys);
 
             return request;
         }

@@ -28,8 +28,8 @@ namespace PagarMe.Model
 
         public DateTime PaymentDate
         {
-            get { return GetAttribute<DateTime>("payment_date"); }
-            set { SetAttribute("payment_date", value); }
+            get { return Utils.ConvertToDateTime(GetAttribute<Int64>("payment_date")); }
+            set { SetAttribute("payment_date", Utils.ConvertToUnixTimeStamp(value)); }
         }
 
         public int Amount
@@ -53,10 +53,10 @@ namespace PagarMe.Model
             get { return GetAttribute<int>("anticipation_fee"); }
         }
 
-        public bool Build
+        public bool? Build
         {
-            set { SetAttribute("build", value); }
-            get { return GetAttribute<bool>("build"); }
+            set { if (value == false) { SetAttribute("build", ""); } }
+            get { return Boolean.Parse(GetAttribute<string>("build")); }
         }
     }
 }
