@@ -53,9 +53,9 @@ namespace PagarMe.Model
             get { return GetAttribute<int>("anticipation_fee"); }
         }
 
-        public bool? Build
+        public bool Build
         {
-            set { if (value == false) { SetAttribute("build", ""); } }
+            set { if (value == false) SetAttribute("build", ""); else SetAttribute("build", "true"); }
             get { return Boolean.Parse(GetAttribute<string>("build")); }
         }
     }
