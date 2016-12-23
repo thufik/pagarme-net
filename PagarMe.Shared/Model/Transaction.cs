@@ -332,7 +332,7 @@ namespace PagarMe
         {
             var request = CreateRequest("POST", "/refund");
 
-            BuildQueryForKeys(request.Query, "bank_account", bank.ToDictionary(Base.SerializationType.Plain));
+            request.Query =  BuildQueryForKeys("bank_account", bank.ToDictionary(Base.SerializationType.Plain));
 
             ExecuteSelfRequest(request);
         }

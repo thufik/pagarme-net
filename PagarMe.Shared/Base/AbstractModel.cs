@@ -212,7 +212,26 @@ namespace PagarMe.Base
 			return JsonConvert.SerializeObject(ToDictionary(type));
         }
 
-        internal void BuildQueryForKeys(List<Tuple<string, string>> query, string prefix, IDictionary<string, object> keys)
+        internal List<Tuple<string, string>> BuildQueryForKeys(IDictionary<string, object> keys)
+        {
+            List<Tuple<string, string>> query = new List<Tuple<string, string>>();
+
+            this.BuildQueryForKeysRecursive(query, null, keys);
+
+            return query;
+        }
+
+        internal List<Tuple<string, string>> BuildQueryForKeys(string prefix, IDictionary<string, object> keys)
+        {
+            List<Tuple<string, string>> query = new List<Tuple<string, string>>();
+
+            this.BuildQueryForKeysRecursive(query, prefix, keys);
+
+            return query;
+        }
+
+
+        private void BuildQueryForKeysRecursive(List<Tuple<string, string>> query, string prefix, IDictionary<string, object> keys)
         {
             foreach (var kvp in keys)
             {
@@ -229,7 +248,7 @@ namespace PagarMe.Base
 
                 if (kvp.Value is IDictionary<string, object>)
                 {
-                    BuildQueryForKeys(query, name, (IDictionary<string, object>)kvp.Value);
+                    BuildQueryForKeysRecursive(query, name, (IDictionary<string, object>)kvp.Value);
                 }
                 else if (kvp.Value is string)
                 {
