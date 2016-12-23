@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagarMe.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,10 @@ namespace PagarMe.Tests
 
         static PagarMeTestFixture ()
 		{
-			PagarMeService.DefaultApiKey = "ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY";
-			PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
-		}
+            PagarMeService.DefaultApiKey = "ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY";
+            PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
+
+        }
 
         public static Recipient CreateRecipientWithAnotherBankAccount()
         {
@@ -24,7 +26,7 @@ namespace PagarMe.Tests
                 Conta = "03032",
                 ContaDv = "5",
                 DocumentNumber = "44417398850",
-                LegalName = "Fellipe"
+                LegalName = "Fellipe xD"
             };
 
             bank.Save();
@@ -55,8 +57,8 @@ namespace PagarMe.Tests
             bank.Save();
             return new Recipient()
             {
-                TransferInterval = TransferInterval.Monthly,
-                TransferDay = 5,
+                TransferInterval = TransferInterval.Daily,
+                AnticipatableVolumePercentage = 100,
                 TransferEnabled = true,
                 BankAccount = bank
             };
@@ -97,9 +99,32 @@ namespace PagarMe.Tests
 				Conta = "08808",
 				ContaDv = "8",
 				DocumentNumber = "43591017833",
-				LegalName = "TesteTestadoTestando"
+				LegalName = "Teste " + DateTime.Now.ToShortTimeString()
 			};
 		}
+
+        public static BulkAnticipation CreateBulkAnticipation()
+        {
+            return new BulkAnticipation()
+            {
+                Timeframe = TimeFrame.Start,
+                PaymentDate = DateTime.Now.AddDays(5),
+                RequestedAmount = 900000,
+                Build = false
+            };
+        }
+        
+        public static BulkAnticipation CreateBulkAnticipationWithBuildTrue()
+        {
+            return new BulkAnticipation()
+            {
+                Timeframe = TimeFrame.Start,
+                PaymentDate = DateTime.Now.AddDays(5),
+                Build = true,
+                RequestedAmount = 900000
+            };
+        }
+
 
 		public static Transaction CreateTestTransaction()
 		{
@@ -140,6 +165,18 @@ namespace PagarMe.Tests
                 SplitRules = CreateSplitRule(recipient)
             };
         }
+
+        public static Transaction CreateCreditCardSplitRuleTransaction(Recipient recipient)
+        {
+            return new Transaction
+            {
+                Amount = 1000000,
+                PaymentMethod = PaymentMethod.CreditCard,
+                CardHash = GetCardHash(),
+                SplitRules = CreateSplitRule(recipient)
+            };
+        }
+
 
         public static SplitRule[] CreateSplitRule(Recipient recipient)
         {

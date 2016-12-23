@@ -104,6 +104,10 @@ namespace PagarMe.Base
             return FinishFindQuery(BuildFindQuery(searchParams).Execute());
         }
         
+        public TModel FindAllObject(TModel searchParams)
+        {
+            return FinishFindQueryObject(BuildFindQuery(searchParams).Execute());
+        }
 
         public async Task<IEnumerable<TModel>> FindAllAsync(TModel searchParams)
         {
@@ -160,6 +164,16 @@ namespace PagarMe.Base
                 return model;
             });
  
+        }
+
+        public TModel FinishFindQueryObject(PagarMeResponse response)
+        {
+            var model = CreateInstance();
+
+            model.LoadFrom(response.Body);
+
+            return model;
+            
         }
 
         private TModel CreateInstance ()

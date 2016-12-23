@@ -177,7 +177,6 @@ namespace PagarMe
         {
             HttpWebRequest request = WebRequest.CreateHttp(GetRequestUri());
 
-
             #if !PCL
             request.UserAgent = "pagarme-net/" + typeof(PagarMeRequest).Assembly.GetName().Version.ToString();
             #else
@@ -186,7 +185,6 @@ namespace PagarMe
 
             request.ContentType = "application/json";
             request.Method = Method;
-
             return request;
         }
 

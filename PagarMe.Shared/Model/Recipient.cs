@@ -25,65 +25,139 @@
 // THE SOFTWARE.
 using System;
 using Newtonsoft.Json;
+using PagarMe.Model;
+using PagarMe.Base;
 
 namespace PagarMe
 {
-	public class Recipient : Base.Model
-	{
-		protected override string Endpoint { get { return "/recipients"; } }
+    public class Recipient : Base.Model
+    {
+        private Base.ModelCollection<BulkAnticipation> _anticipations;
+        protected override string Endpoint { get { return "/recipients"; } }
 
-		public BankAccount BankAccount
-		{
-			get { return GetAttribute<BankAccount>("bank_account"); }
-			set { SetAttribute("bank_account", value); }
-		}
+        public BankAccount BankAccount
+        {
+            get { return GetAttribute<BankAccount>("bank_account"); }
+            set { SetAttribute("bank_account", value); }
+        }
 
-		public bool TransferEnabled
-		{
-			get { return GetAttribute<bool>("transfer_enabled"); }
-			set { SetAttribute("transfer_enabled", value); }
-		}
+        public bool TransferEnabled
+        {
+            get { return GetAttribute<bool>("transfer_enabled"); }
+            set { SetAttribute("transfer_enabled", value); }
+        }
 
-		public DateTime LastTransfer
-		{
-			get { return GetAttribute<DateTime>("last_transfer"); }
-			set { SetAttribute("last_transfer", value); }
-		}
+        public DateTime LastTransfer
+        {
+            get { return GetAttribute<DateTime>("last_transfer"); }
+            set { SetAttribute("last_transfer", value); }
+        }
 
-		public TransferInterval TransferInterval
-		{
-			get { return GetAttribute<TransferInterval>("transfer_interval"); }
-			set { SetAttribute("transfer_interval", value); }
-		}
+        public TransferInterval TransferInterval
+        {
+            get { return GetAttribute<TransferInterval>("transfer_interval"); }
+            set { SetAttribute("transfer_interval", value); }
+        }
 
-		public int TransferDay
-		{
-			get { return GetAttribute<int>("transfer_day"); }
-			set { SetAttribute("transfer_day", value); }
-		}
+        public int TransferDay
+        {
+            get { return GetAttribute<int>("transfer_day"); }
+            set { SetAttribute("transfer_day", value); }
+        }
 
-		public bool AutomaticAnticipationEnabled
-		{
-			get { return GetAttribute<bool>("automatic_anticipation_enabled"); }
-			set { SetAttribute("automatic_anticipation_enabled", value); }
-		}
+        public bool AutomaticAnticipationEnabled
+        {
+            get { return GetAttribute<bool>("automatic_anticipation_enabled"); }
+            set { SetAttribute("automatic_anticipation_enabled", value); }
+        }
 
-		public double AnticipatableVolumePercentage
-		{
-			get { return GetAttribute<double>("anticipatable_volume_percentage"); }
-			set { SetAttribute("anticipatable_volume_percentage", value); }
-		}
+        public double AnticipatableVolumePercentage
+        {
+            get { return GetAttribute<double>("anticipatable_volume_percentage"); }
+            set { SetAttribute("anticipatable_volume_percentage", value); }
+        }
 
+        private BulkAnticipationLimit AnticipationLimits(TimeFrame timeframe, DateTime paymentDate)
+        {
+            BulkAnticipationLimit bulk = new BulkAnticipationLimit();
+            bulk.TimeFrame = timeframe;
+            bulk.PaymentDate = Utils.ConvertToUnixTimeStamp(paymentDate).ToString();
 
-		public Recipient()
-			: this(null)
-		{
+            return new ModelCollection<BulkAnticipationLimit>(Service, "/bulk_anticipations/limits", Endpoint + "/" + Id).FindAllObject(bulk);
+        }
 
-		}
+        public Limit MaxAnticipationValue(TimeFrame timeframe, DateTime paymentDate)
+        {
+            var limit = AnticipationLimits(timeframe, paymentDate);
+            return limit.Maximum;
+        }
 
-		public Recipient(PagarMeService service)
-			: base(service)
-		{
-		}
-	}
+        public Limit MinAnticipationValue(TimeFrame timeframe, DateTime paymentDate)
+        {
+            var limit = AnticipationLimits(timeframe, paymentDate);
+            return limit.Minimum;
+        }
+
+        public void CreateAnticipation(BulkAnticipation anticipation)
+        {
+            var request = CreateRequest("POST", "/bulk_anticipations");
+
+            request.Query.Add(new Tuple<string, string>("payment_date", Utils.ConvertToUnixTimeStamp(anticipation.PaymentDate).ToString()));
+            request.Query.Add(new Tuple<string, string>("timeframe", anticipation.Timeframe.ToString().ToLower()));
+            request.Query.Add(new Tuple<string, string>("requested_amount", anticipation.RequestedAmount.ToString()));
+            if (anticipation.Build == true)
+                request.Query.Add(new Tuple<string, string>("build", anticipation.Build.ToString().ToLower()));
+            var response = request.Execute();
+
+            anticipation.LoadFrom(response.Body);
+        }
+
+        public void ConfirmAnticipation(BulkAnticipation anticipation)
+        {
+            var request = CreateRequest("POST", "/bulk_anticipations/" + anticipation.Id + "/" + "confirm");
+            var response = request.Execute();
+
+            anticipation.LoadFrom(response.Body);
+        }
+
+        public void CancelAnticipation(BulkAnticipation anticipation)
+        {
+            var request = CreateRequest("POST", "/bulk_anticipations/" + anticipation.Id + "/" + "cancel");
+            var response = request.Execute();
+
+            anticipation.LoadFrom(response.Body);
+        }
+
+        public void DeleteAnticipation(BulkAnticipation anticipation)
+        {
+            var request = CreateRequest("DELETE", "/bulk_anticipations/" + anticipation.Id);
+            var response = request.Execute();
+
+            anticipation.LoadFrom(response.Body);
+        }
+
+        public Base.ModelCollection<BulkAnticipation> Anticipations
+        {
+            get
+            {
+                if (Id == null)
+                {
+                    throw new InvalidOperationException("Transaction must have an Id in order to fetch events");
+                }
+
+                return _anticipations ?? (_anticipations = new Base.ModelCollection<BulkAnticipation>(Service, "/bulk_anticipations", Endpoint + "/" + Id));
+            }
+        }
+
+        public Recipient()
+            : this(null)
+        {
+
+        }
+
+        public Recipient(PagarMeService service)
+            : base(service)
+        {
+        }
+    }
 }

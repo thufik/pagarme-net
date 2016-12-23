@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PagarMe;
 using Newtonsoft.Json;
+using PagarMe.Model;
 
 namespace Playground
 {
@@ -37,7 +38,6 @@ namespace Playground
         {
             PagarMeService.DefaultApiKey = "ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY";
             PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
-
 
             Transfer[] transfer = PagarMeService.GetDefaultService().Transfers.FindAll(new Transfer()).ToArray();
             Console.Write(transfer.Count());
@@ -82,7 +82,8 @@ namespace Playground
 
                 Transaction t = new Transaction();
 
-                t.SplitRules = new[] {
+                t.SplitRules = new[]
+                {
                     new SplitRule {
                         Recipient = r1,
                         Percentage = 10,
@@ -112,6 +113,6 @@ namespace Playground
                 foreach (var erro in ex.Error.Errors)
                     Console.WriteLine(String.Format("Error: {0}", erro.Message));
             }
-        }        
+        }
     }
 }
