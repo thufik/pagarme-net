@@ -61,24 +61,6 @@ namespace PagarMe.Tests
         }
 
         [Test]
-        public void returnBalaceOperationsAnticipation()
-        {
-            BulkAnticipation anticipation = CreateBulkAnticipation();
-
-            Recipient recipient = CreateRecipient();
-            recipient.Save();
-
-            Transaction transaction = CreateCreditCardSplitRuleTransaction(recipient);
-            transaction.Save();
-
-            recipient.CreateAnticipation(anticipation);
-
-            Operation[] operation = recipient.Balance.Operations.FindAll(new Operation()).ToArray();
-
-            Assert.IsNotNull(operation.First().MovementBulkAnticipation);
-        }
-
-        [Test]
         public void ReturnAnticipationMaxValue()
         {
             Recipient recipient = CreateRecipient();

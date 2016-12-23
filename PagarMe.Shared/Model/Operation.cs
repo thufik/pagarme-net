@@ -67,10 +67,8 @@ namespace PagarMe.Model
             {
                 case OperationType.Anticipation :
                     return ChooseMovementObject(type);
-                    break;
                 case OperationType.Payable :
                     return ChooseMovementObject(type);
-                    break;
                 case OperationType.Transfer :
                     return ChooseMovementObject(type);
                 default :
@@ -88,24 +86,20 @@ namespace PagarMe.Model
                         return GetAttribute<BulkAnticipation>("movement_object");
                     else
                         return null;
-                    break;
                 case OperationType.Payable:
 
                     if (type == OperationType.Payable)
                         return GetAttribute<Payable>("movement_object");
                     else
                         return null;
-                    break;
                 case OperationType.Transfer:
 
                     if (type == OperationType.Transfer)
                         return GetAttribute<Transfer>("movement_object");
                     else
                         return null;
-                    break;
                 default:
                     return null;
-                    break;
             }
         }
 
