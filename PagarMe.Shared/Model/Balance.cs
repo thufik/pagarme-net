@@ -15,29 +15,29 @@ namespace PagarMe.Model
 
         public Balance(PagarMeService serivce, string endpointPrefix = "") : base(serivce, endpointPrefix) { }
 
-        public Amount WaitingFunds
+        public int WaitingFunds
         {
-            get { return GetAttribute<Amount>("waiting_funds"); }
+            get { return GetAttribute<Amount>("waiting_funds").amount; }
         }
 
-        public Amount Available
+        public int Available
         {
-            get { return GetAttribute<Amount>("available"); }
+            get { return GetAttribute<Amount>("available").amount; }
         }
 
-        public Amount Transferred
+        public int Transferred
         {
-            get { return GetAttribute<Amount>("transferred"); }
+            get { return GetAttribute<Amount>("transferred").amount; }
         }
 
-        public ModelCollection<Operation> Operations
+        public ModelCollection<BalanceOperation> Operations
         {
-            get { return new Operation(Service, endpointPrefix).History(Endpoint); }
+            get { return new BalanceOperation(Service, endpointPrefix).History(Endpoint); }
         }
 
-        public class Amount : Base.Model
+        private class Amount : Base.Model
         {
-            protected override string Endpoint { get { return "/balance"; } }
+            protected override string Endpoint { get { return ""; } }
 
             public Amount(PagarMeService service) : base(service) { }
 

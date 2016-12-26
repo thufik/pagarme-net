@@ -48,7 +48,7 @@ namespace Playground
 
             var x = recipient.Balance.Operations;
 
-            var y = x.FindAll(new Operation()).First().MovementTransfer;
+            var y = x.FindAll(new BalanceOperation()).First().MovementTransfer;
 
             Console.Write(y.Amount);
 

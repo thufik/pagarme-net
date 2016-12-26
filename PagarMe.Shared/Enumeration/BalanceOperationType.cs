@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PagarMe.Enumeration
 {
-    public enum OperationType
+    public enum BalanceOperationType
     {
         [Base.EnumValue("payable")] Payable,
         [Base.EnumValue("anticipation")] Anticipation,

@@ -6,19 +6,19 @@ using System.Text;
 
 namespace PagarMe.Model
 {
-    public class Operation : Base.Model
+    public class BalanceOperation : Base.Model
     {
         protected override string Endpoint { get { return "/operations"; } }
 
-        public Operation() : this(null) { }
+        public BalanceOperation() : this(null) { }
 
-        public Operation(PagarMeService service) : base(service) { }
+        public BalanceOperation(PagarMeService service) : base(service) { }
 
-        public Operation(PagarMeService service, string endpointPrefix = "") :base(service, endpointPrefix) { }
+        public BalanceOperation(PagarMeService service, string endpointPrefix = "") :base(service, endpointPrefix) { }
 
-        public OperationStatus Status
+        public BalanceOperationStatus Status
         {
-            get { return GetAttribute<OperationStatus>("status"); }
+            get { return GetAttribute<BalanceOperationStatus>("status"); }
         }
 
         public int BalanceAmount
@@ -31,9 +31,9 @@ namespace PagarMe.Model
             get { return GetAttribute<int>("balance_old_amout"); }
         }
 
-        public OperationType MovementType
+        public BalanceOperationType MovementType
         {
-            get { return GetAttribute<OperationType>("movement_type"); }
+            get { return GetAttribute<BalanceOperationType>("type"); }
         }
 
         public int Amount
@@ -48,53 +48,53 @@ namespace PagarMe.Model
 
         public Payable MovementPayable
         {
-            get { return (Payable)ChooseOperationType(OperationType.Payable); }
+            get { return (Payable)ChooseBalanceOperationType(BalanceOperationType.Payable); }
         }
 
         public BulkAnticipation MovementBulkAnticipation
         {
-            get { return (BulkAnticipation)ChooseOperationType(OperationType.Anticipation); }
+            get { return (BulkAnticipation)ChooseBalanceOperationType(BalanceOperationType.Anticipation); }
         }
 
         public Transfer MovementTransfer
         {
-            get { return (Transfer)ChooseOperationType(OperationType.Transfer); }
+            get { return (Transfer)ChooseBalanceOperationType(BalanceOperationType.Transfer); }
         }
 
-        private Base.Model ChooseOperationType(OperationType type)
+        private Base.Model ChooseBalanceOperationType(BalanceOperationType type)
         {
             switch (type)
             {
-                case OperationType.Anticipation :
+                case BalanceOperationType.Anticipation :
                     return ChooseMovementObject(type);
-                case OperationType.Payable :
+                case BalanceOperationType.Payable :
                     return ChooseMovementObject(type);
-                case OperationType.Transfer :
+                case BalanceOperationType.Transfer :
                     return ChooseMovementObject(type);
                 default :
                     return null;
             }
         }
 
-        private Base.Model ChooseMovementObject(OperationType type)
+        private Base.Model ChooseMovementObject(BalanceOperationType type)
         {
-            switch (GetAttribute<OperationType>("type"))
+            switch (GetAttribute<BalanceOperationType>("type"))
             {
-                case OperationType.Anticipation:
+                case BalanceOperationType.Anticipation:
 
-                    if (type == OperationType.Anticipation)
+                    if (type == BalanceOperationType.Anticipation)
                         return GetAttribute<BulkAnticipation>("movement_object");
                     else
                         return null;
-                case OperationType.Payable:
+                case BalanceOperationType.Payable:
 
-                    if (type == OperationType.Payable)
+                    if (type == BalanceOperationType.Payable)
                         return GetAttribute<Payable>("movement_object");
                     else
                         return null;
-                case OperationType.Transfer:
+                case BalanceOperationType.Transfer:
 
-                    if (type == OperationType.Transfer)
+                    if (type == BalanceOperationType.Transfer)
                         return GetAttribute<Transfer>("movement_object");
                     else
                         return null;
@@ -103,9 +103,9 @@ namespace PagarMe.Model
             }
         }
 
-        public Base.ModelCollection<Operation> History(string endpoint)
+        public Base.ModelCollection<BalanceOperation> History(string endpoint)
         {
-           return new ModelCollection<Operation>(Service, endpoint + Endpoint, endpointPrefix ); 
+           return new ModelCollection<BalanceOperation>(Service, endpoint + Endpoint, endpointPrefix ); 
         }
     }
 }

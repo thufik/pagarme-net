@@ -39,9 +39,9 @@ namespace PagarMe.Tests
             recipient.Save();
             Balance balance = recipient.Balance;
 
-            Assert.IsTrue(balance.Available.amount == 0);
-            Assert.IsTrue(balance.Transferred.amount == 0);
-            Assert.IsTrue(balance.WaitingFunds.amount == 0);
+            Assert.IsTrue(balance.Available == 0);
+            Assert.IsTrue(balance.Transferred == 0);
+            Assert.IsTrue(balance.WaitingFunds == 0);
         }
 
         [Test]
@@ -54,8 +54,7 @@ namespace PagarMe.Tests
             transaction.Save();
             transaction.Status = TransactionStatus.Paid;
             transaction.Save();
-
-            Operation[] operation = recipient.Balance.Operations.FindAll(new Operation()).ToArray();
+            BalanceOperation[] operation = recipient.Balance.Operations.FindAll(new BalanceOperation()).ToArray();
 
             Assert.IsNotNull(operation.First().MovementPayable);
             Assert.IsNull(operation.First().MovementBulkAnticipation);
