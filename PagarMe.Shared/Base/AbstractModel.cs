@@ -173,12 +173,12 @@ namespace PagarMe.Base
                 }
                 else
                 {
-					value = ((Model)value).ToDictionary(type);
+                    value = ((Model)value).ToDictionary(type);
                 }
             }
             else if (value is AbstractModel)
             {
-				value = ((AbstractModel)value).ToDictionary(type);
+                value = ((AbstractModel)value).ToDictionary(type);
             }
             #if NET40
             else if (value != null && value.GetType().IsEnum)
@@ -192,7 +192,7 @@ namespace PagarMe.Base
             return new KeyValuePair<string, object>(key, value);
         }
 
-		public IDictionary<string, object> ToDictionary(SerializationType type = SerializationType.Shallow)
+        public IDictionary<string, object> ToDictionary(SerializationType type = SerializationType.Shallow)
         {
             IEnumerable<KeyValuePair<string, object>> keys;
 
@@ -208,8 +208,7 @@ namespace PagarMe.Base
 
         internal string ToJson(SerializationType type = SerializationType.Shallow)
         {
-
-			return JsonConvert.SerializeObject(ToDictionary(type));
+            return JsonConvert.SerializeObject(ToDictionary(type));
         }
 
         internal List<Tuple<string, string>> BuildQueryForKeys(IDictionary<string, object> keys)
@@ -229,7 +228,6 @@ namespace PagarMe.Base
 
             return query;
         }
-
 
         private void BuildQueryForKeysRecursive(List<Tuple<string, string>> query, string prefix, IDictionary<string, object> keys)
         {
@@ -295,6 +293,10 @@ namespace PagarMe.Base
             else if (info.IsPrimitive)
             {
                 return Convert.ChangeType(obj, type, CultureInfo.InvariantCulture);
+            }
+            else if (obj != null && obj.GetType() == typeof(Int64) && type == typeof(DateTime))
+            {
+                return Utils.ConvertToDateTime((Int64)obj);
             }
             else if (info.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
@@ -398,4 +400,3 @@ namespace PagarMe.Base
         #endif
     }
 }
-

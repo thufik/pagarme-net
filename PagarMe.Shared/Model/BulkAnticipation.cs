@@ -28,7 +28,7 @@ namespace PagarMe.Model
 
         public DateTime PaymentDate
         {
-            get { return Utils.ConvertToDateTime(GetAttribute<Int64>("payment_date")); }
+            get { return GetAttribute<DateTime>("payment_date"); }
             set { SetAttribute("payment_date", Utils.ConvertToUnixTimeStamp(value)); }
         }
 
