@@ -58,6 +58,7 @@ namespace PagarMe.Tests
             Operation[] operation = recipient.Balance.Operations.FindAll(new Operation()).ToArray();
 
             Assert.IsNotNull(operation.First().MovementPayable);
+            Assert.IsNull(operation.First().MovementBulkAnticipation);
         }
 
         [Test]
