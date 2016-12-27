@@ -31,7 +31,7 @@ namespace PagarMe.Base
 {
     public abstract class Model : AbstractModel
     {
-        readonly string endpointPrefix;
+        protected readonly string endpointPrefix;
 
         public string Id
         {
@@ -73,7 +73,7 @@ namespace PagarMe.Base
 
         protected Model(PagarMeService service, string endpointPrefix = "") : base(service)
         {
-            this.endpointPrefix = "";
+            this.endpointPrefix = endpointPrefix;
         }
 
         public void ExecuteSelfRequest(PagarMeRequest request)

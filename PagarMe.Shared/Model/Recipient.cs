@@ -77,6 +77,11 @@ namespace PagarMe
             set { SetAttribute("anticipatable_volume_percentage", value); }
         }
 
+        public Balance Balance
+        {
+            get { return new ModelCollection<Balance>(Service, "/balance", Endpoint + "/" + Id).FindAllObject(new Balance()); }
+        }
+
         private BulkAnticipationLimit AnticipationLimits(TimeFrame timeframe, DateTime paymentDate)
         {
             BulkAnticipationLimit bulk = new BulkAnticipationLimit();
@@ -142,7 +147,7 @@ namespace PagarMe
             {
                 if (Id == null)
                 {
-                    throw new InvalidOperationException("Transaction must have an Id in order to fetch events");
+                    throw new InvalidOperationException("Recipient must have an Id in order to fetch events");
                 }
 
                 return _anticipations ?? (_anticipations = new Base.ModelCollection<BulkAnticipation>(Service, "/bulk_anticipations", Endpoint + "/" + Id));

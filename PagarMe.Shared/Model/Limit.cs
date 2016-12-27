@@ -10,9 +10,9 @@ namespace PagarMe.Model
 
         public Limit() : base(null) { }
 
-        public Limit(PagarMeService serivce) : base(serivce) { }
+        public Limit(PagarMeService service) : base(service) { }
 
-        public Limit(PagarMeService serivce, string endpointPrefix = "") : base(serivce, endpointPrefix) { }
+        public Limit(PagarMeService service, string endpointPrefix = "") : base(service, endpointPrefix) { }
 
         public int Amount
         {

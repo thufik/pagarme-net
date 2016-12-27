@@ -30,6 +30,7 @@ using PagarMe;
 using Newtonsoft.Json;
 using PagarMe.Model;
 
+
 namespace Playground
 {
     class MainClass
@@ -42,6 +43,14 @@ namespace Playground
             Transfer[] transfer = PagarMeService.GetDefaultService().Transfers.FindAll(new Transfer()).ToArray();
             Console.Write(transfer.Count());
             Console.Read();
+
+            Recipient recipient = PagarMeService.GetDefaultService().Recipients.Find("re_ciwxxlge502jfwp6exm59a1ir");
+
+            var x = recipient.Balance.Operations;
+
+            var y = x.FindAll(new BalanceOperation()).First().MovementTransfer;
+
+            Console.Write(y.Amount);
 
             try
             {

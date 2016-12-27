@@ -10,10 +10,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CardHash.cs" />
-	    <Compile Include="$(MSBuildThisFileDirectory)Enumeration\BulkAnticipationStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enumeration\BulkAnticipationStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enumeration\CardBrand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enumeration\DocumentType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enumeration\Gender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enumeration\BalanceOperationStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enumeration\BalanceOperationType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enumeration\PayableStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enumeration\PayableType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enumeration\PaymentMethod.cs" />
@@ -24,12 +26,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Enumeration\TransferStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enumeration\TransferType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Address.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Balance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BankAccount.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BulkAnticipation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BulkAnticipationLimit.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Card.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Customer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Limit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\BalanceOperation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Payable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Phone.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Plan.cs" />
