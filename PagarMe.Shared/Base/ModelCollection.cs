@@ -118,40 +118,9 @@ namespace PagarMe.Base
         {
             var request = new PagarMeRequest(_service, "GET", _endpointPrefix + _endpoint);
 			var keys = searchParameters.ToDictionary(SerializationType.Plain);
-
-            BuildQueryForKeys(request.Query, null, keys);
+            request.Query = searchParameters.BuildQueryForKeys(null, keys);
 
             return request;
-        }
-
-        public void BuildQueryForKeys(List<Tuple<string, string>> query, string prefix, IDictionary<string, object> keys)
-        {
-            foreach (var kvp in keys)
-            {
-                var name = "";
-
-                if (prefix == null)
-                {
-                    name = kvp.Key;
-                }
-                else
-                {
-                    name = prefix + "[" + kvp.Key + "]";
-                }
-
-                if (kvp.Value is IDictionary<string, object>)
-                {
-                    BuildQueryForKeys(query, name, (IDictionary<string, object>)kvp.Value);
-                }
-                else if (kvp.Value is string)
-                {
-                    query.Add(new Tuple<string, string>(name, kvp.Value.ToString()));
-                }
-                else
-                {
-                    query.Add(new Tuple<string, string>(name, JToken.FromObject (kvp.Value).ToString(Newtonsoft.Json.Formatting.None)));
-                }
-            }
         }
 
         public IEnumerable<TModel> FinishFindQuery(PagarMeResponse response)

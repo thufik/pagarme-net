@@ -63,6 +63,13 @@ namespace PagarMe
             Int64 unixTimestamp = (Int64)(date.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds;
             return unixTimestamp;
         }
+
+        public static DateTime ConvertToDateTime(Int64 unixTimestamp)
+        {
+            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddMilliseconds(unixTimestamp).ToLocalTime();
+            return dtDateTime;
+        }
 	}
 }
 

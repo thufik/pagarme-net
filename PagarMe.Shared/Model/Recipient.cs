@@ -107,11 +107,7 @@ namespace PagarMe
         {
             var request = CreateRequest("POST", "/bulk_anticipations");
 
-            request.Query.Add(new Tuple<string, string>("payment_date", Utils.ConvertToUnixTimeStamp(anticipation.PaymentDate).ToString()));
-            request.Query.Add(new Tuple<string, string>("timeframe", anticipation.Timeframe.ToString().ToLower()));
-            request.Query.Add(new Tuple<string, string>("requested_amount", anticipation.RequestedAmount.ToString()));
-            if (anticipation.Build == true)
-                request.Query.Add(new Tuple<string, string>("build", anticipation.Build.ToString().ToLower()));
+            request.Query = anticipation.BuildQueryForKeys(anticipation.ToDictionary(SerializationType.Plain));
             var response = request.Execute();
 
             anticipation.LoadFrom(response.Body);

@@ -50,7 +50,7 @@ namespace PagarMe
         public string Path { get; private set; }
 
         public bool UseEncryptionKey { get; set; }
-        public List<Tuple<string, string>> Query { get; private set; }
+        public List<Tuple<string, string>> Query { get; internal set; }
 
         public string Body { get; set; }
 
