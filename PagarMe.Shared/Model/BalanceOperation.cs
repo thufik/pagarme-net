@@ -23,12 +23,12 @@ namespace PagarMe.Model
 
         public int BalanceAmount
         {
-            get { return GetAttribute<int>("balance_amout"); }
+            get { return GetAttribute<int>("balance_amount"); }
         }
 
         public int BalanceOldAmount
         {
-            get { return GetAttribute<int>("balance_old_amout"); }
+            get { return GetAttribute<int>("balance_old_amount"); }
         }
 
         public BalanceOperationType MovementType

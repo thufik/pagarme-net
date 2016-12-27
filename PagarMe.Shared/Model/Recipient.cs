@@ -147,7 +147,7 @@ namespace PagarMe
             {
                 if (Id == null)
                 {
-                    throw new InvalidOperationException("Transaction must have an Id in order to fetch events");
+                    throw new InvalidOperationException("Recipient must have an Id in order to fetch events");
                 }
 
                 return _anticipations ?? (_anticipations = new Base.ModelCollection<BulkAnticipation>(Service, "/bulk_anticipations", Endpoint + "/" + Id));
