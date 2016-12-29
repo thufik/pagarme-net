@@ -28,6 +28,10 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="BouncyCastle.Crypto">
       <HintPath>..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
@@ -42,6 +46,7 @@
     <Compile Include="CreditCardTests.cs" />
     <Compile Include="PagarMeTestFixture.cs" />
     <Compile Include="PayableTest.cs" />
+    <Compile Include="PostbackTest.cs" />
     <Compile Include="SubscriptionTests.cs" />
     <Compile Include="TransactionTests.cs" />
     <Compile Include="FingerprintTests.cs" />
