@@ -62,5 +62,12 @@ namespace PagarMe
             get { return GetAttribute<string>("funding_date"); }
         }
 
+        public void CancelTransfer()
+        {
+            var request = CreateRequest("POST", "/cancel");
+            var response = request.Execute();
+
+            LoadFrom(response.Body);
+        }
     }
 }
