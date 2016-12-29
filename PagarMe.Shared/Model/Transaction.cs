@@ -23,6 +23,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using PagarMe.Model;
 using System;
 using System.Collections.Generic;
 
@@ -32,6 +33,8 @@ namespace PagarMe
     {
         private Base.ModelCollection<Event> _events;
         private Base.ModelCollection<Payable> _payables;
+        private Base.ModelCollection<AntifraudAnalyse> _antifraud;
+
         protected override string Endpoint { get { return "/transactions"; } }
 
         public Subscription Subscription
@@ -297,6 +300,19 @@ namespace PagarMe
                 }
 
                 return _payables ?? (_payables = new Base.ModelCollection<Payable>(Service, "/payables", Endpoint + "/" + Id));
+            }
+        }
+
+        public Base.ModelCollection<AntifraudAnalyse> AntifraudAnalyse
+        {
+            get
+            {
+                if (Id == null)
+                {
+                    throw new InvalidOperationException("Transaction must have an Id in order to fetch events");
+                }
+
+                return _antifraud ?? (_antifraud = new Base.ModelCollection<AntifraudAnalyse>(Service, "/antifraud_analyses ", Endpoint + "/" + Id));
             }
         }
 
