@@ -38,7 +38,7 @@ namespace PagarMe.Tests
                  response = request.GetResponse();
             }catch(WebException e)
             {
-                Console.WriteLine("What's up bitches");
+                Console.WriteLine(e.StackTrace);
             }
             
             string body;
