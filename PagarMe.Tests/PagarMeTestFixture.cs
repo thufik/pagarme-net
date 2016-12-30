@@ -30,16 +30,17 @@ namespace PagarMe.Tests
 
             var request = WebRequest.Create("https://requestb.in/api/v1/bins");
             request.Method = "POST";
+
+            WebResponse response = null;
+
             try
             {
-                var response = request.GetResponse();
+                 response = request.GetResponse();
             }catch(WebException e)
             {
                 Console.WriteLine("What's up bitches");
             }
             
-
-
             string body;
 
             using (var reader = new StreamReader(response.GetResponseStream()))
