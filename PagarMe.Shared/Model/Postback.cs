@@ -13,7 +13,7 @@ namespace PagarMe.Model
 
         public Postback(PagarMeService service) : base(service) { }
 
-        public Postback(PagarMeService serivce, string endpointPrefix = "") : base(serivce, endpointPrefix) { }
+        public Postback(PagarMeService service, string endpointPrefix = "") : base(service, endpointPrefix) { }
 
         public PostbackDelivery[] Deliveries
         {
