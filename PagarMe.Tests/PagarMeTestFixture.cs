@@ -19,40 +19,6 @@ namespace PagarMe.Tests
             PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
         }
 
-        private class RequestBin
-        {
-            public string name { get; set; }
-        }
-
-        public static string CreateRequestBin()
-        {
-            var requestBin = "https://requestb.in/";
-
-            var request = WebRequest.Create("https://requestb.in/api/v1/bins");
-            request.Method = "POST";
-
-            WebResponse response = null;
-
-            try
-            {
-                 response = request.GetResponse();
-            }catch(WebException e)
-            {
-                Console.WriteLine(e.StackTrace);
-            }
-            
-            string body;
-
-            using (var reader = new StreamReader(response.GetResponseStream()))
-            {
-                body = reader.ReadToEnd();
-            }
-            
-            var complement = JsonConvert.DeserializeObject<RequestBin>(body);
-
-            return requestBin + complement.name;
-        }
-
         public static Recipient CreateRecipientWithAnotherBankAccount()
         {
             BankAccount bank = new BankAccount
