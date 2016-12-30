@@ -30,8 +30,16 @@ namespace PagarMe.Tests
 
             var request = WebRequest.Create("https://requestb.in/api/v1/bins");
             request.Method = "POST";
+            try
+            {
+                var response = request.GetResponse();
+            }catch(WebException e)
+            {
+                Console.WriteLine("What's up bitches");
+            }
+            
 
-            var response = request.GetResponse();
+
             string body;
 
             using (var reader = new StreamReader(response.GetResponseStream()))
@@ -158,7 +166,7 @@ namespace PagarMe.Tests
             {
                 Amount = 1099,
                 PaymentMethod = PaymentMethod.Boleto,
-                PostbackUrl = CreateRequestBin()
+                PostbackUrl =  CreateRequestBin()
             };
         }
 
