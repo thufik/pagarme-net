@@ -166,7 +166,7 @@ namespace PagarMe.Tests
             {
                 Amount = 1099,
                 PaymentMethod = PaymentMethod.Boleto,
-                PostbackUrl =  CreateRequestBin()
+                PostbackUrl = "https://requestb.in/api/v1/bins"
             };
         }
 
