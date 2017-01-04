@@ -27,7 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Enumeration\TransferStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enumeration\TransferType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Address.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\AntifraudAnalyse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\AntifraudAnalysis.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Balance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BankAccount.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BulkAnticipation.cs" />

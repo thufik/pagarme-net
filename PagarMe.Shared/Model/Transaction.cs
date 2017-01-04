@@ -33,7 +33,7 @@ namespace PagarMe
     {
         private Base.ModelCollection<Event> _events;
         private Base.ModelCollection<Payable> _payables;
-        private Base.ModelCollection<AntifraudAnalyse> _antifraud;
+        private Base.ModelCollection<AntifraudAnalysis> _antifraud;
 
         protected override string Endpoint { get { return "/transactions"; } }
 
@@ -303,7 +303,7 @@ namespace PagarMe
             }
         }
 
-        public Base.ModelCollection<AntifraudAnalyse> AntifraudAnalyse
+        public Base.ModelCollection<AntifraudAnalysis> AntifraudAnalysis
         {
             get
             {
@@ -312,7 +312,7 @@ namespace PagarMe
                     throw new InvalidOperationException("Transaction must have an Id in order to fetch events");
                 }
 
-                return _antifraud ?? (_antifraud = new Base.ModelCollection<AntifraudAnalyse>(Service, "/antifraud_analyses ", Endpoint + "/" + Id));
+                return _antifraud ?? (_antifraud = new Base.ModelCollection<AntifraudAnalysis>(Service, "/antifraud_analyses ", Endpoint + "/" + Id));
             }
         }
 
