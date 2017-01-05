@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CardHash.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enumeration\AntifraudStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enumeration\BulkAnticipationStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enumeration\CardBrand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enumeration\DocumentType.cs" />
@@ -26,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Enumeration\TransferStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enumeration\TransferType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Address.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\AntifraudAnalysis.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Balance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BankAccount.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BulkAnticipation.cs" />
