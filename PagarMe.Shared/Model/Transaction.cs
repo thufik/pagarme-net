@@ -36,7 +36,6 @@ namespace PagarMe
         private Base.ModelCollection<AntifraudAnalysis> _antifraud;
         private Base.ModelCollection<Postback> _postbacks;
 
-
         protected override string Endpoint { get { return "/transactions"; } }
 
         public Subscription Subscription
@@ -304,7 +303,6 @@ namespace PagarMe
                 return _payables ?? (_payables = new Base.ModelCollection<Payable>(Service, "/payables", Endpoint + "/" + Id));
             }
         }
-
 
         public Base.ModelCollection<AntifraudAnalysis> AntifraudAnalysis
         {
