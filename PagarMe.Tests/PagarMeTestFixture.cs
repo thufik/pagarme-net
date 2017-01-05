@@ -73,7 +73,6 @@ namespace PagarMe.Tests
                 RecipientId = recipient_id,
                 BankAccountId = bank_account_id
             };
-
         }
 
 		public static Plan CreateTestPlan()

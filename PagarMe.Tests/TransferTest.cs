@@ -95,5 +95,27 @@ namespace PagarMe.Tests
 
         }
 
+        [Test]
+        public void CancelTransfer()
+        {
+            BankAccount bank = PagarMeTestFixture.CreateTestBankAccount();
+            bank.Save();
+            Recipient recipient = PagarMeTestFixture.CreateRecipient(bank);
+            recipient.Save();
+
+            Transaction transaction = PagarMeTestFixture.CreateBoletoSplitRuleTransaction(recipient);
+            transaction.Save();
+            transaction.Status = TransactionStatus.Paid;
+            transaction.Save();
+
+            Transfer transfer = PagarMeTestFixture.CreateTestTransfer(bank.Id, recipient.Id);
+            transfer.Save();
+
+            transfer.CancelTransfer();
+
+            Assert.IsTrue(transfer.Status == TransferStatus.Canceled);
+
+        }
+
     }
 }
